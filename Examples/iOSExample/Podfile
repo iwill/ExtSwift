@@ -1,0 +1,17 @@
+source "https://github.com/CocoaPods/Specs.git"
+
+project 'iOSExample.xcodeproj/'
+platform :ios, '10.0'
+
+target 'iOSExample' do
+    
+    use_frameworks!
+    
+    # Pods for iOSExample
+    pod 'ExtSwift', '~> 0.0.1'
+    
+    target 'iOSExampleTests' do
+        # Pods for testing
+    end
+    
+end

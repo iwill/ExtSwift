@@ -1,0 +1,16 @@
+PODS:
+  - ExtSwift (0.0.1)
+
+DEPENDENCIES:
+  - ExtSwift (~> 0.0.1)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - ExtSwift
+
+SPEC CHECKSUMS:
+  ExtSwift: f2396494bb460e6410553433195099b9db85bc89
+
+PODFILE CHECKSUM: ab4fb960a0af258fd8e9bdb5db13efb85e5df582
+
+COCOAPODS: 1.10.1
