@@ -8,7 +8,7 @@ target 'iOSExample' do
     use_frameworks!
     
     # Pods for iOSExample
-    pod 'ExtSwift', '~> 0.0.1'
+    pod 'ExtSwift', '~> 0.0'
     
     target 'iOSExampleTests' do
         # Pods for testing
