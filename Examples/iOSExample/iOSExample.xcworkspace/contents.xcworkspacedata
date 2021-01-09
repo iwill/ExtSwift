@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../ExtSwift.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:Podfile">
+   </FileRef>
+   <FileRef
       location = "group:iOSExample.xcodeproj">
    </FileRef>
    <FileRef

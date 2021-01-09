@@ -44,7 +44,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'ExtSwift', '~> 1.0.0'
+    pod 'ExtSwift', '~> 0.0'
 end
 ```
 
@@ -58,12 +58,14 @@ $ pod install
 
 ## Features
 
-- [x] Falsify
-- [ ] Foundation?
-- [x] ifEmpty
-- [x] NameSpace
-- [x] Operators
+- [x] Basic
+    - [x] Falsify
+    - [x] Operators
+    - [x] NameSpace
+- [ ] Foundation
+    - [x] ifEmpty
 - [ ] UIKit
+- [ ] WebKit
 
 ## TODO: Usage
 
@@ -79,14 +81,16 @@ TODO: You can try ExtSwift in Playground.
 
 **Note:**
 
-> To try ExtSwift in playground, open `ExtSwift.xcworkspace` and build ExtSwift.framework for any simulator first.
+> To try ExtSwift in playground, open `ExtSwift.xcworkspace` and build `ExtSwift.framework` for any simulator first.
 
-### TODO: Falsify
+### Basic
+- TODO: Falsify
+- TODO: Operators
+- TODO: NameSpace
 ### TODO: Foundation?
-### TODO: ifEmpty
-### TODO: NameSpace
-### TODO: Operators
+- TODO: ifEmpty
 ### TODO: UIKit
+### TODO: WebKit
 
 ## Credits
 
