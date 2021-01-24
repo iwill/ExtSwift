@@ -53,6 +53,11 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(!!0     == !(!0))
         XCTAssertTrue(!!0.0   == !(!0.0))
         
+        let b: Bool? = nil
+        XCTAssertTrue(!b      == !false) // !b: NOT falsy from Optional, !false: NOT false from Bool
+        let c: OperatorsTests = self
+        XCTAssertTrue(!c      == false) // !c: NOT falsy from Optional
+        
     }
     
     func testFalsyCoalescing() {
