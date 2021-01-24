@@ -18,10 +18,10 @@ public extension Collection {
 
 public extension Optional where Wrapped: Collection {
     func ifEmpty(_ default: Wrapped?) -> Wrapped? {
-        guard let self = self, !self.isEmpty else {
-            return `default`
+        if let self = self, !self.isEmpty {
+            return self
         }
-        return self
+        return `default`
     }
     var nilIfEmpty: Wrapped? {
         return ifEmpty(nil)
