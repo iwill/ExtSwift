@@ -25,14 +25,14 @@ precedencegroup FalsyCoalescingPrecedence {
 infix  operator ??! : FalsyCoalescingPrecedence // a ??! b  >  a.isTruthy ? a : b
 infix  operator ?!! : FalsyCoalescingPrecedence // a ?!! b  >  a.isFalsy  ? a : b
 public func     ??! <T>(l: T?, r: T?) -> T? { return !!l ? l : r }
-public func     ??! <T>(l: T , r: T?) -> T? { return !!l ? l : r }
-public func     ??! <T>(l: T?, r: T ) -> T? { return !!l ? l : r }
-public func     ??! <T>(l: T , r: T ) -> T  { return !!l ? l : r }
+// public func     ??! <T>(l: T , r: T?) -> T? { return !!l ? l : r }
+// public func     ??! <T>(l: T?, r: T ) -> T? { return !!l ? l : r }
+// public func     ??! <T>(l: T , r: T ) -> T  { return !!l ? l : r }
 @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
 public func     ?!! <T>(l: T?, r: T?) -> T? { return  !l ? l : r }
-@available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-public func     ?!! <T>(l: T , r: T?) -> T? { return  !l ? l : r }
-@available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-public func     ?!! <T>(l: T?, r: T ) -> T? { return  !l ? l : r }
-@available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-public func     ?!! <T>(l: T , r: T ) -> T  { return  !l ? l : r }
+// @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
+// public func     ?!! <T>(l: T , r: T?) -> T? { return  !l ? l : r }
+// @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
+// public func     ?!! <T>(l: T?, r: T ) -> T? { return  !l ? l : r }
+// @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
+// public func     ?!! <T>(l: T , r: T ) -> T  { return  !l ? l : r }
