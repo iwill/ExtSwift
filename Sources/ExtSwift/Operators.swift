@@ -12,10 +12,10 @@ prefix operator    ?? // notNil:  ??value  a ?? b
 public prefix func !? <T>(v: T?) -> Bool { return v == nil }
 public prefix func ?? <T>(v: T?) -> Bool { return v != nil }
 
-prefix operator     ! // isFalsy:    !value  == NOT!
-prefix operator    !! // isTruthy:  !!value  NOT! NOT!
-public prefix func  ! <T>(v: T?) -> Bool { return v.isFalsy }
-public prefix func !! <T>(v: T?) -> Bool { return v.isTruthy }
+prefix operator    !!! // isFalsy:   !!!value  ==  NOT!
+prefix operator     !! // isTruthy:   !!value  ==  NOT! NOT!
+public prefix func !!! <T>(v: T?) -> Bool { return v.isFalsy }
+public prefix func  !! <T>(v: T?) -> Bool { return v.isTruthy }
 
 precedencegroup FalsyCoalescingPrecedence {
     associativity: right
@@ -29,10 +29,10 @@ public func     ??! <T>(l: T?, r: T?) -> T? { return !!l ? l : r }
 // public func     ??! <T>(l: T?, r: T ) -> T? { return !!l ? l : r }
 // public func     ??! <T>(l: T , r: T ) -> T  { return !!l ? l : r }
 @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-public func     ?!! <T>(l: T?, r: T?) -> T? { return  !l ? l : r }
+public func     ?!! <T>(l: T?, r: T?) -> T? { return !!!l ? l : r }
 // @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-// public func     ?!! <T>(l: T , r: T?) -> T? { return  !l ? l : r }
+// public func     ?!! <T>(l: T , r: T?) -> T? { return !!!l ? l : r }
 // @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-// public func     ?!! <T>(l: T?, r: T ) -> T? { return  !l ? l : r }
+// public func     ?!! <T>(l: T?, r: T ) -> T? { return !!!l ? l : r }
 // @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
-// public func     ?!! <T>(l: T , r: T ) -> T  { return  !l ? l : r }
+// public func     ?!! <T>(l: T , r: T ) -> T  { return !!!l ? l : r }

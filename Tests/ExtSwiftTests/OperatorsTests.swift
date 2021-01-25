@@ -26,37 +26,37 @@ final class OperatorsTests: XCTestCase {
     
     func testIsFalsyAndIsTruthy() {
         
-        XCTAssertTrue(!true   == false)
-        XCTAssertTrue(!false  == true)
-        XCTAssertTrue(!1      == false)
-        XCTAssertTrue(!0      == true)
-        XCTAssertTrue(!1.0    == false)
-        XCTAssertTrue(!0.0    == true)
-        XCTAssertTrue(!some   == false)
-        XCTAssertTrue(!none   == true)
+        XCTAssertTrue(!!!true  == false)
+        XCTAssertTrue(!!!false == true)
+        XCTAssertTrue(!!!1     == false)
+        XCTAssertTrue(!!!0     == true)
+        XCTAssertTrue(!!!1.0   == false)
+        XCTAssertTrue(!!!0.0   == true)
+        XCTAssertTrue(!!!some  == false)
+        XCTAssertTrue(!!!none  == true)
         
-        XCTAssertTrue(!!true  == true)
-        XCTAssertTrue(!!false == false)
-        XCTAssertTrue(!!1     == true)
-        XCTAssertTrue(!!0     == false)
-        XCTAssertTrue(!!1.0   == true)
-        XCTAssertTrue(!!0.0   == false)
-        XCTAssertTrue(!!some  == true)
-        XCTAssertTrue(!!none  == false)
+        XCTAssertTrue(!!true   == true)
+        XCTAssertTrue(!!false  == false)
+        XCTAssertTrue(!!1      == true)
+        XCTAssertTrue(!!0      == false)
+        XCTAssertTrue(!!1.0    == true)
+        XCTAssertTrue(!!0.0    == false)
+        XCTAssertTrue(!!some   == true)
+        XCTAssertTrue(!!none   == false)
         
-        XCTAssertTrue(!!some  == !(!some))
-        XCTAssertTrue(!!true  == !(!true))
-        XCTAssertTrue(!!1     == !(!1))
-        XCTAssertTrue(!!1.0   == !(!1.0))
-        XCTAssertTrue(!!none  == !(!none))
-        XCTAssertTrue(!!false == !(!false))
-        XCTAssertTrue(!!0     == !(!0))
-        XCTAssertTrue(!!0.0   == !(!0.0))
+        XCTAssertTrue(!!!some  == !(!!some))
+        XCTAssertTrue(!!!true  == !(!!true))
+        XCTAssertTrue(!!!1     == !(!!1))
+        XCTAssertTrue(!!!1.0   == !(!!1.0))
+        XCTAssertTrue(!!!none  == !(!!none))
+        XCTAssertTrue(!!!false == !(!!false))
+        XCTAssertTrue(!!!0     == !(!!0))
+        XCTAssertTrue(!!!0.0   == !(!!0.0))
         
         let b: Bool? = nil
-        XCTAssertTrue(!b      == !false) // !b: NOT falsy from Optional, !false: NOT false from Bool
         let c: OperatorsTests = self
-        XCTAssertTrue(!c      == false) // !c: NOT falsy from Optional
+        XCTAssertTrue(!!!b == !false)
+        XCTAssertTrue(!!!c ==  false)
         
     }
     
@@ -72,10 +72,10 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(false ??! false == false)
         XCTAssertTrue(true  ??! true  == true)
         
-        XCTAssertTrue(none  ??! some  == some)
-        XCTAssertTrue(some  ??! none  == some)
-        XCTAssertTrue(none  ??! none  == none)
-        XCTAssertTrue(some  ??! some2 == some)
+        XCTAssertTrue(none ??! some  == some)
+        XCTAssertTrue(some ??! none  == some)
+        XCTAssertTrue(none ??! none  == none)
+        XCTAssertTrue(some ??! some2 == some)
         
     }
     
@@ -92,10 +92,10 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(false ?!! false == false)
         XCTAssertTrue(true  ?!! true  == true)
         
-        XCTAssertTrue(none  ?!! some  == none)
-        XCTAssertTrue(some  ?!! none  == none)
-        XCTAssertTrue(none  ?!! none  == none)
-        XCTAssertTrue(some  ?!! some2 == some2)
+        XCTAssertTrue(none ?!! some  == none)
+        XCTAssertTrue(some ?!! none  == none)
+        XCTAssertTrue(none ?!! none  == none)
+        XCTAssertTrue(some ?!! some2 == some2)
         
     }
     
