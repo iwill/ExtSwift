@@ -12,10 +12,9 @@ import Foundation
 
 import UIKit
 
-extension UIResponder: ExtSwiftNameSpace {
-}
+extension UIResponder: ESNameSpace {}
 
-public extension NameSpace where Base: UIView {
+public extension ES where Base: UIView {
     var safeAreaLayoutGuide: UILayoutGuide? {
         guard #available(iOS 11, *) else {
             return nil
@@ -24,7 +23,7 @@ public extension NameSpace where Base: UIView {
     }
 }
 
-public extension NameSpace where Base: UIScrollView {
+public extension ES where Base: UIScrollView {
     var contentLayoutGuide: UILayoutGuide? {
         guard #available(iOS 11, *) else {
             return nil
@@ -39,7 +38,7 @@ public extension NameSpace where Base: UIScrollView {
     }
 }
 
-public extension NameSpace where Base: UIViewController {
+public extension ES where Base: UIViewController {
     var topLayoutGuide: UILayoutSupport? {
         guard #available(iOS 11, *) else {
             return _base.topLayoutGuide

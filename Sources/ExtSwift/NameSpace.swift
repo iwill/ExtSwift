@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: NameSpace
 
-open class NameSpace<Base> {
-    let _base: Base
+public class NameSpace<Base> {
+    public let _base: Base
     init(_ base: Base) {
         self._base = base
     }
@@ -18,8 +18,8 @@ open class NameSpace<Base> {
 
 // MARK: - builtin `.es`
 
-public protocol ExtSwiftNameSpace {
-}
-public extension ExtSwiftNameSpace {
-    var es: NameSpace<Self> { return NameSpace(self) }
+public typealias ES = NameSpace
+public protocol  ESNameSpace {}
+public extension ESNameSpace {
+    var es: ES<Self> { return ES(self) }
 }
