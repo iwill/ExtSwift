@@ -21,5 +21,6 @@ public struct NameSpace<Base> {
 public typealias ES = NameSpace
 public protocol  ESNameSpace {}
 public extension ESNameSpace {
+    static var es: ES<Self>.Type { return ES<Self>.self }
     var es: ES<Self> { return ES(self) }
 }
