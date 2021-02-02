@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: NameSpace
 
-public class NameSpace<Base> {
+public struct NameSpace<Base> {
     public let _base: Base
-    init(_ base: Base) {
+    public init(_ base: Base) {
         self._base = base
     }
 }
