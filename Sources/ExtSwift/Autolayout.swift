@@ -1,9 +1,9 @@
 //
 //  Autolayout.swift
-//  BJLiveBase
+//  ExtSwift
 //
-//  Created by MingLQ on 2020-12-29.
-//  Copyright © 2020 BaijiaYun. All rights reserved.
+//  Created by Mr. Ming on 2020-12-29.
+//  Copyright (c) 2021 Mr. Ming <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 import Foundation
