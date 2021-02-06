@@ -7,7 +7,9 @@
 //
 
 import XCTest
-@testable import ExtSwift
+
+@testable
+import ExtSwift
 
 final class OperatorsTests: XCTestCase {
     
@@ -106,4 +108,5 @@ final class OperatorsTests: XCTestCase {
         ("testFalsyCoalescing", testFalsyCoalescing),
         // ("testUnstableFalsyCoalescing", testUnstableFalsyCoalescing),
     ]
+    
 }

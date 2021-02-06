@@ -7,7 +7,9 @@
 //
 
 import XCTest
-@testable import ExtSwift
+
+@testable
+import ExtSwift
 
 // `str.es`
 extension String: ExtSwiftNameSpace {
@@ -27,4 +29,5 @@ final class NameSpaceTests: XCTestCase {
     static var allTests = [
         ("testNameSpace", testNameSpace),
     ]
+    
 }

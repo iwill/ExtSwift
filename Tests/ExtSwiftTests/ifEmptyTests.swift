@@ -7,7 +7,9 @@
 //
 
 import XCTest
-@testable import ExtSwift
+
+@testable
+import ExtSwift
 
 final class ifEmptyTests: XCTestCase {
     
@@ -35,4 +37,5 @@ final class ifEmptyTests: XCTestCase {
     static var allTests = [
         ("testEmpty", testEmpty),
     ]
+    
 }

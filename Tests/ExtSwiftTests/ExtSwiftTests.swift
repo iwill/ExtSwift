@@ -7,9 +7,12 @@
 //
 
 import XCTest
-@testable import ExtSwift
+
+@testable
+import ExtSwift
 
 final class ExtSwiftTests: XCTestCase {
+    
     func testExtSwift() {
         XCTAssertEqual(ExtSwift().text, "Hello, ExtSwift!")
     }
@@ -17,4 +20,5 @@ final class ExtSwiftTests: XCTestCase {
     static var allTests = [
         ("testExtSwift", testExtSwift),
     ]
+    
 }

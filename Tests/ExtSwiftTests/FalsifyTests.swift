@@ -7,7 +7,9 @@
 //
 
 import XCTest
-@testable import ExtSwift
+
+@testable
+import ExtSwift
 
 final class FalsifyTests: XCTestCase {
     
@@ -42,4 +44,5 @@ final class FalsifyTests: XCTestCase {
     static var allTests = [
         ("testFalsify", testFalsify),
     ]
+    
 }
