@@ -1,6 +1,0 @@
-framework module ExtSwift {
-  umbrella header "ExtSwift-umbrella.h"
-
-  export *
-  module * { export * }
-}
