@@ -12,10 +12,10 @@ import XCTest
 import ExtSwift
 
 // `str.es`
-extension String: ExtSwiftNameSpace {
+extension String: ESNameSpace {
 }
 // `str.es.nonEmpty`
-extension NameSpace where Base == String {
+extension ES where Base == String {
     var nonEmpty: String? { return !_base.isEmpty ? _base : nil }
 }
 
