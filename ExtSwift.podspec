@@ -40,6 +40,6 @@ Pod::Spec.new do |s|
     
     # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     # s.xcconfig      = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-    # s.dependency "JSONKit", "~> 1.4"
+    # s.dependency "ExCodable", "~> 0.2.0"
     
 end

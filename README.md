@@ -14,7 +14,7 @@ Extensions for Swift
 
 ## Requirements
 
-- iOS 10.0+ / macOS X 10.12+ / tvOS 10.0+
+- iOS 10.0+ / macOS X 11.0+ / tvOS 10.0+
 - Xcode 12.0+
 - Swift 5.0+
 
@@ -98,4 +98,4 @@ Mr. Ming ([@minglq](https://twitter.com/minglq/))
 
 ## License
 
-ExtSwift is released under the MIT license. See LICENSE for details.
+ExtSwift is released under the MIT license. See [LICENSE](./LICENSE) for details.
