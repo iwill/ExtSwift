@@ -20,17 +20,17 @@ final class ifEmptyTests: XCTestCase {
         XCTAssertEqual("x".ifEmpty(some2), "x")
         XCTAssertEqual("x".ifEmpty(none),  "x")
         XCTAssertEqual("x".ifEmpty("y"),   "x")
-        XCTAssertEqual("x".nilIfEmpty,     "x")
+        XCTAssertEqual("x".nonEmptyOrNil,  "x")
         
         XCTAssertEqual("".ifEmpty(some),   some)
         XCTAssertEqual("".ifEmpty(none),   none)
         XCTAssertEqual("".ifEmpty("y"),    "y")
-        XCTAssertEqual("".nilIfEmpty,      nil)
+        XCTAssertEqual("".nonEmptyOrNil,   nil)
         
         XCTAssertEqual(some.ifEmpty("y"),  some)
         XCTAssertEqual(none.ifEmpty(some), some)
-        XCTAssertEqual(some.nilIfEmpty,    some)
-        XCTAssertEqual(none.nilIfEmpty,    nil)
+        XCTAssertEqual(some.nonEmptyOrNil, some)
+        XCTAssertEqual(none.nonEmptyOrNil, nil)
         
     }
     

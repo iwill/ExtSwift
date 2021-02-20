@@ -12,8 +12,8 @@ public extension Collection {
     func ifEmpty(_ default: Self?) -> Self? {
         return isEmpty ? `default` : self
     }
-    var nilIfEmpty: Self? {
-        return ifEmpty(nil)
+    var nonEmptyOrNil: Self? {
+        return isEmpty ? nil : self
     }
 }
 
@@ -24,7 +24,7 @@ public extension Optional where Wrapped: Collection {
         }
         return `default`
     }
-    var nilIfEmpty: Wrapped? {
+    var nonEmptyOrNil: Wrapped? {
         return ifEmpty(nil)
     }
 }
