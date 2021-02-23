@@ -5,9 +5,10 @@ import PackageDescription
 let package = Package(
     name: "ExtSwift",
     platforms: [
-        .iOS(.v10),
-        .macOS(.v11)
-        // , .tvOS(.v10)
+        .iOS(.v8),
+        .tvOS(.v9),
+        .macOS(.v10_10),
+        .watchOS(.v2)
     ],
     products: [
         .library(
