@@ -51,15 +51,15 @@ extension Float80: Falsifiable { public var isFalsy: Bool { return self == 0.0 }
 extension Optional: Falsifiable {
     public var isFalsy: Bool {
         switch self {
-        case .some(let v):
-            if let f = v as? Falsifiable {
-                return f.isFalsy
-            }
-            else {
-                return false
-            }
-        default:
-            return true
+            case .some(let v):
+                if let f = v as? Falsifiable {
+                    return f.isFalsy
+                }
+                else {
+                    return false
+                }
+            default:
+                return true
         }
     }
 }
