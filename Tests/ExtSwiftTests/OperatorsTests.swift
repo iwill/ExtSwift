@@ -11,6 +11,10 @@ import XCTest
 @testable
 import ExtSwift
 
+infix  operator ?!! : FalsyCoalescingPrecedence // a ?!! b  >  a.isFalsy  ? a : b
+@available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
+public func     ?!! <T>(l: T?, r: T?) -> T? { return !!!l ? l : r }
+
 final class OperatorsTests: XCTestCase {
     
     private let some: String? = "x", some2: String? = "y", none: String? = nil
