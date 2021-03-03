@@ -16,3 +16,21 @@ public extension Collection { // where Indices.Iterator.Element == Index
         return (startIndex <= index && index < endIndex) ? self[index] : nil
     }
 }
+
+public extension Array {
+    subscript(try index: Index) -> Iterator.Element? {
+        get {
+            guard startIndex <= index && index < endIndex else { return nil }
+            return self[index]
+        }
+        set {
+            guard startIndex <= index && index <= endIndex else { return }
+            if let newValue = newValue {
+                self[index] = newValue
+            }
+            else {
+                remove(at: index)
+            }
+        }
+    }
+}
