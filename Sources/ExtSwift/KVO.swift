@@ -138,8 +138,10 @@ extension Observable where Target == Self {
 
 extension Observable where Target == Self {
     @discardableResult
-    func observeEvent<Value>(with keyPath: KeyPath<Target, Value>, closure: @escaping ObservingClosure<Target>) -> Observation<Target> {
-        return kvo(keyPath: keyPath, options: .didSet, closure: closure)
+    func observeEvent<Value>(with keyPath: KeyPath<Target, Value>, closure: @escaping ObservingEventClosure<Target>) -> Observation<Target> {
+        return kvo(keyPath: keyPath, options: .didSet) { (value, oldValue, change) -> ObservingState in
+            return closure(value, change)
+        }
     }
     func triggerEvent<Value>(with keyPath: KeyPath<Target, Value>, value: Value) {
         didSet(value, nil, for: keyPath)
@@ -222,6 +224,7 @@ extension ObservingChange where Value: AnyObject {
 
 enum ObservingState { case goon, stop }
 typealias ObservingClosure<Target> = (Any, Any?, ObservingChange<Target, Any>) -> ObservingState
+typealias ObservingEventClosure<Target> = (Any, ObservingChange<Target, Any>) -> ObservingState
 
 // MARK: Observation
 

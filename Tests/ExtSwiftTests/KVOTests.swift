@@ -55,18 +55,16 @@ final class KVOTests: XCTestCase {
             return .goon
         }
         
-        test.observeEvent(with: \.eventWithoutParameter) { [weak self] (value, oldValue, change) -> ObservingState in
+        test.observeEvent(with: \.eventWithoutParameter) { [weak self] (value, change) -> ObservingState in
             guard self != nil else { return .stop }
             let value: Void = value as! Void
-            let oldValue: Void? = oldValue as? Void
-            print("[\(#function):\(#line)] <none> - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
+            print("[\(#function):\(#line)] <none> - \(change.option): <#->#> \(String(describing: value))")
             return .goon
         }
-        test.observeEvent(with: \.eventWithIntAndString) { [weak self] (value, oldValue, change) -> ObservingState in
+        test.observeEvent(with: \.eventWithIntAndString) { [weak self] (value, change) -> ObservingState in
             guard self != nil else { return .stop }
             let value = value as! (Int, String)
-            let oldValue = oldValue as? (Int, String)
-            print("[\(#function):\(#line)] (Int, String) - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
+            print("[\(#function):\(#line)] (Int, String) - \(change.option): <#->#> \(String(describing: value))")
             return .goon
         }
         
