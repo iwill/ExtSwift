@@ -8,20 +8,30 @@
 
 import Foundation
 
-#if os(iOS) // || os(tvOS)
-
+#if os(iOS) || os(tvOS)
 import UIKit
+#else
+import AppKit
+public typealias UIResponder = NSResponder
+public typealias UIView = NSView
+public typealias UIScrollView = NSScrollView
+public typealias UIViewController = NSViewController
+public typealias UILayoutGuide = NSLayoutGuide
+public class UILayoutSupport {}
+#endif
 
 extension UIResponder: ESNameSpace {}
 
 public extension ES where Base: UIView {
     var safeAreaLayoutGuide: UILayoutGuide? {
-        guard #available(iOS 11, *) else {
+        guard #available(iOS 11, macOS 11, *) else {
             return nil
         }
         return _base.safeAreaLayoutGuide
     }
 }
+
+#if os(iOS) || os(tvOS)
 
 public extension ES where Base: UIScrollView {
     var contentLayoutGuide: UILayoutGuide? {
@@ -54,11 +64,3 @@ public extension ES where Base: UIViewController {
 }
 
 #endif
-
-// #if os(macOS)
-// import AppKit
-// public typealias UIResponder = NSResponder
-// public typealias UIView = NSView
-// public typealias UILayoutGuide = NSLayoutGuide
-// public class UILayoutSupport {}
-// #endif
