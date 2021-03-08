@@ -24,10 +24,10 @@ extension UIResponder: ESNameSpace {}
 
 public extension ES where Base: UIView {
     var safeAreaLayoutGuide: UILayoutGuide? {
-        guard #available(iOS 11, macOS 11, *) else {
-            return nil
+        if #available(iOS 11, macOS 11, *) {
+            return _base.safeAreaLayoutGuide
         }
-        return _base.safeAreaLayoutGuide
+        return nil
     }
 }
 
@@ -35,31 +35,31 @@ public extension ES where Base: UIView {
 
 public extension ES where Base: UIScrollView {
     var contentLayoutGuide: UILayoutGuide? {
-        guard #available(iOS 11, *) else {
-            return nil
+        if #available(iOS 11, *) {
+            return _base.contentLayoutGuide
         }
-        return _base.contentLayoutGuide
+        return nil
     }
     var frameLayoutGuide: UILayoutGuide? {
-        guard #available(iOS 11, *) else {
-            return nil
+        if #available(iOS 11, *) {
+            return _base.frameLayoutGuide
         }
-        return _base.frameLayoutGuide
+        return nil
     }
 }
 
 public extension ES where Base: UIViewController {
     var topLayoutGuide: UILayoutSupport? {
-        guard #available(iOS 11, *) else {
-            return _base.topLayoutGuide
+        if #available(iOS 11, *) {
+            return nil // Use `view.safeAreaLayoutGuide.topAnchor` instead
         }
-        return nil // Use `view.safeAreaLayoutGuide.topAnchor` instead
+        return _base.topLayoutGuide
     }
     var bottomLayoutGuide: UILayoutSupport? {
-        guard #available(iOS 11, *) else {
-            return _base.bottomLayoutGuide
+        if #available(iOS 11, *) {
+            return nil // Use `view.safeAreaLayoutGuide.bottomAnchor` instead
         }
-        return nil // Use `view.safeAreaLayoutGuide.bottomAnchor` instead
+        return _base.bottomLayoutGuide
     }
 }
 
