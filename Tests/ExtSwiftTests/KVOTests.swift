@@ -44,27 +44,27 @@ final class KVOTests: XCTestCase {
             guard self != nil else { return .stop }
             let value = value as! Int
             let oldValue = oldValue as? Int
-            print("[\(#function):\(#line)] Int - \(change.option): \(String(describing: oldValue)) <#->#> \(value)")
+            debugPrint("[\(#function):\(#line)] Int - \(change.option): \(String(describing: oldValue)) <#->#> \(value)")
             return .goon
         }
         test.kvo(keyPath: \.s, options: [.initial, .willSet, .didSet]) { [weak self] (value, oldValue, change) -> ObservingState in
             guard self != nil else { return .stop }
             let value = value as? String
             let oldValue = oldValue as? String
-            print("[\(#function):\(#line)] String - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
+            debugPrint("[\(#function):\(#line)] String - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
             return .goon
         }
         
         test.observeEvent(with: \.eventWithoutParameter) { [weak self] (value, change) -> ObservingState in
             guard self != nil else { return .stop }
             let value: Void = value as! Void
-            print("[\(#function):\(#line)] <none> - \(change.option): <#->#> \(String(describing: value))")
+            debugPrint("[\(#function):\(#line)] <none> - \(change.option): <#->#> \(String(describing: value))")
             return .goon
         }
         test.observeEvent(with: \.eventWithIntAndString) { [weak self] (value, change) -> ObservingState in
             guard self != nil else { return .stop }
             let value = value as! (Int, String)
-            print("[\(#function):\(#line)] (Int, String) - \(change.option): <#->#> \(String(describing: value))")
+            debugPrint("[\(#function):\(#line)] (Int, String) - \(change.option): <#->#> \(String(describing: value))")
             return .goon
         }
         
@@ -80,7 +80,7 @@ final class KVOTests: XCTestCase {
         observer.kvo(to: test, keyPath: \.i) { (value, oldValue, change) -> ObservingState in
             let value = value as! Int
             let oldValue = oldValue as? Int
-            print("kvo: [\(#function):\(#line)] Int - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
+            debugPrint("kvo: [\(#function):\(#line)] Int - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
             return .goon
         }
         test[set: \.i] = 2
@@ -90,7 +90,7 @@ final class KVOTests: XCTestCase {
         
         test = nil
         observer.observedTargets.compact()
-        print("targets: \(String(describing: observer.observedTargets.count))")
+        debugPrint("targets: \(String(describing: observer.observedTargets.count))")
         
     }
     
