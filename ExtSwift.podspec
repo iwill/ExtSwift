@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
     s.source        = { :git => "https://github.com/iwill/ExtSwift.git", :tag => s.version.to_s }
     
     # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-    s.source_files  = "Sources", "Sources/**/*.{swift}"
+    # s.source_files  = "Sources", "Sources/**/*.{swift}"
     # s.exclude_files = "Sources/Exclude"
     # s.public_header_files = "Sources/**/*.h"
     
@@ -41,5 +41,57 @@ Pod::Spec.new do |s|
     # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     # s.xcconfig      = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
     # s.dependency "ExCodable", "~> 0.2.0"
+    
+    # ――― Subspecs ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+    
+    s.default_subspecs = ["ExtSwift"]
+    
+    s.subspec "ExtSwift" do |ss|
+        ss.source_files  = "Sources/**/ExtSwift.swift"
+    end
+    
+    s.subspec "AnyEquatable" do |ss|
+        ss.source_files  = "Sources/**/AnyEquatable.swift"
+    end
+    
+    s.subspec "Autolayout" do |ss|
+        ss.source_files  = "Sources/**/Autolayout.swift"
+        ss.frameworks = ["UIKit"]
+        ss.dependency "ExtSwift/NameSpace"
+    end
+    
+    s.subspec "Falsify" do |ss|
+        ss.source_files  = "Sources/**/Falsify.swift"
+    end
+    
+    s.subspec "ifEmpty" do |ss|
+        ss.source_files  = "Sources/**/ifEmpty.swift"
+    end
+    
+    s.subspec "KVO" do |ss|
+        ss.source_files  = "Sources/**/KVO.swift"
+        ss.dependency "ExtSwift/WeakArray"
+    end
+    
+    s.subspec "NameSpace" do |ss|
+        ss.source_files  = "Sources/**/NameSpace.swift"
+    end
+    
+    s.subspec "Operators" do |ss|
+        ss.source_files  = "Sources/**/Operators.swift"
+        ss.dependency "ExtSwift/Falsify"
+    end
+    
+    s.subspec "TryIndex" do |ss|
+        ss.source_files  = "Sources/**/TryIndex.swift"
+    end
+    
+    s.subspec "Types" do |ss|
+        ss.source_files  = "Sources/**/Types.swift"
+    end
+    
+    s.subspec "WeakArray" do |ss|
+        ss.source_files  = "Sources/**/WeakArray.swift"
+    end
     
 end
