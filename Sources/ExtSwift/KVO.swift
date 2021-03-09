@@ -231,7 +231,7 @@ public typealias ObservingEventClosure<Target> = (Any, ObservingChange<Target, A
 
 // MARK: Observation
 
-public class Observation<Target: AnyObject> {
+public final class Observation<Target: AnyObject> {
     fileprivate private(set) weak var target: Target?
     fileprivate let keyPath: PartialKeyPath<Target>
     fileprivate let options: ObservingOptions
