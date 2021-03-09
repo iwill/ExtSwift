@@ -6,6 +6,8 @@
 //  Copyright (c) 2021 Mr. Ming <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if os(iOS) || os(tvOS) || os(macOS)
+
 import Foundation
 
 #if os(iOS) || os(tvOS)
@@ -24,24 +26,26 @@ extension UIResponder: ESNameSpace {}
 
 public extension ES where Base: UIView {
     var safeAreaLayoutGuide: UILayoutGuide? {
-        if #available(iOS 11, macOS 11, *) {
+        if #available(iOS 11, tvOS 11, macOS 11, *) {
             return _base.safeAreaLayoutGuide
         }
         return nil
     }
 }
 
+#endif
+
 #if os(iOS) || os(tvOS)
 
 public extension ES where Base: UIScrollView {
     var contentLayoutGuide: UILayoutGuide? {
-        if #available(iOS 11, *) {
+        if #available(iOS 11, tvOS 11, *) {
             return _base.contentLayoutGuide
         }
         return nil
     }
     var frameLayoutGuide: UILayoutGuide? {
-        if #available(iOS 11, *) {
+        if #available(iOS 11, tvOS 11, *) {
             return _base.frameLayoutGuide
         }
         return nil
@@ -50,16 +54,24 @@ public extension ES where Base: UIScrollView {
 
 public extension ES where Base: UIViewController {
     var topLayoutGuide: UILayoutSupport? {
-        if #available(iOS 11, *) {
+#if targetEnvironment(macCatalyst)
+        return nil
+#else
+        if #available(iOS 11, tvOS 11, *) {
             return nil // Use `view.safeAreaLayoutGuide.topAnchor` instead
         }
         return _base.topLayoutGuide
+#endif
     }
     var bottomLayoutGuide: UILayoutSupport? {
-        if #available(iOS 11, *) {
+#if targetEnvironment(macCatalyst)
+        return nil
+#else
+        if #available(iOS 11, tvOS 11, *) {
             return nil // Use `view.safeAreaLayoutGuide.bottomAnchor` instead
         }
         return _base.bottomLayoutGuide
+#endif
     }
 }
 
