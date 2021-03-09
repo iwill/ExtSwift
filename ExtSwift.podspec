@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name          = "ExtSwift"
-    s.version       = "0.0.7"
+    s.version       = "0.0.8"
     s.summary       = "Extensions for Swift"
     # s.description   = "Extensions for Swift."
     s.homepage      = "https://github.com/iwill/ExtSwift"
@@ -48,6 +48,20 @@ Pod::Spec.new do |s|
     
     s.subspec "ExtSwift" do |ss|
         ss.source_files  = "Sources/**/ExtSwift.swift"
+    end
+    
+    s.subspec "All" do |ss|
+        ss.dependency "ExtSwift/ExtSwift"
+        ss.dependency "ExtSwift/AnyEquatable"
+        ss.dependency "ExtSwift/Autolayout"
+        ss.dependency "ExtSwift/Falsify"
+        ss.dependency "ExtSwift/ifEmpty"
+        ss.dependency "ExtSwift/KVO"
+        ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/Operators"
+        ss.dependency "ExtSwift/TryIndex"
+        ss.dependency "ExtSwift/Types"
+        ss.dependency "ExtSwift/WeakArray"
     end
     
     s.subspec "AnyEquatable" do |ss|
