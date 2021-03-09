@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable
+// @testable
 import ExtSwift
 
 // `str.es`

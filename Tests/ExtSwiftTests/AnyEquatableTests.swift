@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable
+// @testable
 import ExtSwift
 
 private struct Sa: Equatable {}

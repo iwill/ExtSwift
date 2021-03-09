@@ -12,9 +12,9 @@ import Foundation
 
 // MARK: - Observable
 
-typealias KVO = Observable
+public typealias KVO = Observable
 
-protocol Observable: Observed {
+public protocol Observable: Observed {
     associatedtype Target = Self where Target: Observable
     
     var observations: [Observation<Target>] { get set }
@@ -36,7 +36,7 @@ protocol Observable: Observed {
 
 // MARK: Observable - default implementation
 
-extension Observable where Target == Self {
+public extension Observable where Target == Self {
     
     @discardableResult
     func kvo<Value>(keyPath: KeyPath<Target, Value>, options: ObservingOptions = .default, closure: @escaping ObservingClosure<Target>) -> Observation<Target> {
@@ -136,7 +136,7 @@ extension Observable where Target == Self {
 
 // MARK: Observable - events extension
 
-extension Observable where Target == Self {
+public extension Observable where Target == Self {
     @discardableResult
     func observeEvent<Value>(with keyPath: KeyPath<Target, Value>, closure: @escaping ObservingEventClosure<Target>) -> Observation<Target> {
         return kvo(keyPath: keyPath, options: .didSet) { (value, oldValue, change) -> ObservingState in
@@ -150,7 +150,7 @@ extension Observable where Target == Self {
 
 // MARK: - Observer
 
-protocol Observer: AnyObject {
+public protocol Observer: AnyObject {
     var observedTargets: WeakArray<AnyObject> { get set }
     func kvo<Target: Observable, Value>(to target: Target, keyPath: KeyPath<Target, Value>, options: ObservingOptions, closure: @escaping ObservingClosure<Target>) -> Observation<Target> where Target == Target.Target
     func stopObserving<Target: Observable>(target: Target)
@@ -159,7 +159,7 @@ protocol Observer: AnyObject {
 
 // MARK: Observer - default implementation
 
-extension Observer {
+public extension Observer {
     @discardableResult
     func kvo<Target: Observable, Value>(to target: Target, keyPath: KeyPath<Target, Value>, options: ObservingOptions = .default, closure: @escaping ObservingClosure<Target>) -> Observation<Target> where Target == Target.Target {
         let observation = target.kvo(keyPath: keyPath, options: options, closure: closure)
@@ -183,13 +183,16 @@ extension Observer {
 
 // MARK: Options
 
-struct ObservingOptions: OptionSet, CustomStringConvertible {
-    let rawValue: Int
-    static let initial = ObservingOptions(rawValue: 1 << 0) // value
-    static let willSet = ObservingOptions(rawValue: 1 << 1) // value + oldValue
-    static let didSet  = ObservingOptions(rawValue: 1 << 2) // value + oldValue
-    static let `default`: ObservingOptions = [.initial, .didSet]
-    var description: String {
+public struct ObservingOptions: OptionSet, CustomStringConvertible {
+    public let rawValue: Int
+    public static let initial = ObservingOptions(rawValue: 1 << 0) // value
+    public static let willSet = ObservingOptions(rawValue: 1 << 1) // value + oldValue
+    public static let didSet  = ObservingOptions(rawValue: 1 << 2) // value + oldValue
+    public static let `default`: ObservingOptions = [.initial, .didSet]
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    public var description: String {
         var strings: [String] = []
         if self.contains(.initial) { strings.append("initial") }
         if self.contains(.willSet) { strings.append("willSet") }
@@ -200,21 +203,21 @@ struct ObservingOptions: OptionSet, CustomStringConvertible {
 
 // MARK: Change
 
-struct ObservingChange<Target, Value> {
-    let value: Value
-    let oldValue: Value?
-    let target: Target
-    let keyPath: PartialKeyPath<Target>
-    let option: ObservingOptions
+public struct ObservingChange<Target, Value> {
+    public let value: Value
+    public let oldValue: Value?
+    public let target: Target
+    public let keyPath: PartialKeyPath<Target>
+    public let option: ObservingOptions
 }
 
-extension ObservingChange where Value: Equatable {
+public extension ObservingChange where Value: Equatable {
     var notEqual: Bool {
         return value != oldValue
     }
 }
 
-extension ObservingChange where Value: AnyObject {
+public extension ObservingChange where Value: AnyObject {
     var notIdentical: Bool {
         return value !== oldValue
     }
@@ -222,13 +225,13 @@ extension ObservingChange where Value: AnyObject {
 
 // MARK: State & Closure
 
-enum ObservingState { case goon, stop }
-typealias ObservingClosure<Target> = (Any, Any?, ObservingChange<Target, Any>) -> ObservingState
-typealias ObservingEventClosure<Target> = (Any, ObservingChange<Target, Any>) -> ObservingState
+public enum ObservingState { case goon, stop }
+public typealias ObservingClosure<Target> = (Any, Any?, ObservingChange<Target, Any>) -> ObservingState
+public typealias ObservingEventClosure<Target> = (Any, ObservingChange<Target, Any>) -> ObservingState
 
 // MARK: Observation
 
-class Observation<Target: AnyObject> {
+public class Observation<Target: AnyObject> {
     fileprivate private(set) weak var target: Target?
     fileprivate let keyPath: PartialKeyPath<Target>
     fileprivate let options: ObservingOptions
@@ -243,7 +246,7 @@ class Observation<Target: AnyObject> {
     }
 }
 
-extension Observation where Target: Observable {
+public extension Observation where Target: Observable {
     func isObserving() -> Bool {
         return target?.observations.contains { $0 === self } ?? false
     }
@@ -254,11 +257,11 @@ extension Observation where Target: Observable {
 
 // MARK: Observed
 
-protocol Observed: AnyObject {
+public protocol Observed: AnyObject {
     func remove(observer: AnyObject)
 }
 
-extension Observed where Self: Observable {
+public extension Observed where Self: Observable {
     func remove(observer: AnyObject) {
         observations.removeAll { $0.owner === observer || $0.ownerLost == true }
     }
