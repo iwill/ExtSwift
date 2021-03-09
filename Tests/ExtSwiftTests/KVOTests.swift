@@ -11,10 +11,6 @@ import XCTest
 // @testable
 import ExtSwift
 
-class AnObserver: Observer {
-    var observedTargets: WeakArray<AnyObject> = []
-}
-
 class TestObservable: Observable {
     
     var observations: [Observation<TestObservable>] = []
@@ -28,6 +24,10 @@ class TestObservable: Observable {
     let eventWithoutParameter: Void? = nil //  { get { return nil } set {} }
     let eventWithIntAndString: (Int, String)? = nil //  { get { return nil } set {} }
     
+}
+
+class AnObserver: Observer {
+    var observedTargets: WeakArray<AnyObject> = []
 }
 
 // MARK: - Tests

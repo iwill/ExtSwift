@@ -14,7 +14,7 @@ Extensions for Swift
 
 ## Requirements
 
-- iOS 10.0+ / macOS X 11.0+ / tvOS 10.0+
+- iOS 9.0+ / tvOS 9.0+ / macOS X 10.11+ / watchOS 2+
 - Xcode 12.0+
 - Swift 5.0+
 
