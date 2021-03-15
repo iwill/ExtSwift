@@ -15,7 +15,7 @@ final class JSONTests: XCTestCase {
     
     func testJSON() {
         
-        let data = Data(#"{"i":1,"d":1.23,"b":true,"s":"4.56","a":[1,2,3,4],"o":{"a":1,"b":2}}"#.utf8)
+        let data = Data(#"{"i":1,"d":1.23,"b":true,"s":"4.56","a":[1,1.23,true,"4.56"],"o":{"a":1,"b":2}}"#.utf8)
         let json = try! JSONSerialization.jsonObject(with: data) as! [String: Any]
         
         ({
@@ -64,7 +64,16 @@ final class JSONTests: XCTestCase {
         
         ({
             let a = json["a", as: [Any].self]
-            XCTAssertEqual(a as! [Int], [1, 2, 3, 4])
+            XCTAssertEqual(try! JSONSerialization.data(withJSONObject: a!),
+                           try! JSONSerialization.data(withJSONObject: [1, 1.23, true, "4.56"]))
+            let i = a![try: 0, as: Int.self]
+            XCTAssertEqual(i, 1)
+            let d = a![try: 1, as: Double.self]
+            XCTAssertEqual(d, 1.23)
+            let b = a![try: 2, as: Bool.self]
+            XCTAssertEqual(b, true)
+            let s = a![try: 3, as: String.self]
+            XCTAssertEqual(s, "4.56")
         }())
         
         ({
