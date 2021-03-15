@@ -15,13 +15,14 @@ import CoreGraphics
 
 public extension Dictionary where Key == String, Value == Any {
     subscript<T>(_ key: Key, as type: T.Type) -> T? {
-        if let value = self[key] as? T {
+        let any = self[key]
+        if let value = any as? T {
             return value
         }
-        else if let value = self[key] as? NSNumber {
+        else if let value = any as? NSNumber {
             return value.as(type)
         }
-        else if let value = self[key] as? NSString {
+        else if let value = any as? NSString {
             return value.as(type)
         }
         return nil
@@ -46,6 +47,9 @@ public extension Array where Element == Any {
 
 public extension NSNumber {
     func `as`<T>(_ type: T.Type) -> T? {
+        if let value = self as? T {
+            return value
+        }
         switch type {
             case is Double.Type: return doubleValue as? T
             case is Float.Type: return floatValue as? T
@@ -70,6 +74,9 @@ public extension NSNumber {
 }
 public extension NSString {
     func `as`<T>(_ type: T.Type) -> T? {
+        if let value = self as? T {
+            return value
+        }
         switch type {
             case is Double.Type: return doubleValue as? T
             case is Float.Type: return floatValue as? T
