@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name          = "ExtSwift"
-    s.version       = "0.0.11"
+    s.version       = "0.0.12"
     s.summary       = "Extensions for Swift"
     # s.description   = "Extensions for Swift."
     s.homepage      = "https://github.com/iwill/ExtSwift"
