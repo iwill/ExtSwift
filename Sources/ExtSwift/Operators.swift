@@ -33,6 +33,6 @@ precedencegroup FalsyCoalescingPrecedence {
     higherThan: ComparisonPrecedence
 }
 
-infix  operator ??! : FalsyCoalescingPrecedence // a ??! b  >  a.isTruthy ? a : b
+infix  operator ??!: FalsyCoalescingPrecedence // a ??! b  >  a.isTruthy ? a : b
 
 public func     ??! <T>(l: T, r: T) -> T { return !!l ? l : r }

@@ -120,23 +120,23 @@ public extension String {
     mutating func insert(_ newElement: Character, at intIndex: Int) {
         insert(newElement, at: index(from: intIndex))
     }
-    mutating func insert<C>(contentsOf newElements: C, at intIndex: Int) where C : Collection, C.Element == Element {
+    mutating func insert<C>(contentsOf newElements: C, at intIndex: Int) where C: Collection, C.Element == Element {
         insert(contentsOf: newElements, at: index(from: intIndex))
     }
     
-    mutating func replaceSubrange<C>(_ intRange: Range<Int>, with newElements: C) where C : Collection, C.Element == Element {
+    mutating func replaceSubrange<C>(_ intRange: Range<Int>, with newElements: C) where C: Collection, C.Element == Element {
         replaceSubrange(range(from: intRange), with: newElements)
     }
-    mutating func replaceSubrange<C>(_ intRange: ClosedRange<Int>, with newElements: C) where C : Collection, C.Element == Element {
+    mutating func replaceSubrange<C>(_ intRange: ClosedRange<Int>, with newElements: C) where C: Collection, C.Element == Element {
         replaceSubrange(range(from: intRange), with: newElements)
     }
-    mutating func replaceSubrange<C>(_ intRange: PartialRangeUpTo<Int>, with newElements: C) where C : Collection, C.Element == Element {
+    mutating func replaceSubrange<C>(_ intRange: PartialRangeUpTo<Int>, with newElements: C) where C: Collection, C.Element == Element {
         replaceSubrange(range(from: intRange), with: newElements)
     }
-    mutating func replaceSubrange<C>(_ intRange: PartialRangeThrough<Int>, with newElements: C) where C : Collection, C.Element == Element {
+    mutating func replaceSubrange<C>(_ intRange: PartialRangeThrough<Int>, with newElements: C) where C: Collection, C.Element == Element {
         replaceSubrange(range(from: intRange), with: newElements)
     }
-    mutating func replaceSubrange<C>(_ intRange: PartialRangeFrom<Int>, with newElements: C) where C : Collection, C.Element == Element {
+    mutating func replaceSubrange<C>(_ intRange: PartialRangeFrom<Int>, with newElements: C) where C: Collection, C.Element == Element {
         replaceSubrange(range(from: intRange), with: newElements)
     }
     
@@ -149,24 +149,24 @@ public extension String {
     
     // MARK: new string
     
-    func replacingCharacters<T>(in intRange: Range<Int>, with replacement: T) -> String where T : StringProtocol {
+    func replacingCharacters<T>(in intRange: Range<Int>, with replacement: T) -> String where T: StringProtocol {
         return replacingCharacters(in: range(from: intRange), with: replacement)
     }
-    func replacingCharacters<T>(in intRange: ClosedRange<Int>, with replacement: T) -> String where T : StringProtocol {
+    func replacingCharacters<T>(in intRange: ClosedRange<Int>, with replacement: T) -> String where T: StringProtocol {
         return replacingCharacters(in: range(from: intRange), with: replacement)
     }
-    func replacingCharacters<T>(in intRange: PartialRangeUpTo<Int>, with replacement: T) -> String where T : StringProtocol {
+    func replacingCharacters<T>(in intRange: PartialRangeUpTo<Int>, with replacement: T) -> String where T: StringProtocol {
         return replacingCharacters(in: range(from: intRange), with: replacement)
     }
-    func replacingCharacters<T>(in intRange: PartialRangeThrough<Int>, with replacement: T) -> String where T : StringProtocol {
+    func replacingCharacters<T>(in intRange: PartialRangeThrough<Int>, with replacement: T) -> String where T: StringProtocol {
         return replacingCharacters(in: range(from: intRange), with: replacement)
     }
-    func replacingCharacters<T>(in intRange: PartialRangeFrom<Int>, with replacement: T) -> String where T : StringProtocol {
+    func replacingCharacters<T>(in intRange: PartialRangeFrom<Int>, with replacement: T) -> String where T: StringProtocol {
         return replacingCharacters(in: range(from: intRange), with: replacement)
     }
     
     // only `Range<Int>?`
-    func replacingOccurrences<Target, Replacement>(of target: Target, with replacement: Replacement, options: CompareOptions = [], range intRange: Range<Int>? = nil) -> String where Target : StringProtocol, Replacement : StringProtocol {
+    func replacingOccurrences<Target, Replacement>(of target: Target, with replacement: Replacement, options: CompareOptions = [], range intRange: Range<Int>? = nil) -> String where Target: StringProtocol, Replacement: StringProtocol {
         return replacingOccurrences(of: target, with: replacement, options: options, range: intRange.map { range(from: $0) })
     }
     

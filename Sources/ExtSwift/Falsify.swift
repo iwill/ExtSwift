@@ -45,7 +45,7 @@ extension Float  : Falsifiable { public var isFalsy: Bool { return self == 0.0 }
 extension Float80: Falsifiable { public var isFalsy: Bool { return self == 0.0 } }
 #endif
 
-// NO: extension String : Falsifiable { public var isFalsy: Bool { return !isEmpty } }
+// NO: extension String    : Falsifiable { public var isFalsy: Bool { return !isEmpty } }
 // NO: extension Array<Any>: Falsifiable { public var isFalsy: Bool { return !isEmpty } }
 
 extension Optional: Falsifiable {
