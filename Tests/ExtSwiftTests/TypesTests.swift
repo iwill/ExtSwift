@@ -32,6 +32,7 @@ private class Sub: Sup {
 final class TypesTests: XCTestCase {
     
     func testBuiltinTypesComparing() {
+        
         let any: Any = 1
         XCTAssertTrue(any is Int)
         
@@ -44,6 +45,7 @@ final class TypesTests: XCTestCase {
     }
     
     func testTypesComparingWithGenericTypes() {
+        
         let s1 = S(), s2 = S()
         let sup = Sup(i: 1)
         let sub = Sub(i: 1)
@@ -71,6 +73,7 @@ final class TypesTests: XCTestCase {
     }
     
     func testTypesComparingWithAnyTypes() {
+        
         let a: Any = S(), b: Any = S()
         let sup: Any = Sup(i: 1)
         let sub: Any = Sub(i: 1)
@@ -91,10 +94,40 @@ final class TypesTests: XCTestCase {
         XCTAssertTrue(type(of: sub, isSubclassOfTypeOf: sup))
     }
     
+    func testOptional() {
+        
+        let i: Int = 1, j: Int? = 1
+        
+        func isValueOptional<T>(value: T) -> Bool {
+            return isOptional(value)
+        }
+        func isTypeOptional<T>(value: T) -> Bool {
+            return isOptional(T.self)
+        }
+        
+        XCTAssertFalse(isValueOptional(value: i))
+        XCTAssertTrue(isValueOptional(value: j))
+        XCTAssertFalse(isTypeOptional(value: i))
+        XCTAssertTrue(isTypeOptional(value: j))
+        
+        func wrappedTypeOfValue<T>(value: T) -> Any.Type {
+            return (value as? OptionalProtocol)?.wrappedType ?? T.self
+        }
+        func wrappedTypeOfType<T>(value: T) -> Any.Type {
+            return (T.self as? OptionalProtocol.Type)?.wrappedType ?? T.self
+        }
+        
+        XCTAssertTrue(wrappedTypeOfValue(value: i) is Int.Type)
+        XCTAssertTrue(wrappedTypeOfValue(value: j) is Int.Type)
+        XCTAssertTrue(wrappedTypeOfType(value: i) is Int.Type)
+        XCTAssertTrue(wrappedTypeOfType(value: j) is Int.Type)
+    }
+    
     static var allTests = [
         ("testBuiltinTypesComparing", testBuiltinTypesComparing),
         ("testTypesComparingWithGenericTypes", testTypesComparingWithGenericTypes),
         ("testTypesComparingWithAnyTypes", testTypesComparingWithAnyTypes),
+        ("testOptional", testOptional),
     ]
     
 }

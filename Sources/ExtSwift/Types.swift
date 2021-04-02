@@ -44,3 +44,20 @@ public func type(of a: Any, isEqualToTypeOf b: Any) -> Bool {
 public func type(of a: Any, isSubclassOfTypeOf b: Any) -> Bool {
     return !type(of: a, isEqualToTypeOf: b) && whether(a, isOfTypeOf: b)
 }
+
+/// Check whether value/type is Optional
+
+public protocol OptionalProtocol {
+    static var wrappedType: Any.Type { get }
+    var wrappedType: Any.Type { get }
+}
+extension Optional: OptionalProtocol {
+    public static var wrappedType: Any.Type { Wrapped.self } // `(Type.self as? OptionalProtocol.Type).wrappedType`
+    public var wrappedType: Any.Type { Wrapped.self } // `(value as? OptionalProtocol).wrappedType`
+}
+public func isOptional<T>(_ type: T.Type) -> Bool {
+    return type is OptionalProtocol.Type
+}
+public func isOptional<T>(_ value: T) -> Bool {
+    return value is OptionalProtocol
+}
