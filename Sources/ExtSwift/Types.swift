@@ -66,8 +66,8 @@ public func isOptional<T>(_ value: T) -> Bool {
 }
 
 public func wrappedType<T>(ifOptional type: T.Type) -> Any.Type? {
-    return (type as? OptionalProtocol.Type).wrappedType
+    return (type as? OptionalProtocol.Type)?.wrappedType
 }
 public func wrappedType<T>(ifOptional value: T) -> Any.Type? {
-    return (value as? OptionalProtocol).wrappedType
+    return (value as? OptionalProtocol)?.wrappedType
 }

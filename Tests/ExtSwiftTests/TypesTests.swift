@@ -111,10 +111,10 @@ final class TypesTests: XCTestCase {
         XCTAssertTrue(isTypeOptional(value: j))
         
         func wrappedTypeOfValue<T>(value: T) -> Any.Type {
-            return (value as? OptionalProtocol)?.wrappedType ?? T.self
+            return wrappedType(ifOptional: value) ?? T.self
         }
         func wrappedTypeOfType<T>(value: T) -> Any.Type {
-            return (T.self as? OptionalProtocol.Type)?.wrappedType ?? T.self
+            return wrappedType(ifOptional: T.self) ?? T.self
         }
         
         XCTAssertTrue(wrappedTypeOfValue(value: i) is Int.Type)
