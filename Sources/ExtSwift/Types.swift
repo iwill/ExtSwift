@@ -45,19 +45,29 @@ public func type(of a: Any, isSubclassOfTypeOf b: Any) -> Bool {
     return !type(of: a, isEqualToTypeOf: b) && whether(a, isOfTypeOf: b)
 }
 
-/// Check whether value/type is Optional
+/// Check whether value/type is Optional, get Wrapped Type
+/// - seealso: https://stackoverflow.com/a/32781143/456536
 
-public protocol OptionalProtocol {
+// !!!: MUST be `private`
+fileprivate protocol OptionalProtocol {
     static var wrappedType: Any.Type { get }
     var wrappedType: Any.Type { get }
 }
 extension Optional: OptionalProtocol {
-    public static var wrappedType: Any.Type { Wrapped.self } // `(Type.self as? OptionalProtocol.Type).wrappedType`
-    public var wrappedType: Any.Type { Wrapped.self } // `(value as? OptionalProtocol).wrappedType`
+    static var wrappedType: Any.Type { Wrapped.self }
+    var wrappedType: Any.Type { Wrapped.self }
 }
+
 public func isOptional<T>(_ type: T.Type) -> Bool {
     return type is OptionalProtocol.Type
 }
 public func isOptional<T>(_ value: T) -> Bool {
     return value is OptionalProtocol
+}
+
+public func wrappedType<T>(ifOptional type: T.Type) -> Any.Type? {
+    return (type as? OptionalProtocol.Type).wrappedType
+}
+public func wrappedType<T>(ifOptional value: T) -> Any.Type? {
+    return (value as? OptionalProtocol).wrappedType
 }
