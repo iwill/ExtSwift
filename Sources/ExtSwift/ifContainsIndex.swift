@@ -1,5 +1,5 @@
 //
-//  TryIndex.swift
+//  ifContainsIndex.swift
 //  ExtSwift
 //
 //  Created by Mr. Ming on 2021-01-12.
@@ -11,26 +11,31 @@ import Foundation
 /// - seealso:
 /// [Say Goodbye to "Index out of range" - Swift](https://medium.com/flawless-app-stories/say-goodbye-to-index-out-of-range-swift-eca7c4c7b6ca)
 /// [SwiftKit](https://github.com/wendyliga/SwiftKit)
-public extension Collection { // where Indices.Iterator.Element == Index
-    subscript(try index: Index) -> Iterator.Element? {
-        return (startIndex <= index && index < endIndex) ? self[index] : nil
+public extension Collection {
+    subscript(ifContains index: Index) -> Iterator.Element? {
+        guard indices.contains(index) else { return nil }
+        return self[index]
     }
 }
 
+/* avoid this:
+ *  var array = [0, 1, 2]
+ *  array[ifContains: 999] = 999 // NO warning, NO error and NO effect
 public extension Array {
-    subscript(try index: Index) -> Iterator.Element? {
+    subscript(ifContains index: Index) -> Iterator.Element? {
         get {
-            guard startIndex <= index && index < endIndex else { return nil }
+            guard indices.contains(index) else { return nil }
             return self[index]
         }
         set {
-            guard startIndex <= index && index <= endIndex else { return }
             if let newValue = newValue {
+                guard indices.contains(index) || index == endIndex else { return }
                 self[index] = newValue
             }
             else {
+                guard indices.contains(index) else { return }
                 remove(at: index)
             }
         }
     }
-}
+} */
