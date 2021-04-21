@@ -8,10 +8,6 @@
 
 #if os(iOS) || os(tvOS)
 import UIKit
-#else
-import AppKit
-public typealias UIColor = NSColor
-#endif
 
 // - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
 infix operator |: AdditionPrecedence
@@ -24,3 +20,5 @@ public extension UIColor {
         }
     }
 }
+
+#endif
