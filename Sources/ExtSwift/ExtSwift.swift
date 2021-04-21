@@ -10,7 +10,7 @@ struct ExtSwift {
     var text = "Hello, ExtSwift!"
 }
 
-func mutate<T>(_ value: T, mutate: (inout T) -> Void) -> T {
+public func mutating<T>(_ value: T, mutate: (inout T) -> Void) -> T {
     var value = value
     mutate(&value)
     return value
