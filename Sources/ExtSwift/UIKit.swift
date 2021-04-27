@@ -35,14 +35,14 @@ public extension UIColor {
 /// - seealso: [solution](https://stackoverflow.com/a/42356615/456536)
 /// - seealso: [issue](https://bugs.swift.org/browse/SR-10121)
 /// - seealso: [pr](https://github.com/apple/swift/pull/23430)
-protocol Makable: UIView {}
-extension Makable {
+public protocol Makable: UIView {}
+public extension Makable {
     init(make: (Self) -> Void) {
         self.init()
         make(self)
     }
     @discardableResult
-    public func make(_ make: (Self) -> Void) -> Self {
+    func make(_ make: (Self) -> Void) -> Self {
         make(self)
         return self
     }
