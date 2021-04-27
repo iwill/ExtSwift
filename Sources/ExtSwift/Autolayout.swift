@@ -9,10 +9,9 @@
 #if os(iOS) || os(tvOS) || os(macOS)
 
 import Foundation
-
 #if os(iOS) || os(tvOS)
 import UIKit
-#else
+#elseif os(macOS)
 import AppKit
 public typealias UIResponder = NSResponder
 public typealias UIView = NSView
