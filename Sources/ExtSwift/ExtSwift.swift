@@ -10,6 +10,26 @@ struct ExtSwift {
     var text = "Hello, ExtSwift!"
 }
 
+public protocol Mutable {
+    @discardableResult
+    mutating func mutate(mutate: (inout Self) -> Void) -> Self
+    @discardableResult
+    func mutating(mutate: (inout Self) -> Void) -> Self
+}
+public extension Mutable {
+    @discardableResult
+    mutating func mutate(mutate: (inout Self) -> Void) -> Self {
+        mutate(&self)
+        return self
+    }
+    @discardableResult
+    func mutating(mutate: (inout Self) -> Void) -> Self {
+        var value = self
+        mutate(&value)
+        return value
+    }
+}
+
 @discardableResult
 public func mutating<T>(_ value: T, mutate: (inout T) -> Void) -> T {
     var value = value
