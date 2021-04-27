@@ -6,9 +6,9 @@
 //  Copyright (c) 2021 Mr. Ming <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if canImport(UIKit)
+#if os(iOS) || os(tvOS)
 import UIKit
-#elseif canImport(AppKit)
+#elseif os(macOS)
 import AppKit
 public typealias UIScrollView = NSScrollView
 public typealias UIViewController = NSViewController
@@ -18,7 +18,7 @@ public class UILayoutSupport {}
 
 // MARK: -
 
-#if canImport(UIKit) || canImport(AppKit)
+#if os(iOS) || os(tvOS) || os(macOS)
 
 extension UIResponder: ESNameSpace {}
 
@@ -35,7 +35,7 @@ public extension ES where Base: UIView {
 
 // MARK: -
 
-#if canImport(UIKit)
+#if os(iOS) || os(tvOS)
 
 public extension ES where Base: UIScrollView {
     var contentLayoutGuide: UILayoutGuide? {
