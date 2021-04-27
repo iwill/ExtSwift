@@ -1,25 +1,24 @@
 //
-//  Autolayout.swift
+//  UIKit+Autolayout.swift
 //  ExtSwift
 //
 //  Created by Mr. Ming on 2020-12-29.
 //  Copyright (c) 2021 Mr. Ming <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if os(iOS) || os(tvOS) || os(macOS)
-
-import Foundation
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 import UIKit
-#elseif os(macOS)
+#elseif canImport(AppKit)
 import AppKit
-public typealias UIResponder = NSResponder
-public typealias UIView = NSView
 public typealias UIScrollView = NSScrollView
 public typealias UIViewController = NSViewController
 public typealias UILayoutGuide = NSLayoutGuide
 public class UILayoutSupport {}
 #endif
+
+// MARK: -
+
+#if canImport(UIKit) || canImport(AppKit)
 
 extension UIResponder: ESNameSpace {}
 
@@ -34,7 +33,9 @@ public extension ES where Base: UIView {
 
 #endif
 
-#if os(iOS) || os(tvOS)
+// MARK: -
+
+#if canImport(UIKit)
 
 public extension ES where Base: UIScrollView {
     var contentLayoutGuide: UILayoutGuide? {
