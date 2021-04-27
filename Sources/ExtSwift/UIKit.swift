@@ -16,7 +16,7 @@ public typealias UIView = NSView
 
 // MARK: UIColor
 
-#if canImport(UIKit) || canImport(AppKit)
+#if canImport(UIKit)
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
 infix operator |: AdditionPrecedence
 public extension UIColor {

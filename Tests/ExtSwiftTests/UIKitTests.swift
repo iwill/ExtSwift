@@ -10,8 +10,6 @@ import XCTest
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
 #endif
 
 @testable
@@ -20,7 +18,7 @@ import ExtSwift
 final class UIKitTests: XCTestCase {
     
     func testMakable() {
-        #if canImport(UIKit) || canImport(AppKit)
+        #if canImport(UIKit)
         let view = UIView { (view) in
             view.backgroundColor = .white
         }
