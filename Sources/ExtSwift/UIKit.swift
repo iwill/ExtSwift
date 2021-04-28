@@ -29,23 +29,18 @@ public extension UIColor {
 }
 #endif
 
-// MARK: Makable
+// MARK: Mutable
 
 #if os(iOS) || os(tvOS) || os(macOS)
 /// - seealso: [solution](https://stackoverflow.com/a/42356615/456536)
 /// - seealso: [issue](https://bugs.swift.org/browse/SR-10121)
 /// - seealso: [pr](https://github.com/apple/swift/pull/23430)
-public protocol Makable: UIView {}
-public extension Makable {
-    init(make: (Self) -> Void) {
+public protocol MutableView: UIView, Mutable {}
+public extension MutableView {
+    init(mutate: (Self) -> Void) {
         self.init()
-        make(self)
-    }
-    @discardableResult
-    func make(_ make: (Self) -> Void) -> Self {
-        make(self)
-        return self
+        mutate(self)
     }
 }
-extension UIView: Makable {}
+extension UIView: MutableView {}
 #endif

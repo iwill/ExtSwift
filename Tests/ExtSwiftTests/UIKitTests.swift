@@ -22,8 +22,14 @@ final class UIKitTests: XCTestCase {
         let view = UIView { (view) in
             view.backgroundColor = .white
         }
-        let label = UILabel().make { (label) in
-            label.text = "test"
+        .mutate { (view) in
+            view.backgroundColor = .black
+        }
+        let label = UILabel { (label) in
+            label.text = "init"
+        }
+        .mutate { (label) in
+            label.text = "mutate"
         }
         view.addSubview(label)
         XCTAssertEqual(label.superview, view)

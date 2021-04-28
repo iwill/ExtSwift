@@ -10,27 +10,27 @@ struct ExtSwift {
     var text = "Hello, ExtSwift!"
 }
 
-public protocol Mutable {
-    @discardableResult
-    mutating func mutate(mutate: (inout Self) -> Void) -> Self
-    @discardableResult
-    func mutating(mutate: (inout Self) -> Void) -> Self
-}
+public protocol Mutable {}
 public extension Mutable {
     @discardableResult
     mutating func mutate(mutate: (inout Self) -> Void) -> Self {
         mutate(&self)
         return self
     }
-    @discardableResult
     func mutating(mutate: (inout Self) -> Void) -> Self {
         var value = self
         mutate(&value)
         return value
     }
 }
+public extension Mutable where Self: AnyObject {
+    @discardableResult
+    func mutate(mutate: (Self) -> Void) -> Self {
+        mutate(self)
+        return self
+    }
+}
 
-@discardableResult
 public func mutating<T>(_ value: T, mutate: (inout T) -> Void) -> T {
     var value = value
     mutate(&value)

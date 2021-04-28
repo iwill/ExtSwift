@@ -49,7 +49,7 @@ public func type(of a: Any, isSubclassOfTypeOf b: Any) -> Bool {
 /// - seealso: https://stackoverflow.com/a/32781143/456536
 
 // !!!: MUST be `private`
-fileprivate protocol OptionalProtocol {
+private protocol OptionalProtocol {
     static var wrappedType: Any.Type { get }
     var wrappedType: Any.Type { get }
 }
