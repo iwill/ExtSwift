@@ -10,29 +10,57 @@ struct ExtSwift {
     var text = "Hello, ExtSwift!"
 }
 
+// MARK: value-type
+
 public protocol Mutable {}
 public extension Mutable {
     @discardableResult
-    mutating func mutate(mutate: (inout Self) -> Void) -> Self {
+    mutating func mutate(_ mutate: (inout Self) -> Void) -> Self {
         mutate(&self)
         return self
     }
-    func mutating(mutate: (inout Self) -> Void) -> Self {
+    func mutating(_ mutate: (inout Self) -> Void) -> Self {
         var value = self
         mutate(&value)
         return value
     }
 }
+
+public func mutating<T>(_ value: T, _ mutate: (inout T) -> Void) -> T {
+    var value = value
+    mutate(&value)
+    return value
+}
+
+// MARK: reference-type
+
 public extension Mutable where Self: AnyObject {
     @discardableResult
-    func mutate(mutate: (Self) -> Void) -> Self {
+    func mutate(_ mutate: (Self) -> Void) -> Self {
         mutate(self)
         return self
     }
 }
 
-public func mutating<T>(_ value: T, mutate: (inout T) -> Void) -> T {
-    var value = value
-    mutate(&value)
+public func mutate<T: AnyObject>(_ value: T, _ mutate: (T) -> Void) -> T {
+    mutate(value)
     return value
+}
+
+// MARK: deprecated - prevent value-type methods being used for reference-type
+
+public extension Mutable where Self: AnyObject {
+    @available(*, deprecated, message: "This method is only used for value type!")
+    mutating func mutate(_ mutate: (inout Self) -> Void) -> Self {
+        fatalError("This method is only used for value type!")
+    }
+    @available(*, deprecated, message: "This method is only used for value type!")
+    func mutating(_ mutate: (inout Self) -> Void) -> Self {
+        fatalError("This method is only used for value type!")
+    }
+}
+
+@available(*, deprecated, message: "This method is only used for value type!")
+public func mutating<T: AnyObject>(_ value: T, _ mutate: (inout T) -> Void) -> T {
+    fatalError("This method is only used for value type!")
 }
