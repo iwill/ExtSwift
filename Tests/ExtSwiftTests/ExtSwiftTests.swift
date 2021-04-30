@@ -18,11 +18,11 @@ struct Test: Mutable {
 final class ExtSwiftTests: XCTestCase {
     
     func testMutable() {
-        var test = Test(i: 0).mutating { (t) in
+        var test = Test(i: 0).mutating { t in
             t.i = 1
         }
         XCTAssertEqual(test.i, 1)
-        test.mutate { (t) in
+        test.mutate { t in
             t.i = 2
         }
         XCTAssertEqual(test.i, 2)

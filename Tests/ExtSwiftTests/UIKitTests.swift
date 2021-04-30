@@ -19,16 +19,16 @@ final class UIKitTests: XCTestCase {
     
     func testMakable() {
         #if os(iOS) || os(tvOS)
-        let view = UIView { (view) in
+        let view = UIView { view in
             view.backgroundColor = .white
         }
-        .mutate { (view) in
+        .mutate { view in
             view.backgroundColor = .black
         }
-        let label = UILabel { (label) in
+        let label = UILabel { label in
             label.text = "init"
         }
-        .mutate { (label) in
+        .mutate { label in
             label.text = "mutate"
         }
         view.addSubview(label)
