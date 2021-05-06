@@ -12,6 +12,7 @@ import UIKit
 import AppKit
 public typealias UIResponder = NSResponder
 public typealias UIView = NSView
+public typealias UIEdgeInsets = NSEdgeInsets
 #endif
 
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
@@ -34,6 +35,19 @@ public extension UIColor {
         return UIColor { (traitCollection) -> UIColor in
             return traitCollection.userInterfaceStyle == .dark ? dark : light
         }
+    }
+}
+#endif
+
+// MARK: UIEdgeInsets
+
+#if os(iOS) || os(tvOS) || os(macOS)
+public extension UIEdgeInsets {
+    init(top: Double, left: Double, bottom: Double, right: Double) {
+        self.init(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
+    }
+    init(top: Int, left: Int, bottom: Int, right: Int) {
+        self.init(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
     }
 }
 #endif
