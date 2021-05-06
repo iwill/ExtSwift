@@ -41,15 +41,15 @@ public extension UIColor {
 // MARK: Mutable
 
 #if os(iOS) || os(tvOS) || os(macOS)
-/// - seealso: [solution](https://stackoverflow.com/a/42356615/456536)
-/// - seealso: [issue](https://bugs.swift.org/browse/SR-10121)
-/// - seealso: [pr](https://github.com/apple/swift/pull/23430)
-public protocol MutableView: UIView, Mutable {}
-public extension MutableView {
+
+public protocol ResponderMutable: UIResponder, Mutable {}
+extension UIResponder: ResponderMutable {}
+
+public extension ResponderMutable where Self: UIView {
     init(mutate: (Self) -> Void) {
         self.init()
         mutate(self)
     }
 }
-extension UIView: MutableView {}
+
 #endif
