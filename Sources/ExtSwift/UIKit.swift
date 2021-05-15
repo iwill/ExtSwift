@@ -32,7 +32,7 @@ public extension String {
 public extension UIColor {
     static func | (light: UIColor, dark: UIColor) -> UIColor {
         guard #available(iOS 13.0, tvOS 13.0, *) else { return light }
-        return UIColor { (traitCollection) -> UIColor in
+        return UIColor { traitCollection -> UIColor in
             return traitCollection.userInterfaceStyle == .dark ? dark : light
         }
     }

@@ -139,7 +139,7 @@ public extension Observable where Target == Self {
 public extension Observable where Target == Self {
     @discardableResult
     func observeEvent<Value>(with keyPath: KeyPath<Target, Value>, closure: @escaping ObservingEventClosure<Target>) -> Observation<Target> {
-        return kvo(keyPath: keyPath, options: .didSet) { (value, oldValue, change) -> ObservingState in
+        return kvo(keyPath: keyPath, options: .didSet) { value, oldValue, change -> ObservingState in
             return closure(value, change)
         }
     }
