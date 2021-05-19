@@ -44,19 +44,19 @@ import Foundation
 ///     ✅ (v2..<v3).contains(v) // let v2 = 2 as SemanticVersion, v3 = 3 as SemanticVersion
 ///     ```
 
-struct SemanticVersion: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
+public struct SemanticVersion: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
     
-    var stringLiteral: String
+    public var stringLiteral: String
     
-    init(stringLiteral literal: String) {
+    public init(stringLiteral literal: String) {
         stringLiteral = literal
     }
     
-    init(integerLiteral literal: Int) {
+    public init(integerLiteral literal: Int) {
         stringLiteral = String(literal)
     }
     
-    init(floatLiteral literal: Double) {
+    public init(floatLiteral literal: Double) {
         stringLiteral = String(literal)
     }
 }
@@ -71,26 +71,26 @@ extension SemanticVersion: Comparable {
         return stringLiteral.replacingOccurrences(of: "-", with: "\0") + "\n"
     }
     
-    static func < (a: SemanticVersion, b: SemanticVersion) -> Bool {
+    public static func < (a: SemanticVersion, b: SemanticVersion) -> Bool {
         return a.prepared.compare(b.prepared, options: .numeric) == .orderedAscending
     }
 }
 
 // MARK: EXTENSION
 
-extension String {
+public extension String {
     var semanticVersion: SemanticVersion {
         return SemanticVersion(stringLiteral: self)
     }
 }
 
-extension Int {
+public extension Int {
     var semanticVersion: SemanticVersion {
         return SemanticVersion(integerLiteral: self)
     }
 }
 
-extension Double {
+public extension Double {
     var semanticVersion: SemanticVersion {
         return SemanticVersion(floatLiteral: self)
     }
@@ -98,8 +98,8 @@ extension Double {
 
 // MARK: DEPRECATED
 
-/*
-extension Comparable where Self == SemanticVersion {
+//*
+public extension Comparable where Self == SemanticVersion {
     
     @available(*, deprecated, message: "Use `<` instead.")
     static func <= (a: Self, b: Self) -> Bool {
@@ -112,7 +112,7 @@ extension Comparable where Self == SemanticVersion {
     }
 }
 
-extension SemanticVersion {
+public extension SemanticVersion {
     
     @available(*, deprecated, message: "Use `..<` instead.")
     static func ... (minimum: Self, maximum: Self) -> ClosedRange<Self> {

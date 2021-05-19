@@ -12,7 +12,7 @@ import XCTest
 import UIKit
 #endif
 
-@testable
+// @testable
 import ExtSwift
 
 final class UIKitTests: XCTestCase {

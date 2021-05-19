@@ -16,7 +16,7 @@ import AppKit
 import Foundation
 #endif
 
-@testable
+// @testable
 import ExtSwift
 
 @available(*, deprecated, message: "Suppress warnings.")
