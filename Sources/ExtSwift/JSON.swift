@@ -31,7 +31,7 @@ public extension Dictionary where Key == String, Value == Any {
 
 public extension Array where Element == Any {
     subscript<T>(index: Index, as type: T.Type) -> T? {
-        let any = self[ifContains: index]
+        let any = self[try: index]
         if let value = any as? T {
             return value
         }
