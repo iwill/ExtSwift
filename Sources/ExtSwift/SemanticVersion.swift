@@ -98,7 +98,7 @@ public extension Double {
 
 // MARK: DEPRECATED
 
-//*
+/*
 public extension Comparable where Self == SemanticVersion {
     
     @available(*, deprecated, message: "Use `<` instead.")
