@@ -8,7 +8,13 @@
 
 import XCTest
 
+#if os(iOS) || os(tvOS)
 import UIKit
+#elseif os(macOS)
+import AppKit
+#else
+import Foundation
+#endif
 
 @testable
 import ExtSwift
@@ -41,7 +47,14 @@ final class SemanticVersionTests: XCTestCase {
         
         XCTAssertTrue("2.0.0".semanticVersion   < "2.0.a")
         
+        #if os(iOS) || os(tvOS)
         let systemVersion = UIDevice.current.systemVersion
+        #elseif os(macOS)
+        let osv = ProcessInfo.processInfo.operatingSystemVersion
+        let systemVersion: String = [osv.majorVersion, osv.minorVersion, osv.patchVersion].map { String($0) }.joined(separator: ".")
+        #else
+        let systemVersion = "14.0"
+        #endif
         XCTAssertTrue((systemVersion + "-beta").semanticVersion < systemVersion.semanticVersion)
         
         // test:

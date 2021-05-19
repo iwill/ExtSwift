@@ -13,6 +13,8 @@ import AppKit
 public typealias UIResponder = NSResponder
 public typealias UIView = NSView
 public typealias UIEdgeInsets = NSEdgeInsets
+#else
+import Foundation
 #endif
 
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
