@@ -47,33 +47,60 @@ Pod::Spec.new do |s|
     s.default_subspecs = ["ExtSwift"]
     
     s.subspec "ExtSwift" do |ss|
-        ss.source_files  = "Sources/**/*.swift"
-        ss.exclude_files = [
-            "Sources/**/KVO.swift",
-            "Sources/**/NameSpace.swift",
-            "Sources/**/WeakArray.swift",
-            "Sources/ExtSwift/UIKit/**/*.swift"
-        ]
+        ss.source_files  = "Sources/**/ExtSwift.swift"
         ss.dependency "ExtSwift/KVO"
+        ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/SemanticVersion"
+        ss.dependency "ExtSwift/String+IntIndex"
+        ss.dependency "ExtSwift/tryIndex"
+        ss.dependency "ExtSwift/Types"
         ss.dependency "ExtSwift/WeakArray"
+        ss.dependency "ExtSwift/UIKit"
     end
     
     s.subspec "KVO" do |ss|
-        ss.source_files  = "Sources/**/KVO.swift"
+        ss.source_files  = "Sources/ExtSwift/**/KVO.swift"
         ss.dependency "ExtSwift/WeakArray"
     end
     
-    s.subspec "NameSpace" do |ss|
-        ss.source_files  = "Sources/**/NameSpace.swift"
+    s.subspec "Mutable" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/Mutable.swift"
     end
     
-    s.subspec "WeakArray" do |ss|
-        ss.source_files  = "Sources/**/WeakArray.swift"
+    s.subspec "NameSpace" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/NameSpace.swift"
+    end
+    
+    s.subspec "SemanticVersion" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/SemanticVersion.swift"
+    end
+    
+    s.subspec "String+IntIndex" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/String+IntIndex.swift"
+    end
+    
+    s.subspec "tryIndex" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/tryIndex.swift"
+    end
+    
+    s.subspec "Types" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/Types.swift"
     end
     
     s.subspec "UIKit" do |ss|
         ss.source_files  = "Sources/ExtSwift/UIKit/**/*.swift"
+        ss.dependency "ExtSwift/Mutable"
+        ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/tryIndex"
+    end
+    
+    s.subspec "WeakArray" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/WeakArray.swift"
+    end
+    
+    s.subspec "_All" do |ss|
+        ss.source_files  = "Sources/ExtSwift/unstable/*.swift"
         ss.dependency "ExtSwift/ExtSwift"
     end
     
