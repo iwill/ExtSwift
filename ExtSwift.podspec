@@ -51,7 +51,8 @@ Pod::Spec.new do |s|
         ss.exclude_files = [
             "Sources/**/KVO.swift",
             "Sources/**/NameSpace.swift",
-            "Sources/**/WeakArray.swift"
+            "Sources/**/WeakArray.swift",
+            "Sources/ExtSwift/UIKit/**/*.swift"
         ]
         ss.dependency "ExtSwift/KVO"
         ss.dependency "ExtSwift/NameSpace"
@@ -73,6 +74,7 @@ Pod::Spec.new do |s|
     
     s.subspec "UIKit" do |ss|
         ss.source_files  = "Sources/ExtSwift/UIKit/**/*.swift"
+        ss.dependency "ExtSwift/ExtSwift"
     end
     
 end
