@@ -11,6 +11,8 @@ import Foundation
 import UIKit
 #endif
 
+#if swift(>=4.2)
+
 @resultBuilder
 public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
     public typealias SectionWithItems = (SectionIdentifierType?, [ItemIdentifierType])
@@ -126,5 +128,7 @@ public extension ESTableViewDiffableDataSource {
         apply(snapshot())
     }
 }
+
+#endif
 
 #endif
