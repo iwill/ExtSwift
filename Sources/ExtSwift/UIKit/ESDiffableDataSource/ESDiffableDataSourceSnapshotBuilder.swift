@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 #endif
 
-#if swift(>=4.2)
+#if swift(>=5.4)
 
 @resultBuilder
 public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
