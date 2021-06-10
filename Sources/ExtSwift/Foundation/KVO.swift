@@ -9,6 +9,7 @@
 import Foundation
 
 /// KVO: KeyPath-Value Observing
+// TODO: @propertyWrapper instead of keyPath when set?
 
 // MARK: - Observable
 

@@ -88,6 +88,12 @@ final class SemanticVersionTests: XCTestCase {
         XCTAssertTrue("2.0.0-a".semanticVersion < "2.0.0-b")
         XCTAssertTrue("2.0.0-a".semanticVersion < "2.0.0")
         
+        XCTAssertTrue("2.0.0-a+a".semanticVersion > "2.0.0-a")
+        XCTAssertTrue("2.0.0-a+a".semanticVersion < "2.0.0-b")
+        XCTAssertTrue("2.0.0-a+a".semanticVersion < "2.0.0-b+a")
+        XCTAssertTrue("2.0.0-a+a".semanticVersion < "2.0.0")
+        XCTAssertTrue("2.0.0-a+a".semanticVersion < "2.0.0+a")
+        
         XCTAssertTrue("2.2.99".semanticVersion  <  2.11)
         
         let v1 = 2.0 as SemanticVersion // may be 2, 2.0 or "2.0.0"
