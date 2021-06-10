@@ -71,4 +71,8 @@ Pod::Spec.new do |s|
         ss.source_files  = "Sources/**/WeakArray.swift"
     end
     
+    s.subspec "UIKit" do |ss|
+        ss.source_files  = "Sources/ExtSwift/UIKit/**/*.swift"
+    end
+    
 end
