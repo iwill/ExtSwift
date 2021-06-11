@@ -40,21 +40,21 @@ public extension UITableView {
 
 open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>: NSObject, UITableViewDataSource where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
     
+    public typealias CellProvider = (_ tableView: UITableView, _ indexPath: IndexPath, _ itemIdentifier: ItemIdentifierType) -> UITableViewCell?
     public typealias TitleProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> String?
     public typealias HeaderViewProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> UIView?
-    public typealias CellProvider = (_ tableView: UITableView, _ indexPath: IndexPath, _ itemIdentifier: ItemIdentifierType) -> UITableViewCell?
     
     private let tableView: UITableView
-    private let titleProvider: TitleProvider?
-    private let headerViewProvider: HeaderViewProvider?
     private let cellProvider: CellProvider
+    private let headerTitleProvider: TitleProvider?
+    private let headerViewProvider: HeaderViewProvider?
     private lazy var _snapshot = ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>()
     
-    public init(tableView: UITableView, titleProvider: TitleProvider? = nil, headerViewProvider: HeaderViewProvider? = nil, cellProvider: @escaping CellProvider) {
+    public init(tableView: UITableView, cellProvider: @escaping CellProvider, headerTitleProvider: TitleProvider? = nil, headerViewProvider: HeaderViewProvider? = nil) {
         self.tableView = tableView
-        self.titleProvider = titleProvider
-        self.headerViewProvider = headerViewProvider
         self.cellProvider = cellProvider
+        self.headerTitleProvider = headerTitleProvider
+        self.headerViewProvider = headerViewProvider
         super.init()
         tableView.dataSource = self
     }
@@ -80,7 +80,7 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
-           let title = titleProvider?(tableView, section, sectionIdentifier) {
+           let title = headerTitleProvider?(tableView, section, sectionIdentifier) {
             return title
         }
         return nil
