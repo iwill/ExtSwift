@@ -16,22 +16,18 @@ public extension UITableView {
     
     struct ESCellRegistration<Cell, Item> where Cell: UITableViewCell, Item: Hashable {
         public typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ item: Item) -> Void
-        fileprivate let reuseIdentifier: String
+        fileprivate let reuseIdentifier = UUID().uuidString
         fileprivate let handler: Handler
-        fileprivate init(reuseIdentifier: String, handler: @escaping Handler) {
-            self.reuseIdentifier = reuseIdentifier
+        public init(handler: @escaping Handler) {
             self.handler = handler
         }
     }
     
-    func cellRegistration<Cell, Item>(cellClass: AnyClass?, handler: @escaping ESCellRegistration<Cell, Item>.Handler) -> ESCellRegistration<Cell, Item> {
-        let identifier = UUID().uuidString
-        register(cellClass, forCellReuseIdentifier: identifier)
-        return ESCellRegistration(reuseIdentifier: identifier, handler: handler)
-    }
-    
     func dequeueConfiguredReusableCell<Cell, Item>(using registration: ESCellRegistration<Cell, Item>, for indexPath: IndexPath, item: Item?) -> Cell where Cell: UITableViewCell {
         guard let item = item else { return Cell() }
+        if dequeueReusableCell(withIdentifier: registration.reuseIdentifier) == nil {
+            register(Cell.self, forCellReuseIdentifier: registration.reuseIdentifier)
+        }
         let cell = dequeueReusableCell(withIdentifier: registration.reuseIdentifier, for: indexPath) as! Cell
         registration.handler(cell, indexPath, item)
         return cell
@@ -41,20 +37,24 @@ public extension UITableView {
 open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>: NSObject, UITableViewDataSource where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
     
     public typealias CellProvider = (_ tableView: UITableView, _ indexPath: IndexPath, _ itemIdentifier: ItemIdentifierType) -> UITableViewCell?
-    public typealias TitleProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> String?
-    public typealias HeaderViewProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> UIView?
+    public typealias StringProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> String?
+    public typealias ViewProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> UIView?
     
     private let tableView: UITableView
     private let cellProvider: CellProvider
-    private let headerTitleProvider: TitleProvider?
-    private let headerViewProvider: HeaderViewProvider?
+    private let headerTitleProvider: StringProvider?
+    private let headerViewProvider: ViewProvider?
+    private let footerTitleProvider: StringProvider?
+    private let footerViewProvider: ViewProvider?
     private lazy var _snapshot = ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>()
     
-    public init(tableView: UITableView, cellProvider: @escaping CellProvider, headerTitleProvider: TitleProvider? = nil, headerViewProvider: HeaderViewProvider? = nil) {
+    public init(tableView: UITableView, cellProvider: @escaping CellProvider, headerTitleProvider: StringProvider? = nil, headerViewProvider: ViewProvider? = nil, footerTitleProvider: StringProvider? = nil, footerViewProvider: ViewProvider? = nil) {
         self.tableView = tableView
         self.cellProvider = cellProvider
         self.headerTitleProvider = headerTitleProvider
         self.headerViewProvider = headerViewProvider
+        self.footerTitleProvider = footerTitleProvider
+        self.footerViewProvider = footerViewProvider
         super.init()
         tableView.dataSource = self
     }
@@ -78,6 +78,15 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
         return _snapshot.numberOfItems(inSection: _snapshot.sectionIdentifiers[section])
     }
     
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: indexPath.section],
+           let itemIdentifier = _snapshot.allItemIdentifiers[sectionIdentifier]![try: indexPath.row],
+           let cell = cellProvider(tableView, indexPath, itemIdentifier) {
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
            let title = headerTitleProvider?(tableView, section, sectionIdentifier) {
@@ -86,13 +95,28 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
         return nil
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: indexPath.section],
-           let itemIdentifier = _snapshot.allItemIdentifiers[sectionIdentifier]![try: indexPath.row],
-           let cell = cellProvider(tableView, indexPath, itemIdentifier) {
-            return cell
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+           let view = headerViewProvider?(tableView, section, sectionIdentifier) {
+            return view
         }
-        return UITableViewCell()
+        return nil
+    }
+    
+    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+           let title = footerTitleProvider?(tableView, section, sectionIdentifier) {
+            return title
+        }
+        return nil
+    }
+    
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+           let view = footerViewProvider?(tableView, section, sectionIdentifier) {
+            return view
+        }
+        return nil
     }
 }
 
