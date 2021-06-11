@@ -99,11 +99,11 @@ open class ESCollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentif
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return _snapshot.numberOfItems(inSection: _snapshot.sectionIdentifiers[section])
+        return _snapshot.numberOfItems(in: section)
     }
     
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: indexPath.section],
+        if let sectionIdentifier = _snapshot.sectionIdentifier(in: indexPath.section),
            let supplementary = supplementaryViewProvider?(collectionView, elementKind, indexPath, sectionIdentifier) {
             return supplementary
         }
@@ -111,8 +111,7 @@ open class ESCollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentif
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: indexPath.section],
-           let itemIdentifier = _snapshot.allItemIdentifiers[sectionIdentifier]![try: indexPath.row],
+        if let itemIdentifier = _snapshot.itemIdentifier(at: indexPath),
            let cell = cellProvider(collectionView, indexPath, itemIdentifier) {
             return cell
         }

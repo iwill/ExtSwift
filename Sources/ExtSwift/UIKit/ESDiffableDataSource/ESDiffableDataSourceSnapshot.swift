@@ -162,6 +162,10 @@ public extension ESDiffableDataSourceSnapshot {
         return sectionIdentifiers[try: section]
     }
     
+    public func numberOfItems(in section: Int) -> Int {
+        return itemIdentifiers(in: section).count
+    }
+    
     func itemIdentifiers(in section: Int) -> [ItemIdentifierType] {
         guard let section = sectionIdentifiers[try: section] else {
             return []
