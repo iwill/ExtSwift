@@ -162,7 +162,7 @@ public extension ESDiffableDataSourceSnapshot {
         return sectionIdentifiers[try: section]
     }
     
-    public func numberOfItems(in section: Int) -> Int {
+    func numberOfItems(in section: Int) -> Int {
         return itemIdentifiers(in: section).count
     }
     
@@ -177,7 +177,7 @@ public extension ESDiffableDataSourceSnapshot {
         guard let section = sectionIdentifiers[try: indexPath.section] else {
             return nil
         }
-        return itemIdentifiers(inSection: section)[try: indexPath.row]
+        return itemIdentifiers(inSection: section)[try: indexPath.item]
     }
 }
 
