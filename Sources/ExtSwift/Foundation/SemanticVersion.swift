@@ -46,18 +46,18 @@ import Foundation
 
 public struct SemanticVersion: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
     
-    public var stringLiteral: String
+    public var stringValue: String
     
     public init(stringLiteral literal: String) {
-        stringLiteral = literal
+        stringValue = literal
     }
     
     public init(integerLiteral literal: Int) {
-        stringLiteral = String(literal)
+        stringValue = String(literal)
     }
     
     public init(floatLiteral literal: Double) {
-        stringLiteral = String(literal)
+        stringValue = String(literal)
     }
 }
 
@@ -68,7 +68,7 @@ extension SemanticVersion: Comparable {
         //  Dec   |   0   9  10   27  32  43  45  46  48  57  65  97
         //                                     ^ replace `-` with `\0`, which less than `\n`
         //                    ^ append `\n` which less than `+`, `.`, numbers and letters
-        return stringLiteral.replacingOccurrences(of: "-", with: "\0") + "\n"
+        return stringValue.replacingOccurrences(of: "-", with: "\0") + "\n"
     }
     
     public static func < (a: SemanticVersion, b: SemanticVersion) -> Bool {

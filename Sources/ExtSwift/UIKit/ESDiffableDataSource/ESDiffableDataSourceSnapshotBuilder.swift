@@ -118,6 +118,27 @@ public extension ESDiffableDataSourceSnapshotBuilder {
 
 // MARK: -
 
+public struct ESSection: Hashable, ExpressibleByIntegerLiteral {
+    public let integerValue: Int
+    public init(integerLiteral literal: Int) {
+        integerValue = literal
+    }
+}
+
+public struct ESItem: Hashable, ExpressibleByIntegerLiteral {
+    public let integerValue: Int
+    public init(integerLiteral literal: Int) {
+        integerValue = literal
+    }
+}
+
+public struct ESRow: Hashable, ExpressibleByIntegerLiteral {
+    public let integerValue: Int
+    public init(integerLiteral literal: Int) {
+        integerValue = literal
+    }
+}
+
 #if os(iOS) || os(tvOS)
 
 public extension ESCollectionViewDiffableDataSource {
