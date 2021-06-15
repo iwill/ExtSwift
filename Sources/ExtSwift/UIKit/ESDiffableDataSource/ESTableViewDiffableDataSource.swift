@@ -16,9 +16,10 @@ public extension UITableView {
     
     struct ESCellRegistration<Cell, Item> where Cell: UITableViewCell, Item: Hashable {
         public typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ item: Item) -> Void
-        fileprivate let reuseIdentifier = UUID().uuidString
+        fileprivate let reuseIdentifier: String
         fileprivate let handler: Handler
-        public init(handler: @escaping Handler) {
+        public init(_reuseIdentifier: String = UUID().uuidString, handler: @escaping Handler) {
+            self.reuseIdentifier = _reuseIdentifier
             self.handler = handler
         }
     }

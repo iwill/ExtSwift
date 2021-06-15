@@ -16,9 +16,10 @@ public extension UICollectionView {
     
     struct ESCellRegistration<Cell, Item> where Cell: UICollectionViewCell, Item: Hashable {
         public typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ item: Item) -> Void
-        fileprivate let reuseIdentifier = UUID().uuidString
+        fileprivate let reuseIdentifier: String
         fileprivate let handler: Handler
-        public init(handler: @escaping Handler) {
+        public init(_reuseIdentifier: String = UUID().uuidString, handler: @escaping Handler) {
+            self.reuseIdentifier = _reuseIdentifier
             self.handler = handler
         }
     }
@@ -37,10 +38,11 @@ public extension UICollectionView {
     struct ESSupplementaryRegistration<Supplementary, Section> where Supplementary: UICollectionReusableView, Section: Hashable {
         public typealias Handler = (_ supplementary: Supplementary, _ elementKind: String, _ indexPath: IndexPath, _ section: Section) -> Void
         fileprivate let elementKind: String
-        fileprivate let reuseIdentifier = UUID().uuidString
+        fileprivate let reuseIdentifier: String
         fileprivate let handler: Handler
-        public init(elementKind: String, handler: @escaping Handler) {
+        public init(elementKind: String, _reuseIdentifier: String = UUID().uuidString, handler: @escaping Handler) {
             self.elementKind = elementKind
+            self.reuseIdentifier = _reuseIdentifier
             self.handler = handler
         }
     }
