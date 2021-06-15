@@ -51,7 +51,7 @@ public extension ESDiffableDataSourceSnapshotBuilder {
     
     static func buildExpression(_ expression: SectionIdentifierType) -> [SectionWithItems] {
         if expression is [SectionIdentifierType] {
-            return (expression as! [SectionIdentifierType]).map { ($0, []) }
+            return (expression as! [SectionIdentifierType]).map { ($0, []) } // `as! [SectionIdentifierType]` for `AnyHashable`
         }
         return [(expression, [])]
     }
@@ -61,7 +61,7 @@ public extension ESDiffableDataSourceSnapshotBuilder {
     }
     
     static func buildExpression(_ expression: ItemIdentifierType) -> [SectionWithItems] {
-        return [(nil, expression as? Array<ItemIdentifierType> ?? [expression])]
+        return [(nil, expression as? [ItemIdentifierType] ?? [expression])] // `as? [ItemIdentifierType]` for `AnyHashable`
     }
     
     static func buildExpression(_ expression: [ItemIdentifierType]) -> [SectionWithItems] {
@@ -104,7 +104,7 @@ public extension ESDiffableDataSourceSnapshotBuilder {
     }
     
     static func buildExpression(_ expression: ItemIdentifierType) -> [ItemIdentifierType] {
-        return expression as? Array<ItemIdentifierType> ?? [expression]
+        return expression as? [ItemIdentifierType] ?? [expression] // `as? [ItemIdentifierType]` for `AnyHashable`
     }
     
     static func buildExpression(_ expression: [ItemIdentifierType]) -> [ItemIdentifierType] {
