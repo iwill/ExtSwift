@@ -179,6 +179,18 @@ public extension ESDiffableDataSourceSnapshot {
         }
         return itemIdentifiers(inSection: section)[try: indexPath.item]
     }
+    
+    public func indexOfItem(_ itemIdentifier: ItemIdentifierType, inSection sectionIdentifier: SectionIdentifierType) -> Int? {
+        return itemIdentifiers(inSection: sectionIdentifier).firstIndex(of: itemIdentifier)
+    }
+    
+    public func indexPathOfItem(_ itemIdentifier: ItemIdentifierType, inSection sectionIdentifier: SectionIdentifierType) -> IndexPath? {
+        guard let section = indexOfSection(sectionIdentifier),
+              let item = indexOfItem(itemIdentifier, inSection: sectionIdentifier) else {
+            return nil
+        }
+        return IndexPath(item: item, section: section)
+    }
 }
 
 #endif
