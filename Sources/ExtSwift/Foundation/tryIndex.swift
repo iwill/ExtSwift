@@ -12,6 +12,7 @@ import Foundation
 /// [Say Goodbye to "Index out of range" - Swift](https://medium.com/flawless-app-stories/say-goodbye-to-index-out-of-range-swift-eca7c4c7b6ca)
 /// [SwiftKit](https://github.com/wendyliga/SwiftKit)
 public extension Collection {
+    
     subscript(try index: Index) -> Iterator.Element? {
         guard indices.contains(index) else { return nil }
         return self[index]

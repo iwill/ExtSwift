@@ -32,7 +32,6 @@ public protocol Observable: Observed {
     
     func willSet<Value>(_ value: Value, _ oldValue: Value?, for keyPath: KeyPath<Target, Value>)
     func didSet<Value>(_ value: Value, _ oldValue: Value?, for keyPath: KeyPath<Target, Value>)
-    
 }
 
 // MARK: Observable - default implementation
@@ -132,7 +131,6 @@ public extension Observable where Target == Self {
             }
         }
     }
-    
 }
 
 // MARK: Observable - events extension

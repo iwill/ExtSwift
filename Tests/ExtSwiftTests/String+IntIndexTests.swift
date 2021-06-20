@@ -54,11 +54,9 @@ final class IntIndexTests: XCTestCase {
         // XCTAssertThrowsError(fingers[5])
         // XCTAssertThrowsError(fingers[1..<5])
         // XCTAssertThrowsError(fingers[1...5])
-        
     }
     
     static var allTests = [
         ("testIntIndex", testIntIndex),
     ]
-    
 }

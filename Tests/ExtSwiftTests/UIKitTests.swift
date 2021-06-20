@@ -39,5 +39,4 @@ final class UIKitTests: XCTestCase {
     static var allTests = [
         ("testMakable", testMakable),
     ]
-    
 }

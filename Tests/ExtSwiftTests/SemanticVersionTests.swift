@@ -109,5 +109,4 @@ final class SemanticVersionTests: XCTestCase {
     static var allTests = [
         ("testSemanticVersion", testSemanticVersion)
     ]
-    
 }

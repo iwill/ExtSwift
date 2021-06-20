@@ -28,7 +28,6 @@ final class OperatorsTests: XCTestCase {
         
         XCTAssertTrue(!?some  == !(??some))
         XCTAssertTrue(!?none  == !(??none))
-        
     }
     
     func testIsFalsyAndIsTruthy() {
@@ -64,7 +63,6 @@ final class OperatorsTests: XCTestCase {
         let c: OperatorsTests = self
         XCTAssertTrue(!!!b == !false)
         XCTAssertTrue(!!!c ==  false)
-        
     }
     
     func testFalsyCoalescing() {
@@ -83,7 +81,6 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(some ??! none  == some)
         XCTAssertTrue(none ??! none  == none)
         XCTAssertTrue(some ??! some2 == some)
-        
     }
     
     @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
@@ -103,7 +100,6 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(some ?!! none  == none)
         XCTAssertTrue(none ?!! none  == none)
         XCTAssertTrue(some ?!! some2 == some2)
-        
     }
     
     static var allTests = [
@@ -112,5 +108,4 @@ final class OperatorsTests: XCTestCase {
         ("testFalsyCoalescing", testFalsyCoalescing),
         // ("testUnstableFalsyCoalescing", testUnstableFalsyCoalescing),
     ]
-    
 }

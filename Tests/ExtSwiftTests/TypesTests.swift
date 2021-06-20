@@ -129,5 +129,4 @@ final class TypesTests: XCTestCase {
         ("testTypesComparingWithAnyTypes", testTypesComparingWithAnyTypes),
         ("testOptional", testOptional),
     ]
-    
 }

@@ -169,5 +169,4 @@ public extension String {
     func replacingOccurrences<Target, Replacement>(of target: Target, with replacement: Replacement, options: CompareOptions = [], range intRange: Range<Int>? = nil) -> String where Target: StringProtocol, Replacement: StringProtocol {
         return replacingOccurrences(of: target, with: replacement, options: options, range: intRange.map { range(from: $0) })
     }
-    
 }

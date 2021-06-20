@@ -31,11 +31,9 @@ final class ifEmptyTests: XCTestCase {
         XCTAssertEqual(none.ifEmpty(some), some)
         XCTAssertEqual(some.nonEmptyOrNil, some)
         XCTAssertEqual(none.nonEmptyOrNil, nil)
-        
     }
     
     static var allTests = [
         ("testEmpty", testEmpty),
     ]
-    
 }

@@ -63,5 +63,4 @@ final class AnyEquatableTests: XCTestCase {
     static var allTests = [
         ("testAnyEquatable", testAnyEquatable),
     ]
-    
 }

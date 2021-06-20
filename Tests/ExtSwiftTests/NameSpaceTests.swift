@@ -29,5 +29,4 @@ final class NameSpaceTests: XCTestCase {
     static var allTests = [
         ("testNameSpace", testNameSpace),
     ]
-    
 }

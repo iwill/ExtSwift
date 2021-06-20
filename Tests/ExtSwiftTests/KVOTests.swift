@@ -23,7 +23,6 @@ class TestObservable: Observable {
     
     let eventWithoutParameter: Void? = nil //  { get { return nil } set {} }
     let eventWithIntAndString: (Int, String)? = nil //  { get { return nil } set {} }
-    
 }
 
 class AnObserver: Observer {
@@ -91,11 +90,9 @@ final class KVOTests: XCTestCase {
         test = nil
         observer.observedTargets.compact()
         debugPrint("targets: \(String(describing: observer.observedTargets.count))")
-        
     }
     
     static var allTests = [
         ("testObservable", testObservable),
     ]
-    
 }

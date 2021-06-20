@@ -89,11 +89,9 @@ final class JSONTests: XCTestCase {
             let o = json["o", as: [String: Any].self]
             XCTAssertEqual(o as! [String: Int], ["a": 1, "b": 2])
         }())
-        
     }
     
     static var allTests = [
         ("testJSON", testJSON),
     ]
-    
 }

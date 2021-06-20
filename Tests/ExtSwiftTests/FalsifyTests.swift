@@ -38,11 +38,9 @@ final class FalsifyTests: XCTestCase {
         
         XCTAssertTrue(some.isFalsy  == !some.isTruthy)
         XCTAssertTrue(none.isFalsy  == !none.isTruthy)
-        
     }
     
     static var allTests = [
         ("testFalsify", testFalsify),
     ]
-    
 }
