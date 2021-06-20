@@ -17,6 +17,21 @@ public extension Collection {
         guard indices.contains(index) else { return nil }
         return self[index]
     }
+    
+    subscript<R>(try rangeExpression: R) -> Self.SubSequence? where R: RangeExpression, Self.Index == R.Bound {
+        let limit = startIndex..<endIndex
+        let range = rangeExpression.relative(to: self).clamped(to: limit)
+        guard !range.isEmpty else {
+            return nil
+        }
+        return self[range]
+    }
+    
+    subscript(try index: Index) -> Iterator.Element? where Index == Int {
+        let index = index >= 0 ? index : count + index
+        guard indices.contains(index) else { return nil }
+        return self[index]
+    }
 }
 
 /* avoid this:
