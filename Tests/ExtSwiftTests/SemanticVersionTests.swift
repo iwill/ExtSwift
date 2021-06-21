@@ -19,7 +19,7 @@ import Foundation
 // @testable
 import ExtSwift
 
-@available(*, deprecated, message: "Suppress warnings.")
+@available(*, deprecated, message: "Suppressing warnings.")
 final class SemanticVersionTests: XCTestCase {
     
     func testSemanticVersion() {
