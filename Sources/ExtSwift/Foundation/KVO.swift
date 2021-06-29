@@ -77,7 +77,7 @@ extension KVO {
         }
     }
     
-    public func addObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState) -> some KVObserver {
+    public func addObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState) -> KVObserver {
         let observer = Observer(propertyWrapper: self, options: options, closure: closure)
         if !options.contains(.initial) || closure(wrappedValue, wrappedValue, .initial) == .goon {
             observers.append(observer)
@@ -127,7 +127,7 @@ public extension KVO {
         }
     }
     
-    func addEventObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> some KVObserver {
+    func addEventObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
         return addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
             return closure(value)
         }
