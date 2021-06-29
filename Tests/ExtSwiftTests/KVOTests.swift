@@ -11,22 +11,23 @@ import XCTest
 // @testable
 import ExtSwift
 
-class TestObservable: Observable {
+class TestKVO {
     
-    var observations: [Observation<TestObservable>] = []
-    
+    @KVO
     var i: Int
+    
+    @KVO
     var s: String?
+    
     init(i: Int, s: String?) {
         (self.i, self.s) = (i, s)
     }
     
-    let eventWithoutParameter: Void? = nil //  { get { return nil } set {} }
-    let eventWithIntAndString: (Int, String)? = nil //  { get { return nil } set {} }
-}
-
-class AnObserver: Observer {
-    var observedTargets: WeakArray<AnyObject> = []
+    @KVO(autoResetToNil: true)
+    var eventWithoutParameter: Void? = nil
+    
+    @KVO(autoResetToNil: true)
+    var eventWithIntAndString: (i: Int, s: String)? = nil
 }
 
 // MARK: - Tests
@@ -34,62 +35,41 @@ class AnObserver: Observer {
 final class KVOTests: XCTestCase {
     
     func testObservable() {
-        var test: TestObservable! = TestObservable(i: 0, s: "")
+        
+        let test: TestKVO! = TestKVO(i: 0, s: "")
         
         // initialValue: Value?, newValue: Value, oldValue: Value
         
-        let observation =
-        test.kvo(keyPath: \.i) { [weak self] value, oldValue, change -> ObservingState in
-            guard self != nil else { return .stop }
-            let value = value as! Int
-            let oldValue = oldValue as? Int
-            debugPrint("[\(#function):\(#line)] Int - \(change.option): \(String(describing: oldValue)) <#->#> \(value)")
-            return .goon
+        let kvObserver =
+            test.$i.addObserver { value, oldValue, option in
+                NSLog("Int - \(option): \(String(describing: oldValue)) <#->#> \(value)")
+                return .goon
+            }
+        
+        test.$s.keepObserver(options: [.initial, .willSet, .didSet]) { value, oldValue, option in
+            NSLog("String - \(option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
         }
-        test.kvo(keyPath: \.s, options: [.initial, .willSet, .didSet]) { [weak self] value, oldValue, change -> ObservingState in
-            guard self != nil else { return .stop }
-            let value = value as? String
-            let oldValue = oldValue as? String
-            debugPrint("[\(#function):\(#line)] String - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
+        
+        let eventObserver =
+        test.$eventWithoutParameter.addEventObserver { value in
+            NSLog("Void: <#->#> \(String(describing: value))")
             return .goon
         }
         
-        test.observeEvent(with: \.eventWithoutParameter) { [weak self] value, change -> ObservingState in
-            guard self != nil else { return .stop }
-            let value: Void = value as! Void
-            debugPrint("[\(#function):\(#line)] <none> - \(change.option): <#->#> \(String(describing: value))")
-            return .goon
-        }
-        test.observeEvent(with: \.eventWithIntAndString) { [weak self] value, change -> ObservingState in
-            guard self != nil else { return .stop }
-            let value = value as! (Int, String)
-            debugPrint("[\(#function):\(#line)] (Int, String) - \(change.option): <#->#> \(String(describing: value))")
-            return .goon
+        test.$eventWithIntAndString.keepEventObserver { value in
+            NSLog("(Int, String): <#->#> \(String(describing: value))")
         }
         
-        // test.set(1, for: \.i)
-        // test.set(nil, for: \.s)
-        test[set: \.i] = 1
-        test[set: \.s] = nil
-        test.triggerEvent(with: \.eventWithoutParameter, value: ())
-        test.triggerEvent(with: \.eventWithIntAndString, value: (1, "s"))
+        test.i = 1
+        test.s = nil
+        test.eventWithoutParameter = ()
+        test.eventWithIntAndString = (1, "s")
         
-        observation.stopObserving()
-        let observer = AnObserver()
-        observer.kvo(to: test, keyPath: \.i) { value, oldValue, change -> ObservingState in
-            let value = value as! Int
-            let oldValue = oldValue as? Int
-            debugPrint("kvo: [\(#function):\(#line)] Int - \(change.option): \(String(describing: oldValue)) <#->#> \(String(describing: value))")
-            return .goon
-        }
-        test[set: \.i] = 2
-        test[set: \.i] = 3
-        // observer.stopObserving(target: test)
-        test[set: \.i] = 4
+        kvObserver.stopObserving()
+        test.i = 2
         
-        test = nil
-        observer.observedTargets.compact()
-        debugPrint("targets: \(String(describing: observer.observedTargets.count))")
+        eventObserver.stopObserving()
+        test.eventWithoutParameter = nil
     }
     
     static var allTests = [
