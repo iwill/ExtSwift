@@ -90,7 +90,7 @@ extension KVO {
     }
 }
 
-// MARK: - 
+// MARK: -
 
 public struct KVObservingOptions: OptionSet, CustomStringConvertible {
     
@@ -116,7 +116,18 @@ public struct KVObservingOptions: OptionSet, CustomStringConvertible {
 
 public enum KVObservingState { case goon, stop }
 
-// MARK: - events extension
+// MARK: - event observer
+
+public extension KVO {
+    
+    func addEventObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
+        return addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
+            return closure(value)
+        }
+    }
+}
+
+// MARK: - keep observer
 
 public extension KVO {
     
@@ -124,12 +135,6 @@ public extension KVO {
         _ = addObserver(options: options) { newValue, oldValue, option in
             closure(newValue, oldValue, option)
             return .goon
-        }
-    }
-    
-    func addEventObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
-        return addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
-            return closure(value)
         }
     }
     
