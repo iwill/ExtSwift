@@ -23,10 +23,10 @@ class TestKVO {
         (self.i, self.s) = (i, s)
     }
     
-    @KVO(autoResetToNil: true)
+    @EventObservable(autoResetToNil: true)
     var eventWithoutParameter: Void? = nil
     
-    @KVO(autoResetToNil: true)
+    @EventObservable(autoResetToNil: true)
     var eventWithIntAndString: (i: Int, s: String)? = nil
 }
 
@@ -51,12 +51,12 @@ final class KVOTests: XCTestCase {
         }
         
         let eventObserver =
-        test.$eventWithoutParameter.addEventObserver { value in
+        test.$eventWithoutParameter.addObserver { value in
             NSLog("Void: <#->#> \(String(describing: value))")
             return .goon
         }
         
-        test.$eventWithIntAndString.keepEventObserver { value in
+        test.$eventWithIntAndString.keepObserver { value in
             NSLog("(Int, String): <#->#> \(String(describing: value))")
         }
         
@@ -68,7 +68,7 @@ final class KVOTests: XCTestCase {
         kvObserver.stopObserving()
         test.i = 2
         
-        eventObserver.stopObserving()
+        eventObserver.stopObserving() // OR `test.$eventWithoutParameter.removeObserver(eventObserver)`
         test.eventWithoutParameter = nil
     }
     

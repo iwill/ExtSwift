@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// KVO: Key-Value Observing
+/// Key-Value Observing
 
 @propertyWrapper
-public final class KVO<KVOType> {
+public class KVO<KVOType> {
     
     private var observers: [Observer<KVOType>] = []
     
@@ -41,9 +41,13 @@ public final class KVO<KVOType> {
     
     private var autoResetToNil: Bool
     
-    public init(wrappedValue: KVOType, autoResetToNil: Bool = false) {
+    fileprivate init(wrappedValue: KVOType, autoResetToNil: Bool = false) {
         self.wrappedValue = wrappedValue
         self.autoResetToNil = autoResetToNil
+    }
+    
+    public convenience init(wrappedValue: KVOType) {
+        self.init(wrappedValue: wrappedValue, autoResetToNil: false)
     }
 }
 
@@ -88,6 +92,13 @@ extension KVO {
     public func removeObserver(_ observer: KVObserver) {
         observers.removeAll { $0 === observer }
     }
+    
+    public func keepObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> Void) {
+        _ = addObserver(options: options) { newValue, oldValue, option in
+            closure(newValue, oldValue, option)
+            return .goon
+        }
+    }
 }
 
 // MARK: -
@@ -118,28 +129,28 @@ public enum KVObservingState { case goon, stop }
 
 // MARK: - event observer
 
-public extension KVO {
+@propertyWrapper
+public final class EventObservable<KVOType>: KVO<KVOType> {
     
-    func addEventObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
-        return addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
+    public override var projectedValue: EventObservable<KVOType> { self }
+    
+    public override var wrappedValue: KVOType {
+        get { return super.wrappedValue }
+        set { super.wrappedValue = newValue }
+    }
+    
+    public override init(wrappedValue: KVOType, autoResetToNil: Bool = false) {
+        super.init(wrappedValue: wrappedValue, autoResetToNil: autoResetToNil)
+    }
+    
+    public func addObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
+        return super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
             return closure(value)
         }
     }
-}
-
-// MARK: - keep observer
-
-public extension KVO {
     
-    func keepObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> Void) {
-        _ = addObserver(options: options) { newValue, oldValue, option in
-            closure(newValue, oldValue, option)
-            return .goon
-        }
-    }
-    
-    func keepEventObserver(using closure: @escaping (_ value: KVOType) -> Void) {
-        _ = addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
+    public func keepObserver(using closure: @escaping (_ value: KVOType) -> Void) {
+        _ = super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
             closure(value)
             return .goon
         }
