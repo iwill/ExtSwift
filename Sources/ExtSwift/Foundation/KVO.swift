@@ -83,7 +83,7 @@ extension KVO {
     
     public func addObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState) -> KVObserver {
         let observer = Observer(propertyWrapper: self, options: options, closure: closure)
-        if !options.contains(.initial) || closure(wrappedValue, wrappedValue, .initial) == .goon {
+        if !options.contains(.initial) || closure(wrappedValue, wrappedValue, .initial) == .keep {
             observers.append(observer)
         }
         return observer
@@ -96,7 +96,7 @@ extension KVO {
     public func keepObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> Void) {
         _ = addObserver(options: options) { newValue, oldValue, option in
             closure(newValue, oldValue, option)
-            return .goon
+            return .keep
         }
     }
 }
@@ -125,7 +125,7 @@ public struct KVObservingOptions: OptionSet, CustomStringConvertible {
     }
 }
 
-public enum KVObservingState { case goon, stop }
+public enum KVObservingState { case keep, stop }
 
 // MARK: - event observer
 
@@ -152,7 +152,7 @@ public final class EventObservable<KVOType>: KVO<KVOType> {
     public func keepObserver(using closure: @escaping (_ value: KVOType) -> Void) {
         _ = super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
             closure(value)
-            return .goon
+            return .keep
         }
     }
 }

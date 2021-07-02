@@ -43,7 +43,7 @@ final class KVOTests: XCTestCase {
         let kvObserver =
             test.$i.addObserver { value, oldValue, option in
                 NSLog("Int - \(option): \(String(describing: oldValue)) <#->#> \(value)")
-                return .goon
+                return .keep
             }
         
         test.$s.keepObserver(options: [.initial, .willSet, .didSet]) { value, oldValue, option in
@@ -53,7 +53,7 @@ final class KVOTests: XCTestCase {
         let eventObserver =
         test.$eventWithoutParameter.addObserver { value in
             NSLog("Void: <#->#> \(String(describing: value))")
-            return .goon
+            return .keep
         }
         
         test.$eventWithIntAndString.keepObserver { value in
