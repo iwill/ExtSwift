@@ -23,10 +23,10 @@ class TestKVO {
         (self.i, self.s) = (i, s)
     }
     
-    @EventObservable(autoResetToNil: true)
+    @EventObservable
     var eventWithoutParameter: Void? = nil
     
-    @EventObservable(autoResetToNil: true)
+    @EventObservable(keepEventState: true)
     var eventWithIntAndString: (i: Int, s: String)? = nil
 }
 

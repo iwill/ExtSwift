@@ -33,21 +33,21 @@ public class KVO<KVOType> {
             observers.removeAll { observer in
                 return removing.contains { $0 === observer }
             }
-            if autoResetToNil {
+            if !keepEventState {
                 wrappedValue = oldValue
             }
         }
     }
     
-    private var autoResetToNil: Bool
+    private var keepEventState: Bool
     
-    fileprivate init(wrappedValue: KVOType, autoResetToNil: Bool = false) {
+    fileprivate init(wrappedValue: KVOType, keepEventState: Bool = false) {
         self.wrappedValue = wrappedValue
-        self.autoResetToNil = autoResetToNil
+        self.keepEventState = keepEventState
     }
     
     public convenience init(wrappedValue: KVOType) {
-        self.init(wrappedValue: wrappedValue, autoResetToNil: false)
+        self.init(wrappedValue: wrappedValue, keepEventState: false)
     }
 }
 
@@ -139,8 +139,8 @@ public final class EventObservable<KVOType>: KVO<KVOType> {
         set { super.wrappedValue = newValue }
     }
     
-    public override init(wrappedValue: KVOType, autoResetToNil: Bool = false) {
-        super.init(wrappedValue: wrappedValue, autoResetToNil: autoResetToNil)
+    public override init(wrappedValue: KVOType, keepEventState: Bool = false) {
+        super.init(wrappedValue: wrappedValue, keepEventState: keepEventState)
     }
     
     public func addObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
