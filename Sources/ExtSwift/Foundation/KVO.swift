@@ -13,7 +13,7 @@ import Foundation
 @propertyWrapper
 public class KVO<KVOType> {
     
-    private var observers: [Observer<KVOType>] = []
+    // MARK: property-wrapper
     
     public var projectedValue: KVO<KVOType> { self }
     
@@ -49,17 +49,10 @@ public class KVO<KVOType> {
     public convenience init(wrappedValue: KVOType) {
         self.init(wrappedValue: wrappedValue, keepEventState: false)
     }
-}
-
-// MARK: - KVObserver
-
-@objc // for Swift&ObjC mixed project
-public protocol KVObserver: AnyObject {
-    func isObserving() -> Bool
-    func stopObserving()
-}
-
-extension KVO {
+    
+    // MARK: observers
+    
+    private var observers: [Observer<KVOType>] = []
     
     private final class Observer<KVOType>: KVObserver {
         
@@ -102,6 +95,46 @@ extension KVO {
     }
 }
 
+// MARK: - event observer
+
+@propertyWrapper
+public final class EventObservable<KVOType>: KVO<KVOType> {
+    
+    public override var projectedValue: EventObservable<KVOType> { self }
+    
+    public override var wrappedValue: KVOType {
+        get { return super.wrappedValue }
+        set { super.wrappedValue = newValue }
+    }
+    
+    public override init(wrappedValue: KVOType, keepEventState: Bool = false) {
+        super.init(wrappedValue: wrappedValue, keepEventState: keepEventState)
+    }
+    
+    public func addObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
+        return super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
+            return closure(value)
+        }
+    }
+    
+    public func keepObserver(using closure: @escaping (_ value: KVOType) -> Void) {
+        _ = super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
+            closure(value)
+            return .keep
+        }
+    }
+    
+    @available(*, unavailable)
+    public override func addObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState) -> KVObserver {
+        fatalError()
+    }
+    
+    @available(*, unavailable)
+    public override func keepObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> Void) {
+        fatalError()
+    }
+}
+
 // MARK: -
 
 public struct KVObservingOptions: OptionSet, CustomStringConvertible {
@@ -132,32 +165,8 @@ public enum KVObservingState: Int { case keep = 1, stop = 0 }
 // without @objc
 // public enum KVObservingState { case keep, stop }
 
-// MARK: - event observer
-
-@propertyWrapper
-public final class EventObservable<KVOType>: KVO<KVOType> {
-    
-    public override var projectedValue: EventObservable<KVOType> { self }
-    
-    public override var wrappedValue: KVOType {
-        get { return super.wrappedValue }
-        set { super.wrappedValue = newValue }
-    }
-    
-    public override init(wrappedValue: KVOType, keepEventState: Bool = false) {
-        super.init(wrappedValue: wrappedValue, keepEventState: keepEventState)
-    }
-    
-    public func addObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
-        return super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
-            return closure(value)
-        }
-    }
-    
-    public func keepObserver(using closure: @escaping (_ value: KVOType) -> Void) {
-        _ = super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
-            closure(value)
-            return .keep
-        }
-    }
+@objc // for Swift&ObjC mixed project
+public protocol KVObserver: AnyObject {
+    func isObserving() -> Bool
+    func stopObserving()
 }
