@@ -53,6 +53,7 @@ public class KVO<KVOType> {
 
 // MARK: - KVObserver
 
+@objc // for Swift&ObjC mixed project
 public protocol KVObserver: AnyObject {
     func isObserving() -> Bool
     func stopObserving()
@@ -125,7 +126,11 @@ public struct KVObservingOptions: OptionSet, CustomStringConvertible {
     }
 }
 
-public enum KVObservingState { case keep, stop }
+@objc // for mixing Swift&ObjC
+public enum KVObservingState: Int { case keep = 1, stop = 0 }
+
+// without @objc
+// public enum KVObservingState { case keep, stop }
 
 // MARK: - event observer
 
