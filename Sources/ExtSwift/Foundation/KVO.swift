@@ -75,6 +75,7 @@ public class KVO<KVOType> {
         }
     }
     
+    @discardableResult
     public func addObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState) -> KVObserver {
         let observer = Observer(propertyWrapper: self, options: options, closure: closure)
         if !options.contains(.initial) || closure(wrappedValue, wrappedValue, .initial) == .keep {
@@ -83,15 +84,15 @@ public class KVO<KVOType> {
         return observer
     }
     
-    public func removeObserver(_ observer: KVObserver) {
-        observers.removeAll { $0 === observer }
-    }
-    
     public func keepObserver(options: KVObservingOptions = .default, using closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> Void) {
-        _ = addObserver(options: options) { newValue, oldValue, option in
+        addObserver(options: options) { newValue, oldValue, option in
             closure(newValue, oldValue, option)
             return .keep
         }
+    }
+    
+    public func removeObserver(_ observer: KVObserver) {
+        observers.removeAll { $0 === observer }
     }
 }
 
@@ -111,6 +112,7 @@ public final class EventObservable<KVOType>: KVO<KVOType> {
         super.init(wrappedValue: wrappedValue, keepEventState: keepEventState)
     }
     
+    @discardableResult
     public func addObserver(using closure: @escaping (_ value: KVOType) -> KVObservingState) -> KVObserver {
         return super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
             return closure(value)
@@ -118,7 +120,7 @@ public final class EventObservable<KVOType>: KVO<KVOType> {
     }
     
     public func keepObserver(using closure: @escaping (_ value: KVOType) -> Void) {
-        _ = super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
+        super.addObserver(options: .didSet) { value, oldValue, option -> KVObservingState in
             closure(value)
             return .keep
         }
