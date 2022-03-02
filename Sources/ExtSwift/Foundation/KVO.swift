@@ -41,13 +41,13 @@ public class KVO<KVOType> {
     
     private var keepEventState: Bool
     
-    fileprivate init(wrappedValue: KVOType, keepEventState: Bool = false) {
+    fileprivate init(wrappedValue: KVOType, keepEventState: Bool = true) {
         self.wrappedValue = wrappedValue
         self.keepEventState = keepEventState
     }
     
     public convenience init(wrappedValue: KVOType) {
-        self.init(wrappedValue: wrappedValue, keepEventState: false)
+        self.init(wrappedValue: wrappedValue, keepEventState: true)
     }
     
     // MARK: observers
@@ -110,6 +110,10 @@ public final class EventObservable<KVOType>: KVO<KVOType> {
     
     public override init(wrappedValue: KVOType, keepEventState: Bool = false) {
         super.init(wrappedValue: wrappedValue, keepEventState: keepEventState)
+    }
+    
+    public convenience init(wrappedValue: KVOType) {
+        self.init(wrappedValue: wrappedValue, keepEventState: false)
     }
     
     @discardableResult
