@@ -3,7 +3,7 @@
 //  ExtSwift
 //
 //  Created by MingLQ on 2021-06-09.
-//  Copyright (c) 2021 Mr. Míng <minglq.9@gmail.com>. Released under the MIT license.
+//  Copyright (c) 2022 Mr. Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 import Foundation
