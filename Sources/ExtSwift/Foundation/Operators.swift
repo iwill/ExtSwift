@@ -10,19 +10,19 @@ import Foundation
 
 // MARK: - isNil & notNil
 
-prefix operator    !? // isNil:   !?value  !value
-prefix operator    ?? // notNil:  ??value  a ?? b
+prefix operator    !? // `!?value == value.isNil`,  from `!value` and `value?`
+prefix operator    ?? // `??value == value.notNil`, from `a ?? b`
 
 public prefix func !? <T>(v: T?) -> Bool { return v == nil }
 public prefix func ?? <T>(v: T?) -> Bool { return v != nil }
 
-// MARK: - isFalsy & isTruthy
+// MARK: - boolValue & !boolValue
 
-prefix operator    !!! // isFalsy:   !!!value  ==  NOT!
-prefix operator     !! // isTruthy:   !!value  ==  NOT! NOT!
+prefix operator     !! //  `!!value ==  value.boolValue`
+prefix operator    !!! // `!!!value == !value.boolValue`
 
-public prefix func !!! <T>(v: T?) -> Bool { return v.isFalsy }
-public prefix func  !! <T>(v: T?) -> Bool { return v.isTruthy }
+public prefix func  !! <T>(v: T?) -> Bool { return  v.boolValue }
+public prefix func !!! <T>(v: T?) -> Bool { return !v.boolValue }
 
 // MARK: - FalsyCoalescing
 
