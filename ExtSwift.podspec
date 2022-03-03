@@ -48,6 +48,7 @@ Pod::Spec.new do |s|
     
     s.subspec "ExtSwift" do |ss|
         ss.source_files  = "Sources/**/ExtSwift.swift"
+        ss.dependency "ExtSwift/boolValue"
         ss.dependency "ExtSwift/KVO"
         ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
@@ -57,6 +58,10 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/Types"
         ss.dependency "ExtSwift/WeakArray"
         ss.dependency "ExtSwift/UIKit"
+    end
+    
+    s.subspec "boolValue" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/boolValue.swift"
     end
     
     s.subspec "KVO" do |ss|
@@ -70,6 +75,11 @@ Pod::Spec.new do |s|
     
     s.subspec "NameSpace" do |ss|
         ss.source_files  = "Sources/ExtSwift/**/NameSpace.swift"
+    end
+    
+    s.subspec "Operators" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/Operators.swift"
+        ss.dependency "ExtSwift/boolValue"
     end
     
     s.subspec "SemanticVersion" do |ss|
