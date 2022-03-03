@@ -58,8 +58,8 @@ public extension UIEdgeInsets {
 
 #if os(iOS) || os(tvOS) || os(macOS)
 
-public protocol ResponderMutable: UIResponder, Mutable {}
-extension UIResponder: ResponderMutable {}
+public protocol ResponderMutable: UIResponder {}
+extension UIResponder: ResponderMutable, Mutable {}
 
 public extension ResponderMutable where Self: UIView {
     init(mutate: (Self) -> Void) {

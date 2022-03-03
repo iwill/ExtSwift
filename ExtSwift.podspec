@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name          = "ExtSwift"
-    s.version       = "0.0.17"
+    s.version       = "0.0.18"
     s.summary       = "Extensions for Swift"
     # s.description   = "Extensions for Swift."
     s.homepage      = "https://github.com/iwill/ExtSwift"
@@ -52,6 +52,7 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/KVO"
         ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/Operators"
         ss.dependency "ExtSwift/SemanticVersion"
         ss.dependency "ExtSwift/String+IntIndex"
         ss.dependency "ExtSwift/tryIndex"
