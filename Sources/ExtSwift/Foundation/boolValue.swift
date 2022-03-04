@@ -58,7 +58,8 @@ extension Optional: BoolValue {
 }
 
 // OC Types
-extension NSNumber: BoolValue {}
 #if canImport(CoreGraphics)
 extension CGFloat:  BoolValue { public var boolValue: Bool { return self != 0.0 } }
 #endif
+extension NSNumber: BoolValue {}
+extension NSString: BoolValue {}
