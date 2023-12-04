@@ -13,62 +13,59 @@ import UIKit
 
 #if swift(>=5.4)
 
+// for [SectionWithItems]
 @resultBuilder
 public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
     public typealias SectionWithItems = (SectionIdentifierType?, [ItemIdentifierType])
-}
-
-// for [SectionWithItems]
-public extension ESDiffableDataSourceSnapshotBuilder {
     
-    static func buildBlock(_ components: [SectionWithItems]...) -> [SectionWithItems] {
+    public static func buildBlock(_ components: [SectionWithItems]...) -> [SectionWithItems] {
         return components.flatMap { $0 }
     }
     
-    static func buildOptional(_ components: [SectionWithItems]?) -> [SectionWithItems] {
+    public static func buildOptional(_ components: [SectionWithItems]?) -> [SectionWithItems] {
         return components ?? []
     }
     
-    static func buildEither(first components: [SectionWithItems]) -> [SectionWithItems] {
+    public static func buildEither(first components: [SectionWithItems]) -> [SectionWithItems] {
         return components
     }
     
-    static func buildEither(second components: [SectionWithItems]) -> [SectionWithItems] {
+    public static func buildEither(second components: [SectionWithItems]) -> [SectionWithItems] {
         return components
     }
     
-    static func buildArray(_ components: [[SectionWithItems]]) -> [SectionWithItems] {
+    public static func buildArray(_ components: [[SectionWithItems]]) -> [SectionWithItems] {
         return components.flatMap { $0 }
     }
     
-    static func buildExpression(_ expression: SectionWithItems) -> [SectionWithItems] {
+    public static func buildExpression(_ expression: SectionWithItems) -> [SectionWithItems] {
         return [expression]
     }
     
-    static func buildExpression(_ expression: [SectionWithItems]) -> [SectionWithItems] {
+    public static func buildExpression(_ expression: [SectionWithItems]) -> [SectionWithItems] {
         return [expression].flatMap { $0 }
     }
     
-    static func buildExpression(_ expression: SectionIdentifierType) -> [SectionWithItems] {
+    public static func buildExpression(_ expression: SectionIdentifierType) -> [SectionWithItems] {
         if expression is [SectionIdentifierType] {
             return (expression as! [SectionIdentifierType]).map { ($0, []) } // `as! [SectionIdentifierType]` for `AnyHashable`
         }
         return [(expression, [])]
     }
     
-    static func buildExpression(_ expression: [SectionIdentifierType]) -> [SectionWithItems] {
+    public static func buildExpression(_ expression: [SectionIdentifierType]) -> [SectionWithItems] {
         return expression.map { ($0, []) }
     }
     
-    static func buildExpression(_ expression: ItemIdentifierType) -> [SectionWithItems] {
+    public static func buildExpression(_ expression: ItemIdentifierType) -> [SectionWithItems] {
         return [(nil, expression as? [ItemIdentifierType] ?? [expression])] // `as? [ItemIdentifierType]` for `AnyHashable`
     }
     
-    static func buildExpression(_ expression: [ItemIdentifierType]) -> [SectionWithItems] {
+    public static func buildExpression(_ expression: [ItemIdentifierType]) -> [SectionWithItems] {
         return [(nil, expression)]
     }
     
-    static func buildFinalResult(_ components: [SectionWithItems]) -> ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType> {
+    public static func buildFinalResult(_ components: [SectionWithItems]) -> ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType> {
         var snapshot = ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>()
         for (section, items) in components {
             if section != nil {
@@ -81,37 +78,38 @@ public extension ESDiffableDataSourceSnapshotBuilder {
 }
 
 // for nested [ItemIdentifierType]
-public extension ESDiffableDataSourceSnapshotBuilder {
+@resultBuilder
+public struct ESDiffableDataSourceItemIdentifierBuilder<ItemIdentifierType> where ItemIdentifierType: Hashable {
     
-    static func buildBlock(_ components: [ItemIdentifierType]...) -> [ItemIdentifierType] {
+    public static func buildBlock(_ components: [ItemIdentifierType]...) -> [ItemIdentifierType] {
         return components.flatMap { $0 }
     }
     
-    static func buildOptional(_ components: [ItemIdentifierType]?) -> [ItemIdentifierType] {
+    public static func buildOptional(_ components: [ItemIdentifierType]?) -> [ItemIdentifierType] {
         return components ?? []
     }
     
-    static func buildEither(first components: [ItemIdentifierType]) -> [ItemIdentifierType] {
+    public static func buildEither(first components: [ItemIdentifierType]) -> [ItemIdentifierType] {
         return components
     }
     
-    static func buildEither(second components: [ItemIdentifierType]) -> [ItemIdentifierType] {
+    public static func buildEither(second components: [ItemIdentifierType]) -> [ItemIdentifierType] {
         return components
     }
     
-    static func buildArray(_ components: [[ItemIdentifierType]]) -> [ItemIdentifierType] {
+    public static func buildArray(_ components: [[ItemIdentifierType]]) -> [ItemIdentifierType] {
         return components.flatMap { $0 }
     }
     
-    static func buildExpression(_ expression: ItemIdentifierType) -> [ItemIdentifierType] {
+    public static func buildExpression(_ expression: ItemIdentifierType) -> [ItemIdentifierType] {
         return expression as? [ItemIdentifierType] ?? [expression] // `as? [ItemIdentifierType]` for `AnyHashable`
     }
     
-    static func buildExpression(_ expression: [ItemIdentifierType]) -> [ItemIdentifierType] {
+    public static func buildExpression(_ expression: [ItemIdentifierType]) -> [ItemIdentifierType] {
         return expression
     }
     
-    static func buildFinalResult(_ components: [ItemIdentifierType]) -> [ItemIdentifierType] {
+    public static func buildFinalResult(_ components: [ItemIdentifierType]) -> [ItemIdentifierType] {
         return components
     }
 }
