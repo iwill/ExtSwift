@@ -33,15 +33,21 @@ import Foundation
 /// - Use `>=`, instead of `>`
 /// - Remove all trailing `.0` from the comparing target when using via `<` or `>=`
 /// 
+/// Because:
 ///     ```
-///     ✅ v <  2
-///     ⚠️ v <= "1.99999999.99999999"
-///     ⚠️ v <  2.0 // ❌ if v is 2.0.0
-///     ✅ v >= 2
-///     ⚠️ v >  "1.99999999.99999999"
-///     ⚠️ v >= 2.0 // ❌ if v is 2
-///     ✅ v >= 2 && v < 3
-///     ✅ (v2..<v3).contains(v) // let v2 = 2 as SemanticVersion, v3 = 3 as SemanticVersion
+///     v <  2 // ✅
+///     v >= 2 // ✅
+///     
+///     v <= "1.99999999.99999999" // ⚠️ NOT a good comparing target
+///     v >  "1.99999999.99999999" // ⚠️ NOT a good comparing target
+///     
+///     v <  2.0 // ❌ `2.0.0 > 2.0` is NOT expected
+///     v >= 2.0 // ❌ `2     > 2.0` is NOT expected
+///     
+///     v >= 2 && v < 3 // ✅
+///     
+///     let v2 = 2 as SemanticVersion, v3 = 3 as SemanticVersion
+///     (v2..<v3).contains(v) // ✅
 ///     ```
 
 public struct SemanticVersion: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
@@ -66,13 +72,23 @@ extension SemanticVersion: Comparable {
     private var prepared: String {
         //  Char  |  \0  \t  \n  esc   ␣   +   -   .   0   9   A   a
         //  Dec   |   0   9  10   27  32  43  45  46  48  57  65  97
-        //                                     ^ replace `-` with `\0`, which less than `\n`
-        //                    ^ append `\n` which less than `+`, `.`, numbers and letters
-        return stringValue.replacingOccurrences(of: "-", with: "\0") + "\n"
+        //                                     ^ replace `-` with `\0` (0) or `\t` (9), which less than `\n` (10)
+        //                    ^ append `\n` (10), which less than `+` (43), `.` (46), numbers and letters (48+)
+        return stringValue.replacingOccurrences(of: "-", with: "\t") + "\n"
     }
     
     public static func < (a: SemanticVersion, b: SemanticVersion) -> Bool {
         return a.prepared.compare(b.prepared, options: .numeric) == .orderedAscending
+    }
+}
+
+public extension SemanticVersion {
+    
+    var removingBuildMetadata: SemanticVersion {
+        if let index = stringValue.firstIndex(of: "+") {
+            return String(stringValue[..<index]).semanticVersion
+        }
+        return self
     }
 }
 
