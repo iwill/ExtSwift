@@ -74,7 +74,7 @@ final class JSONTests: XCTestCase {
         ({
             let a = json["a", as: [Any].self]!
             XCTAssertEqual(try! JSONSerialization.data(withJSONObject: a),
-                           try! JSONSerialization.data(withJSONObject: [1, 1.23, true, "4.56"]))
+                           try! JSONSerialization.data(withJSONObject: [1, 1.23, true, "4.56"] as [Any]))
             let i = a[0, as: Int.self]
             XCTAssertEqual(i, 1)
             let d = a[1, as: Double.self]

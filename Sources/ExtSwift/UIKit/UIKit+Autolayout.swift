@@ -52,6 +52,7 @@ public extension ES where Base: UIScrollView {
     }
 }
 
+// TODO: remove once NOT supporting iOS 11
 public extension ES where Base: UIViewController {
     var topLayoutGuide: UILayoutSupport? {
 #if targetEnvironment(macCatalyst)

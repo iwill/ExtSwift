@@ -54,13 +54,13 @@ public class KVO<KVOType> {
     
     private var observers: [Observer<KVOType>] = []
     
-    private final class Observer<KVOType>: KVObserver {
+    private final class Observer<_KVOType>: KVObserver {
         
         weak var propertyWrapper: KVO?
         let options: KVObservingOptions
-        let closure: (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState
+        let closure: (_ newValue: _KVOType, _ oldValue: _KVOType, _ option: KVObservingOptions) -> KVObservingState
         
-        init(propertyWrapper: KVO, options: KVObservingOptions, closure: @escaping (_ newValue: KVOType, _ oldValue: KVOType, _ option: KVObservingOptions) -> KVObservingState) {
+        init(propertyWrapper: KVO, options: KVObservingOptions, closure: @escaping (_ newValue: _KVOType, _ oldValue: _KVOType, _ option: KVObservingOptions) -> KVObservingState) {
             self.propertyWrapper = propertyWrapper
             self.options = options
             self.closure = closure
