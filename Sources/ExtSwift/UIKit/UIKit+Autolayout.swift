@@ -23,6 +23,7 @@ public class UILayoutSupport {}
 extension UIResponder: ESNameSpace {}
 
 public extension ES where Base: UIView {
+    @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
     var safeAreaLayoutGuide: UILayoutGuide? {
         if #available(iOS 11, tvOS 11, macOS 11, *) {
             return _base.safeAreaLayoutGuide
@@ -38,12 +39,14 @@ public extension ES where Base: UIView {
 #if os(iOS) || os(tvOS)
 
 public extension ES where Base: UIScrollView {
+    @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.contentLayoutGuide` instead")
     var contentLayoutGuide: UILayoutGuide? {
         if #available(iOS 11, tvOS 11, *) {
             return _base.contentLayoutGuide
         }
         return nil
     }
+    @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.frameLayoutGuide` instead")
     var frameLayoutGuide: UILayoutGuide? {
         if #available(iOS 11, tvOS 11, *) {
             return _base.frameLayoutGuide
@@ -54,6 +57,7 @@ public extension ES where Base: UIScrollView {
 
 // TODO: remove once NOT supporting iOS 11
 public extension ES where Base: UIViewController {
+    @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
     var topLayoutGuide: UILayoutSupport? {
 #if targetEnvironment(macCatalyst)
         return nil
@@ -64,6 +68,7 @@ public extension ES where Base: UIViewController {
         return _base.topLayoutGuide
 #endif
     }
+    @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
     var bottomLayoutGuide: UILayoutSupport? {
 #if targetEnvironment(macCatalyst)
         return nil

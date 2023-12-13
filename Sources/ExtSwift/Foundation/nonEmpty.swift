@@ -9,22 +9,16 @@
 import Foundation
 
 public extension Collection {
-    func ifEmpty(_ default: Self?) -> Self? {
-        return isEmpty ? `default` : self
-    }
-    var nonEmptyOrNil: Self? {
+    var nonEmpty: Self? {
         return isEmpty ? nil : self
     }
 }
 
 public extension Optional where Wrapped: Collection {
-    func ifEmpty(_ default: Wrapped?) -> Wrapped? {
+    var nonEmpty: Wrapped? {
         if let self = self, !self.isEmpty {
             return self
         }
-        return `default`
-    }
-    var nonEmptyOrNil: Wrapped? {
-        return ifEmpty(nil)
+        return nil
     }
 }

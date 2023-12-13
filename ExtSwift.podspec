@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name          = "ExtSwift"
-    s.version       = "1.0.0"
+    s.version       = "2.0.0-dev"
     s.summary       = "Extensions for Swift"
     # s.description   = "Extensions for Swift."
     s.homepage      = "https://github.com/iwill/ExtSwift"
@@ -13,10 +13,10 @@ Pod::Spec.new do |s|
     s.social_media_url = "https://iwill.im/about/"
     
     # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-    s.ios.deployment_target = "9.0"
-    s.tvos.deployment_target = "13.0"
-    s.osx.deployment_target = "10.11"
-    s.watchos.deployment_target = "2.0"
+    s.ios.deployment_target = "12.0"
+    s.tvos.deployment_target = "12.0"
+    s.osx.deployment_target = "10.14"
+    s.watchos.deployment_target = "5.0"
     s.swift_version = "5.0"
     
     # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -52,13 +52,36 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/KVO"
         ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/nonEmpty"
         ss.dependency "ExtSwift/Operators"
         ss.dependency "ExtSwift/SemanticVersion"
-        ss.dependency "ExtSwift/String+IntIndex"
+        ss.dependency "ExtSwift/String+intIndex"
         ss.dependency "ExtSwift/tryIndex"
         ss.dependency "ExtSwift/Types"
         ss.dependency "ExtSwift/WeakArray"
         ss.dependency "ExtSwift/UIKit"
+    end
+    
+    s.subspec "Common" do |ss|
+        # ss.source_files  = "Sources/**/ExtSwift.swift"
+        ss.dependency "ExtSwift/boolValue"
+        # ss.dependency "ExtSwift/KVO"
+        ss.dependency "ExtSwift/Mutable"
+        # ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/nonEmpty"
+        ss.dependency "ExtSwift/Operators"
+        # ss.dependency "ExtSwift/SemanticVersion"
+        ss.dependency "ExtSwift/String+intIndex"
+        ss.dependency "ExtSwift/tryIndex"
+        ss.dependency "ExtSwift/Types"
+        # ss.dependency "ExtSwift/WeakArray"
+        ss.dependency "ExtSwift/UIKit"
+        # ss.dependency "ExtSwift/ESDiffableDataSource"
+    end
+    
+    s.subspec "Unstable" do |ss|
+        ss.source_files  = "Sources/ExtSwift/unstable/*.swift"
+        ss.dependency "ExtSwift/ExtSwift"
     end
     
     s.subspec "boolValue" do |ss|
@@ -78,6 +101,10 @@ Pod::Spec.new do |s|
         ss.source_files  = "Sources/ExtSwift/**/NameSpace.swift"
     end
     
+    s.subspec "nonEmpty" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/nonEmpty.swift"
+    end
+    
     s.subspec "Operators" do |ss|
         ss.source_files  = "Sources/ExtSwift/**/Operators.swift"
         ss.dependency "ExtSwift/boolValue"
@@ -87,8 +114,8 @@ Pod::Spec.new do |s|
         ss.source_files  = "Sources/ExtSwift/**/SemanticVersion.swift"
     end
     
-    s.subspec "String+IntIndex" do |ss|
-        ss.source_files  = "Sources/ExtSwift/**/String+IntIndex.swift"
+    s.subspec "String+intIndex" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/String+intIndex.swift"
     end
     
     s.subspec "tryIndex" do |ss|
@@ -99,20 +126,20 @@ Pod::Spec.new do |s|
         ss.source_files  = "Sources/ExtSwift/**/Types.swift"
     end
     
+    s.subspec "WeakArray" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/WeakArray.swift"
+    end
+    
     s.subspec "UIKit" do |ss|
-        ss.source_files  = "Sources/ExtSwift/UIKit/**/*.swift"
+        ss.source_files  = "Sources/ExtSwift/UIKit/*.swift"
         ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
         ss.dependency "ExtSwift/tryIndex"
     end
     
-    s.subspec "WeakArray" do |ss|
-        ss.source_files  = "Sources/ExtSwift/**/WeakArray.swift"
-    end
-    
-    s.subspec "_All" do |ss|
-        ss.source_files  = "Sources/ExtSwift/unstable/*.swift"
-        ss.dependency "ExtSwift/ExtSwift"
+    s.subspec "ESDiffableDataSource" do |ss|
+        ss.source_files  = "Sources/ExtSwift/UIKit/ESDiffableDataSource/*.swift"
+        ss.dependency "ExtSwift/tryIndex"
     end
     
 end
