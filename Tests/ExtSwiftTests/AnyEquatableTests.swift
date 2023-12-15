@@ -59,8 +59,4 @@ final class AnyEquatableTests: XCTestCase {
         let anySup = AnyEquatable(sup), anySub = AnyEquatable(sub/*  as Sup */)
         XCTAssertTrue(anySup == anySub)
     }
-    
-    static var allTests = [
-        ("testAnyEquatable", testAnyEquatable),
-    ]
 }

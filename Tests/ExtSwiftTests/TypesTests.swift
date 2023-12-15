@@ -122,11 +122,4 @@ final class TypesTests: XCTestCase {
         XCTAssertTrue(wrappedTypeOfType(value: i) is Int.Type)
         XCTAssertTrue(wrappedTypeOfType(value: j) is Int.Type)
     }
-    
-    static var allTests = [
-        ("testBuiltinTypesComparing", testBuiltinTypesComparing),
-        ("testTypesComparingWithGenericTypes", testTypesComparingWithGenericTypes),
-        ("testTypesComparingWithAnyTypes", testTypesComparingWithAnyTypes),
-        ("testOptional", testOptional),
-    ]
 }

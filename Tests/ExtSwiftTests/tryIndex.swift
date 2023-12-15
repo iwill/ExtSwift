@@ -35,8 +35,4 @@ final class tryIndexTests: XCTestCase {
         XCTAssertEqual(ints[tryBidirectRange: bidirectIndex(from: -3)!..<bidirectIndex(from: -1)!], [1, 2]) // (4 - 3)..<(4 - 1) -> 1..<3
         XCTAssertEqual(ints[tryBidirectRange: bidirectIndex(from: -6)!...bidirectIndex(from: -5)!], nil)
     }
-    
-    static var allTests = [
-        ("testIndex", testIndex),
-    ]
 }

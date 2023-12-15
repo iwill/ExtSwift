@@ -35,8 +35,4 @@ final class UIKitTests: XCTestCase {
         XCTAssertEqual(label.superview, view)
         #endif
     }
-    
-    static var allTests = [
-        ("testMakable", testMakable),
-    ]
 }

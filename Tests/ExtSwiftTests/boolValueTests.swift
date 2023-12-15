@@ -32,8 +32,4 @@ final class BoolValueTests: XCTestCase {
         XCTAssertTrue(some.boolValue  == true)
         XCTAssertTrue(none.boolValue  == false)
     }
-    
-    static var allTests = [
-        ("testBoolValue", testBoolValue),
-    ]
 }

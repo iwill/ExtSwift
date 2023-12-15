@@ -156,8 +156,4 @@ final class SemanticVersionTests: XCTestCase {
         // XCTAssertTrue("1.2.3-r2".semanticVersion > "1.2.3-r100") // ❌ exp: >, got: <
         XCTAssertTrue("1.2.3-r100".semanticVersion > "1.2.3-R2")
     }
-    
-    static var allTests = [
-        ("testSemanticVersion", testSemanticVersion)
-    ]
 }

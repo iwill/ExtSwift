@@ -101,11 +101,4 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(none ?!! none  == none)
         XCTAssertTrue(some ?!! some2 == some2)
     }
-    
-    static var allTests = [
-        ("testIsNilAndNotNil", testIsNilAndNotNil),
-        ("testIsFalsyAndIsTruthy", testIsFalsyAndIsTruthy),
-        ("testFalsyCoalescing", testFalsyCoalescing),
-        // ("testUnstableFalsyCoalescing", testUnstableFalsyCoalescing),
-    ]
 }

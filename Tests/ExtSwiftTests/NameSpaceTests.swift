@@ -25,8 +25,4 @@ final class NameSpaceTests: XCTestCase {
         let strOrNil = "".es.nonEmpty
         XCTAssertEqual(strOrNil, nil)
     }
-    
-    static var allTests = [
-        ("testNameSpace", testNameSpace),
-    ]
 }

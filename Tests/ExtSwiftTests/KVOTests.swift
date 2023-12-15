@@ -71,8 +71,4 @@ final class KVOTests: XCTestCase {
         eventObserver.stopObserving() // OR `test.$eventWithoutParameter.removeObserver(eventObserver)`
         test.eventWithoutParameter = nil
     }
-    
-    static var allTests = [
-        ("testObservable", testObservable),
-    ]
 }
