@@ -38,6 +38,10 @@ public extension UIColor {
             return traitCollection.userInterfaceStyle == .dark ? dark : light
         }
     }
+    func resolvedColor(with userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        guard #available(iOS 13.0, tvOS 13.0, *) else { return self }
+        return resolvedColor(with: .init(userInterfaceStyle: userInterfaceStyle))
+    }
 }
 #endif
 
