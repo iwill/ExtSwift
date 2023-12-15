@@ -2,8 +2,8 @@
 //  ESTableViewDiffableDataSource.swift
 //  ExtSwift
 //
-//  Created by MingLQ on 2021-06-09.
-//  Copyright (c) 2022 Mr. Míng <minglq.9@gmail.com>. Released under the MIT license.
+//  Created by Míng on 2021-06-09.
+//  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 #if os(iOS) || os(tvOS)

@@ -2,8 +2,8 @@
 //  ifEmpty.swift
 //  ExtSwift
 //
-//  Created by Mr. Míng on 2021-01-07.
-//  Copyright (c) 2022 Mr. Míng <minglq.9@gmail.com>. Released under the MIT license.
+//  Created by Míng on 2021-01-07.
+//  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 import Foundation

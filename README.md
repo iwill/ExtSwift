@@ -94,7 +94,7 @@ TODO: You can try ExtSwift in Playground.
 
 ## Credits
 
-Mr. Míng ([@minglq](https://twitter.com/minglq/))
+Míng ([@minglq](https://twitter.com/minglq/))
 
 ## License
 
