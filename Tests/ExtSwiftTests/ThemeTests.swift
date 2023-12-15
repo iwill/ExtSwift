@@ -10,8 +10,11 @@ import XCTest
 final class ThemeTests: XCTestCase {
     
     func testThemeMakers() throws {
+        UIView.es.autoUpdateThemeWhenMovedToSuperview()
+        
         var view = UIView()
         view.es.makeTheme { view in
+            let view = view as! UIView
             let app = view // UIApplication.shared - <uninitialized>
             if app.es.theme == "Dark" {
                 view.backgroundColor = .black
@@ -24,5 +27,16 @@ final class ThemeTests: XCTestCase {
         view.es.theme = "Dark"
         XCTAssertEqual(view.es.theme, "Dark")
         XCTAssertEqual(view.backgroundColor, .black)
+        
+        let button = UIButton()
+        button.es.makeTheme { button in
+            let button = button as! UIButton
+            let color: UIColor = button.es.theme == "Dark" ? .white : .black
+            button.setTitleColor(color, for: .normal)
+        }
+        XCTAssertEqual(button.titleColor(for: .normal), .black)
+        
+        view.addSubview(button)
+        XCTAssertEqual(button.titleColor(for: .normal), .white)
     }
 }
