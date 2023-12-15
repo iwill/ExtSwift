@@ -54,6 +54,10 @@ public extension UIEdgeInsets {
 }
 #endif
 
+// MARK: ESNameSpace
+
+extension UIResponder: ESNameSpace {}
+
 // MARK: Mutable
 
 #if os(iOS) || os(tvOS) || os(macOS)

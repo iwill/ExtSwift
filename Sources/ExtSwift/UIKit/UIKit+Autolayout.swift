@@ -20,8 +20,6 @@ public class UILayoutSupport {}
 
 #if os(iOS) || os(tvOS) || os(macOS)
 
-extension UIResponder: ESNameSpace {}
-
 public extension ES where Base: UIView {
     @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
     var safeAreaLayoutGuide: UILayoutGuide? {
