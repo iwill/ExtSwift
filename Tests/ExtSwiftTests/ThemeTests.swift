@@ -14,7 +14,6 @@ final class ThemeTests: XCTestCase {
         
         var view = UIView()
         view.es.makeTheme { view in
-            let view = view as! UIView
             let app = view // UIApplication.shared - <uninitialized>
             if app.es.theme == "Dark" {
                 view.backgroundColor = .black
@@ -30,7 +29,6 @@ final class ThemeTests: XCTestCase {
         
         let button = UIButton()
         button.es.makeTheme { button in
-            let button = button as! UIButton
             let color: UIColor = button.es.theme == "Dark" ? .white : .black
             button.setTitleColor(color, for: .normal)
         }

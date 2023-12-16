@@ -10,21 +10,21 @@
 
 import UIKit
 
-private var AssociatedObject_theme: UInt8 = 0
-private var AssociatedObject_themeMakers: UInt8 = 0
-
 private class ThemeMakerWrapper: Equatable {
     
-    let maker: (UIResponder) -> Void
+    let closure: () -> Void
     
-    init(_ maker: @escaping (UIResponder) -> Void) {
-        self.maker = maker
+    init(_ closure: @escaping () -> Void) {
+        self.closure = closure
     }
     
     static func == (lhs: ThemeMakerWrapper, rhs: ThemeMakerWrapper) -> Bool {
         return lhs === rhs
     }
 }
+
+private var AssociatedObject_theme: UInt8 = 0
+private var AssociatedObject_themeMakers: UInt8 = 0
 
 /// UIResponder: UIApplication, UIWindowScene, UIWindow, UIViewController, UIView, UIControl ...
 public extension ES where Base: UIResponder {
@@ -44,10 +44,10 @@ public extension ES where Base: UIResponder {
         }
     }
     
-    private var themeMakers: NSMutableArray? {
+    private var themeMakers: [ThemeMakerWrapper]? {
         get {
             let themeMakers = objc_getAssociatedObject(_base, &AssociatedObject_themeMakers)
-            return themeMakers as? NSMutableArray
+            return themeMakers as? [ThemeMakerWrapper]
         }
         set {
             objc_setAssociatedObject(_base, &AssociatedObject_themeMakers, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -55,10 +55,8 @@ public extension ES where Base: UIResponder {
     }
     
     fileprivate func updateTheme(prevTheme: String?) {
-        for wrapper in themeMakers ?? NSMutableArray() {
-            if let wrapper = wrapper as? ThemeMakerWrapper {
-                wrapper.maker(_base)
-            }
+        for wrapper in themeMakers ?? [] {
+            wrapper.closure()
         }
         if let view = _base as? UIView {
             for subview in view.subviews {
@@ -72,12 +70,18 @@ public extension ES where Base: UIResponder {
     /// 2. view[...superview] didMoveToSuperview()
     /// 3. view[...nextResponder] setTheme(:)
     @discardableResult
-    func makeTheme(_ maker: @escaping (UIResponder) -> Void) -> any Equatable {
+    func makeTheme(_ maker: @escaping (Base) -> Void) -> any Equatable {
         maker(_base)
-        let wrapper = ThemeMakerWrapper(maker)
         
-        let themeMakers = themeMakers ?? NSMutableArray()
-        themeMakers.add(wrapper)
+        // !!!: new closure to erase `Base` type from `ThemeMakerWrapper`
+        let wrapper = ThemeMakerWrapper { [weak _base] in
+            if _base != nil {
+                maker(_base!)
+            }
+        }
+        
+        var themeMakers = themeMakers ?? []
+        themeMakers.append(wrapper)
         
         var this = self
         this.themeMakers = themeMakers
@@ -86,27 +90,31 @@ public extension ES where Base: UIResponder {
     }
     
     @discardableResult
-    func replaceTheme(receipt: any Equatable, _ maker: @escaping (UIResponder) -> Void) -> any Equatable {
+    func replaceTheme(receipt: any Equatable, _ maker: @escaping (Base) -> Void) -> any Equatable {
         removeTheme(receipt: receipt)
         return makeTheme(maker)
     }
     
     @discardableResult
-    func remakeTheme(_ maker: @escaping (UIResponder) -> Void) -> any Equatable {
+    func remakeTheme(_ maker: @escaping (Base) -> Void) -> any Equatable {
         removeThemes()
         return makeTheme(maker)
     }
     
     func removeTheme(receipt: any Equatable) {
-        themeMakers?.remove(receipt)
-        var this = self
-        this.themeMakers = themeMakers
+        var themeMakers = themeMakers
+        themeMakers?.removeAll(where: { wrapper in
+            return wrapper == receipt as? ThemeMakerWrapper
+        })
+        // var this = self
+        // this.themeMakers = themeMakers
     }
     
     func removeThemes() {
-        themeMakers?.removeAllObjects()
-        var this = self
-        this.themeMakers = themeMakers
+        var themeMakers = themeMakers
+        themeMakers?.removeAll()
+        // var this = self
+        // this.themeMakers = themeMakers
     }
 }
 
