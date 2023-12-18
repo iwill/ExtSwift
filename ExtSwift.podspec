@@ -135,6 +135,7 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
         ss.dependency "ExtSwift/tryIndex"
+        ss.dependency "SnapKit", "~> 5.6"
     end
     
     s.subspec "ESDiffableDataSource" do |ss|

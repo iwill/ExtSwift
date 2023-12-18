@@ -16,6 +16,7 @@ import UIKit
 // for [SectionWithItems]
 @resultBuilder
 public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
+    
     public typealias SectionWithItems = (SectionIdentifierType?, [ItemIdentifierType])
     
     public static func buildBlock(_ components: [SectionWithItems]...) -> [SectionWithItems] {

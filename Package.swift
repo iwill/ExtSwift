@@ -17,12 +17,13 @@ let package = Package(
         .library(name: "ExtSwift-Dynamic", type: .dynamic, targets: ["ExtSwift"])
     ],
     dependencies: [
-        // .package(url: "https://github.com/iwill/ExCodable", from: "0.2.0")
+        // .package(url: "https://github.com/iwill/ExCodable", from: "0.2.0"),
+        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0")
     ],
     targets: [
         .target(
             name: "ExtSwift",
-            dependencies: [] // "ExCodable"
+            dependencies: ["SnapKit"] // "ExCodable"
         ),
         .testTarget(
             name: "ExtSwiftTests",
