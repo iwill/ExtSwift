@@ -17,6 +17,10 @@ public typealias UIEdgeInsets = NSEdgeInsets
 import Foundation
 #endif
 
+// MARK: ESNameSpace
+
+extension UIResponder: ESNameSpace {}
+
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
 infix operator |: AdditionPrecedence
 
@@ -58,9 +62,7 @@ public extension UIEdgeInsets {
 }
 #endif
 
-// MARK: ESNameSpace
 
-extension UIResponder: ESNameSpace {}
 
 // MARK: Mutable
 

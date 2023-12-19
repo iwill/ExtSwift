@@ -7,9 +7,15 @@
 //
 
 #if os(iOS) || os(tvOS)
-
 import UIKit
+#elseif os(macOS)
+import AppKit
+public typealias UIApplication = NSApplication
+public typealias UIApplicationDelegate = NSApplicationDelegate
+// public typealias UIWindowSceneDelegate = NSWindowSceneDelegate
+#endif
 
+#if os(iOS) || os(tvOS) || os(macOS)
 private class ThemeMakerWrapper: Equatable {
     
     let closure: () -> Void
@@ -106,15 +112,15 @@ public extension ES where Base: UIResponder {
         themeMakers?.removeAll(where: { wrapper in
             return wrapper == receipt as? ThemeMakerWrapper
         })
-        // var this = self
-        // this.themeMakers = themeMakers
+        var this = self
+        this.themeMakers = themeMakers
     }
     
     func removeThemes() {
         var themeMakers = themeMakers
         themeMakers?.removeAll()
-        // var this = self
-        // this.themeMakers = themeMakers
+        var this = self
+        this.themeMakers = themeMakers
     }
 }
 
@@ -135,10 +141,4 @@ public extension ES where Base: UIView {
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
 }
-
-#elseif os(macOS)
-import AppKit
-public typealias UIApplication = NSApplication
-public typealias UIApplicationDelegate = NSApplicationDelegate
-// public typealias UIWindowSceneDelegate = NSWindowSceneDelegate
 #endif
