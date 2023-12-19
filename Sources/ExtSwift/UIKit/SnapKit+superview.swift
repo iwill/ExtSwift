@@ -3,7 +3,7 @@
 //  ExtSwift
 //
 //  Created by Míng on 2023-12-19.
-//  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
+//  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 #if os(iOS) || os(tvOS)

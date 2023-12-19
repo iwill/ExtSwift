@@ -1,8 +1,9 @@
 //
 //  ThemeTests.swift
-//  
+//  ExtSwift
 //
 //  Created by Míng on 2023-12-14.
+//  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 import XCTest
