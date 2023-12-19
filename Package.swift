@@ -8,12 +8,11 @@ let package = Package(
         // supported min versions for `swift-tools-version:5.9`
         .iOS(.v12),
         .tvOS(.v12),
-        .macOS(.v10_13),
-        .watchOS(.v4)
+        .macOS(.v10_13)
     ],
     products: [
         .library(name: "ExtSwift", targets: ["ExtSwift"]),
-        .library(name: "ExtSwift-Static", type: .static, targets: ["ExtSwift"]),
+        // .library(name: "ExtSwift-Static", type: .static, targets: ["ExtSwift"]),
         .library(name: "ExtSwift-Dynamic", type: .dynamic, targets: ["ExtSwift"])
     ],
     dependencies: [

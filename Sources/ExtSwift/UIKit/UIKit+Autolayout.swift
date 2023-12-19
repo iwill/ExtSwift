@@ -8,7 +8,7 @@
 
 #if os(iOS) || os(tvOS)
 import UIKit
-#elseif os(macOS)
+#else
 import AppKit
 public typealias UIScrollView = NSScrollView
 public typealias UIViewController = NSViewController
@@ -17,8 +17,6 @@ public class UILayoutSupport {}
 #endif
 
 // MARK: -
-
-#if os(iOS) || os(tvOS) || os(macOS)
 
 public extension ES where Base: UIView {
     @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
@@ -29,8 +27,6 @@ public extension ES where Base: UIView {
         return nil
     }
 }
-
-#endif
 
 // MARK: -
 

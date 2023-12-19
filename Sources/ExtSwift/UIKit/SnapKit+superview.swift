@@ -6,7 +6,12 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if os(iOS) || os(tvOS)
 import UIKit
+#else
+import AppKit
+#endif
+
 import SnapKit
 
 public extension ConstraintViewDSL {

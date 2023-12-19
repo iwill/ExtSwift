@@ -8,13 +8,11 @@
 
 #if os(iOS) || os(tvOS)
 import UIKit
-#elseif os(macOS)
+#else
 import AppKit
 public typealias UIResponder = NSResponder
 public typealias UIView = NSView
 public typealias UIEdgeInsets = NSEdgeInsets
-#else
-import Foundation
 #endif
 
 // MARK: ESNameSpace
@@ -51,7 +49,6 @@ public extension UIColor {
 
 // MARK: UIEdgeInsets
 
-#if os(iOS) || os(tvOS) || os(macOS)
 public extension UIEdgeInsets {
     init(top: Double, left: Double, bottom: Double, right: Double) {
         self.init(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
@@ -60,13 +57,11 @@ public extension UIEdgeInsets {
         self.init(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
     }
 }
-#endif
 
 
 
 // MARK: Mutable
 
-#if os(iOS) || os(tvOS) || os(macOS)
 
 public protocol ResponderMutable: UIResponder {}
 extension UIResponder: ResponderMutable, Mutable {}
@@ -77,5 +72,3 @@ public extension ResponderMutable where Self: UIView {
         mutate(self)
     }
 }
-
-#endif
