@@ -16,49 +16,50 @@ import SnapKit
 @resultBuilder
 public struct UIViewBuilder: Hashable {
     
-    public typealias UIViewAndConstraint = (UIView, [Constraint]?)
+    public typealias ConstraintClosure = (_ make: ConstraintMaker) -> Void
+    public typealias ViewAndConstraintClosure = (UIView, ConstraintClosure?)
     
-    public static func buildBlock(_ components: UIViewAndConstraint...) -> [UIViewAndConstraint] {
+    public static func buildBlock(_ components: ViewAndConstraintClosure...) -> [ViewAndConstraintClosure] {
         return components
     }
     
-    public static func buildBlock(_ components: [UIViewAndConstraint]...) -> [UIViewAndConstraint] {
+    public static func buildBlock(_ components: [ViewAndConstraintClosure]...) -> [ViewAndConstraintClosure] {
         return components.flatMap { $0 }
     }
     
-    public static func buildOptional(_ components: [UIViewAndConstraint]?) -> [UIViewAndConstraint] {
+    public static func buildOptional(_ components: [ViewAndConstraintClosure]?) -> [ViewAndConstraintClosure] {
         return components ?? []
     }
     
-    public static func buildEither(first components: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+    public static func buildEither(first components: [ViewAndConstraintClosure]) -> [ViewAndConstraintClosure] {
         return components
     }
     
-    public static func buildEither(second components: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+    public static func buildEither(second components: [ViewAndConstraintClosure]) -> [ViewAndConstraintClosure] {
         return components
     }
     
-    public static func buildArray(_ components: [[UIViewAndConstraint]]) -> [UIViewAndConstraint] {
+    public static func buildArray(_ components: [[ViewAndConstraintClosure]]) -> [ViewAndConstraintClosure] {
         return components.flatMap { $0 }
     }
     
-    public static func buildExpression(_ expression: UIViewAndConstraint) -> [UIViewAndConstraint] {
+    public static func buildExpression(_ expression: ViewAndConstraintClosure) -> [ViewAndConstraintClosure] {
         return [expression]
     }
     
-    public static func buildExpression(_ expression: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+    public static func buildExpression(_ expression: [ViewAndConstraintClosure]) -> [ViewAndConstraintClosure] {
         return [expression].flatMap { $0 }
     }
     
-    public static func buildExpression(_ expression: UIView) -> [UIViewAndConstraint] {
+    public static func buildExpression(_ expression: UIView) -> [ViewAndConstraintClosure] {
         return [(expression, nil)]
     }
     
-    public static func buildExpression(_ expression: [UIView]) -> [UIViewAndConstraint] {
+    public static func buildExpression(_ expression: [UIView]) -> [ViewAndConstraintClosure] {
         return expression.map { ($0, nil) }
     }
     
-    public static func buildFinalResult(_ components: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+    public static func buildFinalResult(_ components: [ViewAndConstraintClosure]) -> [ViewAndConstraintClosure] {
         return components
     }
 }
@@ -66,18 +67,20 @@ public struct UIViewBuilder: Hashable {
 public extension ES where Base: UIView {
     
     @discardableResult
-    func build(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.UIViewAndConstraint]) -> [some UIView] {
-        let viewAndConstraints = buildSubviewsAndConstraints()
-        for (subview, constraints) in viewAndConstraints {
+    func build(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.ViewAndConstraintClosure]) -> [some UIView] {
+        let viewAndConstraintClosureArray = buildSubviewsAndConstraints()
+        for (subview, _) in viewAndConstraintClosureArray {
             _base.addSubview(subview)
-            for constraint in constraints ?? [] {
-                constraint.activate()
+        }
+        for (subview, closure) in viewAndConstraintClosureArray {
+            if closure != nil {
+                subview.snp.makeConstraints(closure!)
             }
         }
-        return viewAndConstraints.map { $0.0 }
+        return viewAndConstraintClosureArray.map { $0.0 }
     }
     
-    func buildConstraints(_ closure: (_ make: ConstraintMaker) -> Void) -> UIViewBuilder.UIViewAndConstraint {
-        return (_base, _base.snp.prepareConstraints(closure))
+    func buildConstraints(_ closure: @escaping UIViewBuilder.ConstraintClosure) -> UIViewBuilder.ViewAndConstraintClosure {
+        return (_base, closure)
     }
 }
