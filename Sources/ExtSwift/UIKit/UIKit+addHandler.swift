@@ -6,26 +6,15 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if os(iOS) || os(tvOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 private var AssociatedObject_handlerWrappers: UInt8 = 0
 
 // MARK: UIControl
-
-fileprivate class EventHandlerWrapper: Equatable {
-    private let handler: (_ sender: UIControl, UIControl.Event) -> Void
-    let event: UIControl.Event
-    init(event:UIControl.Event, handler: @escaping (_ sender: UIControl, UIControl.Event) -> Void) {
-        self.event = event
-        self.handler = handler
-    }
-    @objc func action(with sender: UIControl) {
-        handler(sender, event)
-    }
-    static func == (lhs: EventHandlerWrapper, rhs: EventHandlerWrapper) -> Bool {
-        return lhs === rhs
-    }
-}
 
 public extension ES where Base: UIControl {
     
@@ -98,29 +87,22 @@ public extension ES where Base: UIButton {
     }
 }
 
-// MARK: UIBarButtonItem
-
-fileprivate class UIBarButtonItemActionHandlerWrapper: Equatable {
-    private let handler: (_ sender: UIBarButtonItem) -> Void
-    init(_ handler: @escaping (_ sender: UIBarButtonItem) -> Void) {
+fileprivate class EventHandlerWrapper: Equatable {
+    private let handler: (_ sender: UIControl, UIControl.Event) -> Void
+    let event: UIControl.Event
+    init(event:UIControl.Event, handler: @escaping (_ sender: UIControl, UIControl.Event) -> Void) {
+        self.event = event
         self.handler = handler
     }
-    func action(with sender: UIBarButtonItem) {
-        handler(sender)
+    @objc func action(with sender: UIControl) {
+        handler(sender, event)
     }
-    static func == (lhs: UIBarButtonItemActionHandlerWrapper, rhs: UIBarButtonItemActionHandlerWrapper) -> Bool {
+    static func == (lhs: EventHandlerWrapper, rhs: EventHandlerWrapper) -> Bool {
         return lhs === rhs
     }
 }
 
-fileprivate extension UIBarButtonItem {
-    @objc func _es_action(with sender: UIBarButtonItem) {
-        let wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [UIBarButtonItemActionHandlerWrapper] ?? []
-        for wrapper in wrappers {
-            wrapper.action(with: sender)
-        }
-    }
-}
+// MARK: UIBarButtonItem
 
 public extension ES where Base: UIBarButtonItem {
     
@@ -148,20 +130,29 @@ public extension ES where Base: UIBarButtonItem {
     }
 }
 
-// MARK: UIGestureRecognizer
-
-private class UIGestureRecognizerActionHandlerWrapper: Equatable {
-    private let handler: (_ sender: UIGestureRecognizer) -> Void
-    init(_ handler: @escaping (_ sender: UIGestureRecognizer) -> Void) {
+fileprivate class UIBarButtonItemActionHandlerWrapper: Equatable {
+    private let handler: (_ sender: UIBarButtonItem) -> Void
+    init(_ handler: @escaping (_ sender: UIBarButtonItem) -> Void) {
         self.handler = handler
     }
-    @objc func action(with sender: UIGestureRecognizer) {
+    func action(with sender: UIBarButtonItem) {
         handler(sender)
     }
-    static func == (lhs: UIGestureRecognizerActionHandlerWrapper, rhs: UIGestureRecognizerActionHandlerWrapper) -> Bool {
+    static func == (lhs: UIBarButtonItemActionHandlerWrapper, rhs: UIBarButtonItemActionHandlerWrapper) -> Bool {
         return lhs === rhs
     }
 }
+
+fileprivate extension UIBarButtonItem {
+    @objc func _es_action(with sender: UIBarButtonItem) {
+        let wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [UIBarButtonItemActionHandlerWrapper] ?? []
+        for wrapper in wrappers {
+            wrapper.action(with: sender)
+        }
+    }
+}
+
+// MARK: UIGestureRecognizer
 
 public extension ES where Base: UIGestureRecognizer {
     
@@ -190,5 +181,18 @@ public extension ES where Base: UIGestureRecognizer {
             _base.removeTarget(wrapper, action: #selector(UIGestureRecognizerActionHandlerWrapper.action(with:)))
         }
         objc_setAssociatedObject(_base, &AssociatedObject_handlerWrappers, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+}
+
+private class UIGestureRecognizerActionHandlerWrapper: Equatable {
+    private let handler: (_ sender: UIGestureRecognizer) -> Void
+    init(_ handler: @escaping (_ sender: UIGestureRecognizer) -> Void) {
+        self.handler = handler
+    }
+    @objc func action(with sender: UIGestureRecognizer) {
+        handler(sender)
+    }
+    static func == (lhs: UIGestureRecognizerActionHandlerWrapper, rhs: UIGestureRecognizerActionHandlerWrapper) -> Bool {
+        return lhs === rhs
     }
 }

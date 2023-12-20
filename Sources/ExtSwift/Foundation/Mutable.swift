@@ -64,8 +64,10 @@ public func mutate<T: AnyObject>(_ value: T?, _ mutate: (T?) -> Void) -> T? {
 }
 
 // MARK: for reference-type
+// MARK: deprecated - prevent value-type methods being used for reference-type
 
 public extension Mutable where Self: AnyObject {
+    @available(*, deprecated, message: "Use `mutate(_:)` instead.")
     func mutating(_ mutate: (Self) -> Void) -> Self {
         mutate(self)
         return self
@@ -73,18 +75,21 @@ public extension Mutable where Self: AnyObject {
 }
 
 extension Optional where Wrapped: Mutable {
+    @available(*, deprecated, message: "Use `mutate(_:)` instead.")
     func mutating(_ mutate: (Self) -> Void) -> Self {
         mutate(self)
         return self
     }
 }
 
+@available(*, deprecated, message: "Use `mutate(_:mutate:)` instead.")
 public func mutating<T: AnyObject>(_ value: T, _ mutate: (inout T) -> Void) -> T {
     var value = value
     mutate(&value)
     return value
 }
 
+@available(*, deprecated, message: "Use `mutate(_:mutate:)` instead.")
 public func mutating<T: AnyObject>(_ value: T?, _ mutate: (inout T?) -> Void) -> T? {
     var value = value
     mutate(&value)
