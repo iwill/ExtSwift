@@ -6,12 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-import Foundation
-#if os(iOS) || os(tvOS)
 import UIKit
-#endif
-
-#if swift(>=5.4)
 
 // for [SectionWithItems]
 @resultBuilder
@@ -138,8 +133,6 @@ public struct ESRow: Hashable, ExpressibleByIntegerLiteral {
     }
 }
 
-#if os(iOS) || os(tvOS)
-
 public extension ESCollectionViewDiffableDataSource {
     func apply(@ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> _ snapshot: () -> ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>) {
         apply(snapshot())
@@ -151,7 +144,3 @@ public extension ESTableViewDiffableDataSource {
         apply(snapshot())
     }
 }
-
-#endif
-
-#endif

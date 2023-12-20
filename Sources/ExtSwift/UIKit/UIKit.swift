@@ -6,14 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if os(iOS) || os(tvOS)
 import UIKit
-#else
-import AppKit
-public typealias UIResponder = NSResponder
-public typealias UIView = NSView
-public typealias UIEdgeInsets = NSEdgeInsets
-#endif
 
 // MARK: ESNameSpace
 
@@ -32,7 +25,6 @@ public extension String {
 
 // MARK: UIColor
 
-#if os(iOS) || os(tvOS)
 public extension UIColor {
     static func | (light: UIColor, dark: UIColor) -> UIColor {
         guard #available(iOS 13.0, tvOS 13.0, *) else { return light }
@@ -45,7 +37,6 @@ public extension UIColor {
         return resolvedColor(with: .init(userInterfaceStyle: userInterfaceStyle))
     }
 }
-#endif
 
 // MARK: UIEdgeInsets
 
@@ -58,10 +49,7 @@ public extension UIEdgeInsets {
     }
 }
 
-
-
 // MARK: Mutable
-
 
 public protocol ResponderMutable: UIResponder {}
 extension UIResponder: ResponderMutable, Mutable {}

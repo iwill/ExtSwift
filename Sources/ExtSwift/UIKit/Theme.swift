@@ -6,14 +6,7 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if os(iOS) || os(tvOS)
 import UIKit
-#else
-import AppKit
-public typealias UIApplication = NSApplication
-public typealias UIApplicationDelegate = NSApplicationDelegate
-// public typealias UIWindowSceneDelegate = NSWindowSceneDelegate
-#endif
 
 private class ThemeMakerWrapper: Equatable {
     

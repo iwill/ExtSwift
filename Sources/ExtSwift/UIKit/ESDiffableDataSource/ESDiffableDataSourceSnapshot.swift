@@ -6,10 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-import Foundation
-#if os(iOS) || os(tvOS)
 import UIKit
-#endif
 
 /// #see NSDiffableDataSourceSnapshot
 
@@ -154,8 +151,6 @@ public extension ESDiffableDataSourceSnapshot {
     }
 }
 
-#if os(iOS) || os(tvOS)
-
 public extension ESDiffableDataSourceSnapshot {
     
     func sectionIdentifier(in section: Int) -> SectionIdentifierType? {
@@ -192,5 +187,3 @@ public extension ESDiffableDataSourceSnapshot {
         return IndexPath(item: item, section: section)
     }
 }
-
-#endif

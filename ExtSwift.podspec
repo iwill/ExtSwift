@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name          = "ExtSwift"
-    s.version       = "2.0.0-dev"
+    s.version       = "2.0.0"
     s.summary       = "Extensions for Swift"
     # s.description   = "Extensions for Swift."
     s.homepage      = "https://github.com/iwill/ExtSwift"
@@ -15,9 +15,8 @@ Pod::Spec.new do |s|
     # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.ios.deployment_target = "12.0"
     s.tvos.deployment_target = "12.0"
-    s.osx.deployment_target = "10.14"
-    s.watchos.deployment_target = "5.0"
-    s.swift_version = "5.0"
+    # s.osx.deployment_target = "10.13"
+    s.swift_version = "5.9"
     
     # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.source        = { :git => "https://github.com/iwill/ExtSwift.git", :tag => s.version.to_s }

@@ -6,8 +6,6 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if os(iOS) || os(tvOS)
-
 import UIKit
 
 public class UITableViewCellValue1: UITableViewCell {
@@ -36,5 +34,3 @@ public class UITableViewCellValueSubtitle: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-#endif

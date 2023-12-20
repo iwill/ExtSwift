@@ -6,15 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if os(iOS) || os(tvOS)
 import UIKit
-#else
-import AppKit
-public typealias UIScrollView = NSScrollView
-public typealias UIViewController = NSViewController
-public typealias UILayoutGuide = NSLayoutGuide
-public class UILayoutSupport {}
-#endif
 
 // MARK: -
 
@@ -29,8 +21,6 @@ public extension ES where Base: UIView {
 }
 
 // MARK: -
-
-#if os(iOS) || os(tvOS)
 
 public extension ES where Base: UIScrollView {
     @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.contentLayoutGuide` instead")
@@ -53,26 +43,16 @@ public extension ES where Base: UIScrollView {
 public extension ES where Base: UIViewController {
     @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
     var topLayoutGuide: UILayoutSupport? {
-#if targetEnvironment(macCatalyst)
-        return nil
-#else
         if #available(iOS 11, tvOS 11, *) {
             return nil // Use `view.safeAreaLayoutGuide.topAnchor` instead
         }
         return _base.topLayoutGuide
-#endif
     }
     @available(iOS, introduced: 7.0, deprecated: 11.0, message: "Use `view.safeAreaLayoutGuide` instead")
     var bottomLayoutGuide: UILayoutSupport? {
-#if targetEnvironment(macCatalyst)
-        return nil
-#else
         if #available(iOS 11, tvOS 11, *) {
             return nil // Use `view.safeAreaLayoutGuide.bottomAnchor` instead
         }
         return _base.bottomLayoutGuide
-#endif
     }
 }
-
-#endif
