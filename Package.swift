@@ -26,7 +26,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ExtSwiftTests",
-            dependencies: ["ExtSwift"]) // "ExCodable"
+            dependencies: ["ExtSwift", "SnapKit"]) // "ExCodable"
     ],
     swiftLanguageVersions: [.v5]
 )

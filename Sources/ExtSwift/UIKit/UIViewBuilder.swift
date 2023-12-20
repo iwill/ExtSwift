@@ -21,13 +21,53 @@ public struct UIViewBuilder: Hashable {
     public static func buildBlock(_ components: UIViewAndConstraint...) -> [UIViewAndConstraint] {
         return components
     }
+    
+    public static func buildBlock(_ components: [UIViewAndConstraint]...) -> [UIViewAndConstraint] {
+        return components.flatMap { $0 }
+    }
+    
+    public static func buildOptional(_ components: [UIViewAndConstraint]?) -> [UIViewAndConstraint] {
+        return components ?? []
+    }
+    
+    public static func buildEither(first components: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+        return components
+    }
+    
+    public static func buildEither(second components: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+        return components
+    }
+    
+    public static func buildArray(_ components: [[UIViewAndConstraint]]) -> [UIViewAndConstraint] {
+        return components.flatMap { $0 }
+    }
+    
+    public static func buildExpression(_ expression: UIViewAndConstraint) -> [UIViewAndConstraint] {
+        return [expression]
+    }
+    
+    public static func buildExpression(_ expression: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+        return [expression].flatMap { $0 }
+    }
+    
+    public static func buildExpression(_ expression: UIView) -> [UIViewAndConstraint] {
+        return [(expression, nil)]
+    }
+    
+    public static func buildExpression(_ expression: [UIView]) -> [UIViewAndConstraint] {
+        return expression.map { ($0, nil) }
+    }
+    
+    public static func buildFinalResult(_ components: [UIViewAndConstraint]) -> [UIViewAndConstraint] {
+        return components
+    }
 }
 
 public extension ES where Base: UIView {
     
     @discardableResult
-    func build(@UIViewBuilder _ makeSubviews: () -> [UIViewBuilder.UIViewAndConstraint]) -> [UIView] {
-        let viewAndConstraints = makeSubviews()
+    func build(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.UIViewAndConstraint]) -> [some UIView] {
+        let viewAndConstraints = buildSubviewsAndConstraints()
         for (subview, constraints) in viewAndConstraints {
             _base.addSubview(subview)
             for constraint in constraints ?? [] {
