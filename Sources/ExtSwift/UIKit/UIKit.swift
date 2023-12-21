@@ -27,13 +27,11 @@ public extension String {
 
 public extension UIColor {
     static func | (light: UIColor, dark: UIColor) -> UIColor {
-        guard #available(iOS 13.0, tvOS 13.0, *) else { return light }
         return UIColor { traitCollection -> UIColor in
             return traitCollection.userInterfaceStyle == .dark ? dark : light
         }
     }
     func resolvedColor(with userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        guard #available(iOS 13.0, tvOS 13.0, *) else { return self }
         return resolvedColor(with: .init(userInterfaceStyle: userInterfaceStyle))
     }
 }

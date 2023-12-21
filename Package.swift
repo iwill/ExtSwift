@@ -6,9 +6,9 @@ let package = Package(
     name: "ExtSwift",
     platforms: [
         // supported min versions for `swift-tools-version:5.9`
-        .iOS(.v12),
-        .tvOS(.v12)
-        // .macOS(.v10_13)
+        .iOS(.v13),
+        .tvOS(.v13)
+        // .macOS(.v11)
     ],
     products: [
         .library(name: "ExtSwift", targets: ["ExtSwift"]),

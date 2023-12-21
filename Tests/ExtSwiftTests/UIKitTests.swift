@@ -8,9 +8,7 @@
 
 import XCTest
 
-#if os(iOS) || os(tvOS)
 import UIKit
-#endif
 
 // @testable
 import ExtSwift
@@ -18,7 +16,6 @@ import ExtSwift
 final class UIKitTests: XCTestCase {
     
     func testMakable() {
-        #if os(iOS) || os(tvOS)
         let view = UIView { view in
             view.backgroundColor = .white
         }
@@ -33,6 +30,5 @@ final class UIKitTests: XCTestCase {
         }
         view.addSubview(label)
         XCTAssertEqual(label.superview, view)
-        #endif
     }
 }
