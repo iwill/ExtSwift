@@ -16,6 +16,11 @@ import ExtSwift
 final class UIKitTests: XCTestCase {
     
     func testMakable() {
+        let frame = CGRectZero.mutating { rect in
+            rect.size = CGSizeMake(1.0, 1.0)
+        }
+        XCTAssertEqual(frame, CGRectMake(0.0, 0.0, 1.0, 1.0))
+        
         let view = UIView { view in
             view.backgroundColor = .white
         }

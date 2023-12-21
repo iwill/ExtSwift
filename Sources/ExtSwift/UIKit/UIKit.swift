@@ -49,6 +49,11 @@ public extension UIEdgeInsets {
 
 // MARK: Mutable
 
+extension CGPoint: Mutable {}
+extension CGSize: Mutable {}
+extension CGRect: Mutable {}
+
+// constrain conforming types to subclasses of UIResponder
 public protocol ResponderMutable: UIResponder {}
 extension UIResponder: ResponderMutable, Mutable {}
 
