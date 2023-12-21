@@ -8,18 +8,18 @@
 
 import Foundation
 
-// MARK: value-type
-
 /// - seealso: [solution](https://stackoverflow.com/a/42356615/456536)
 /// - seealso: [issue](https://bugs.swift.org/browse/SR-10121)
 /// - seealso: [pr](https://github.com/apple/swift/pull/23430)
 public protocol Mutable {}
 public extension Mutable {
+    // mutate self, returning self for chaining
     @discardableResult
     mutating func mutate(_ mutate: (inout Self) -> Void) -> Self {
         mutate(&self)
         return self
     }
+    // mutating an immutable value and returning a new one
     func mutating(_ mutate: (inout Self) -> Void) -> Self {
         var value = self
         mutate(&value)
@@ -27,7 +27,17 @@ public extension Mutable {
     }
 }
 
-// not suggested for reference-type
+extension Optional: Mutable where Wrapped: Mutable {
+    @discardableResult
+    func mutate(_ mutate: (Self) -> Void) -> Self {
+        mutate(self)
+        return self
+    }
+}
+
+// MARK: value-type
+
+// not recommended for reference-type
 public func mutating<T>(_ value: T, _ mutate: (inout T) -> Void) -> T {
     var value = value
     mutate(&value)
@@ -37,14 +47,6 @@ public func mutating<T>(_ value: T, _ mutate: (inout T) -> Void) -> T {
 // MARK: reference-type
 
 public extension Mutable where Self: AnyObject {
-    @discardableResult
-    func mutate(_ mutate: (Self) -> Void) -> Self {
-        mutate(self)
-        return self
-    }
-}
-
-extension Optional: Mutable where Wrapped: Mutable {
     @discardableResult
     func mutate(_ mutate: (Self) -> Void) -> Self {
         mutate(self)
