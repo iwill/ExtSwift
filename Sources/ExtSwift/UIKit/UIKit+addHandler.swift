@@ -15,7 +15,7 @@ private var AssociatedObject_handlerWrappers: UInt8 = 0
 public extension ES where Base: UIControl {
     
     @discardableResult
-    func addHandler(for events: UIControl.Event, _ handler: @escaping (UIControl, UIControl.Event) -> Void) -> Any {
+    func addHandler(for events: UIControl.Event, _ handler: @escaping (_ control: UIControl, _ event: UIControl.Event) -> Void) -> Any {
         var wrappers = objc_getAssociatedObject(_base, &AssociatedObject_handlerWrappers) as? [EventHandlerWrapper] ?? []
         var targets: [EventHandlerWrapper] = []
         
@@ -72,7 +72,7 @@ public extension ES where Base: UIControl {
 public extension ES where Base: UIButton {
     
     @discardableResult
-    func addHandler(_ handler: @escaping (Base) -> Void) -> Any {
+    func addHandler(_ handler: @escaping (_ button: Base) -> Void) -> Any {
         addHandler(for: .touchUpInside) { sender, event in
             handler(sender as! Base)
         }
@@ -84,9 +84,9 @@ public extension ES where Base: UIButton {
 }
 
 fileprivate class EventHandlerWrapper: Equatable {
-    private let handler: (_ sender: UIControl, UIControl.Event) -> Void
+    private let handler: (_ sender: UIControl, _ event: UIControl.Event) -> Void
     let event: UIControl.Event
-    init(event:UIControl.Event, handler: @escaping (_ sender: UIControl, UIControl.Event) -> Void) {
+    init(event:UIControl.Event, handler: @escaping (_ sender: UIControl, _ event: UIControl.Event) -> Void) {
         self.event = event
         self.handler = handler
     }
@@ -102,7 +102,8 @@ fileprivate class EventHandlerWrapper: Equatable {
 
 public extension ES where Base: UIBarButtonItem {
     
-    func addHandler(_ handler: @escaping (UIBarButtonItem) -> Void) -> Any {
+    @discardableResult
+    func addHandler(_ handler: @escaping (_ item: UIBarButtonItem) -> Void) -> Any {
         _base.target = _base
         _base.action = #selector(UIBarButtonItem._es_action(with:))
         var wrappers = objc_getAssociatedObject(_base, &AssociatedObject_handlerWrappers) as? [UIBarButtonItemActionHandlerWrapper] ?? []
@@ -150,9 +151,17 @@ fileprivate extension UIBarButtonItem {
 
 // MARK: UIGestureRecognizer
 
+extension UIGestureRecognizer: ESNameSpace {
+    public convenience init(_ handler: @escaping (_ gesture: UIGestureRecognizer) -> Void) {
+        self.init()
+        es.addHandler(handler)
+    }
+}
+
 public extension ES where Base: UIGestureRecognizer {
     
-    func addHandler(_ handler: @escaping (UIGestureRecognizer) -> Void) -> Any {
+    @discardableResult
+    func addHandler(_ handler: @escaping (_ gesture: UIGestureRecognizer) -> Void) -> Any {
         var wrappers = objc_getAssociatedObject(_base, &AssociatedObject_handlerWrappers) as? [UIGestureRecognizerActionHandlerWrapper] ?? []
         let wrapper = UIGestureRecognizerActionHandlerWrapper(handler)
         _base.addTarget(wrapper, action: #selector(UIGestureRecognizerActionHandlerWrapper.action(with:)))
@@ -181,12 +190,12 @@ public extension ES where Base: UIGestureRecognizer {
 }
 
 private class UIGestureRecognizerActionHandlerWrapper: Equatable {
-    private let handler: (_ sender: UIGestureRecognizer) -> Void
-    init(_ handler: @escaping (_ sender: UIGestureRecognizer) -> Void) {
+    private let handler: (_ gesture: UIGestureRecognizer) -> Void
+    init(_ handler: @escaping (_ gesture: UIGestureRecognizer) -> Void) {
         self.handler = handler
     }
-    @objc func action(with sender: UIGestureRecognizer) {
-        handler(sender)
+    @objc func action(with gesture: UIGestureRecognizer) {
+        handler(gesture)
     }
     static func == (lhs: UIGestureRecognizerActionHandlerWrapper, rhs: UIGestureRecognizerActionHandlerWrapper) -> Bool {
         return lhs === rhs
