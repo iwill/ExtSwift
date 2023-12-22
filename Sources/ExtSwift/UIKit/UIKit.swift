@@ -26,6 +26,7 @@ public extension String {
 // MARK: UIColor
 
 public extension UIColor {
+    
     static func | (light: UIColor, dark: UIColor) -> UIColor {
         return UIColor { traitCollection -> UIColor in
             return traitCollection.userInterfaceStyle == .dark ? dark : light
@@ -33,6 +34,41 @@ public extension UIColor {
     }
     func resolvedColor(with userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
         return resolvedColor(with: .init(userInterfaceStyle: userInterfaceStyle))
+    }
+    
+    convenience init(hex: UInt64) {
+        self.init(hex: hex, alpha: 1.0)
+    }
+    convenience init(hex: UInt64, alpha: CGFloat) {
+        let r = (hex & 0xFF0000) >> 16,
+            g = (hex & 0x00FF00) >> 8,
+            b = (hex & 0x0000FF)
+        self.init(red:   CGFloat(r) / 255.0,
+                  green: CGFloat(g) / 255.0,
+                  blue:  CGFloat(b) / 255.0,
+                  alpha: alpha)
+    }
+    
+    convenience init(hex: String) {
+        self.init(hex: hex, alpha: 1.0)
+    }
+    convenience init(hex: String, alpha: CGFloat) {
+        var hexString: String
+        if hex.hasPrefix("#") {
+            hexString = String(hex[1...])
+        }
+        else if hex.hasPrefix("0x") {
+            hexString = String(hex[2...])
+        }
+        else {
+            hexString = hex
+        }
+        guard hexString.count == 6 else {
+            fatalError("invalid hex string: \(hex)")
+        }
+        var hexUInt: UInt64 = 0
+        Scanner(string: hexString).scanHexInt64(&hexUInt)
+        self.init(hex: hexUInt, alpha: alpha)
     }
 }
 

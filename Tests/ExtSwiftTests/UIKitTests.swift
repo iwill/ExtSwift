@@ -21,6 +21,14 @@ final class UIKitTests: XCTestCase {
         }
         XCTAssertEqual(frame, CGRectMake(0.0, 0.0, 1.0, 1.0))
         
+        XCTAssertEqual(UIColor(hex: 0xffffff), .init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        XCTAssertEqual(UIColor(hex: 0xFFFFFF), .init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        XCTAssertEqual(UIColor(hex: 0xFfFfFf), .init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        XCTAssertEqual(UIColor(hex: 0x000000), .init(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0))
+        XCTAssertEqual(UIColor(hex: 0xFF0000), .red)
+        XCTAssertEqual(UIColor(hex: 0x00FF00), .green)
+        XCTAssertEqual(UIColor(hex: 0x0000FF), .blue)
+        
         let view = UIView { view in
             view.backgroundColor = .white
         }
