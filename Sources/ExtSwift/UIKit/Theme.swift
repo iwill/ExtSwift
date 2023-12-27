@@ -27,6 +27,7 @@ private var AssociatedObject_themeMakers: UInt8 = 0
 /// UIResponder: UIApplication, UIWindowScene, UIWindow, UIViewController, UIView, UIControl ...
 public extension ES where Base: UIResponder {
     
+    @available(iOS, introduced: 13.0, deprecated: 17.0, message: "Use `UITraitDefinition` insead: https://developer.apple.com/videos/play/wwdc2023/10057/")
     var theme: String? {
         get {
             let string = objc_getAssociatedObject(_base, &AssociatedObject_theme) as? String
