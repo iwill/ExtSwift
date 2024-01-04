@@ -84,3 +84,30 @@ public extension ES where Base: UIView {
         return (_base, closure)
     }
 }
+
+public extension ES where Base: UIControl {
+    
+    @discardableResult
+    func buildHandler(for events: UIControl.Event, _ handler: @escaping (_ control: UIControl, _ event: UIControl.Event) -> Void) -> Base {
+        addHandler(for: events, handler)
+        return _base
+    }
+}
+
+public extension ES where Base: UIButton {
+    
+    @discardableResult
+    func buildHandler(_ handler: @escaping (_ button: Base) -> Void) -> Base {
+        addHandler(handler)
+        return _base
+    }
+}
+
+public extension ES where Base: UITextField {
+    
+    @discardableResult
+    func buildHandler(_ handler: @escaping (_ button: Base) -> Void) -> Base {
+        addHandler(handler)
+        return _base
+    }
+}
