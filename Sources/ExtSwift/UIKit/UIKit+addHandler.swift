@@ -102,6 +102,24 @@ public extension ES where Base: UIButton {
     }
 }
 
+// MARK: UITextField
+
+public extension ES where Base: UITextField {
+    
+    private var commonEvents: UIControl.Event { .allEditingEvents }
+    
+    @discardableResult
+    func addHandler(_ handler: @escaping (_ button: Base) -> Void) -> Any {
+        return addHandler(for: commonEvents) { sender, event in
+            handler(sender as! Base)
+        }
+    }
+    
+    func removeHandler(with target: Any) {
+        removeHandler(with: target, for: commonEvents)
+    }
+}
+
 // MARK: UIBarButtonItem
 
 public extension ES where Base: UIBarButtonItem {
