@@ -10,41 +10,41 @@ import UIKit
 
 public extension UIViewController {
     
-    func addChild(_ childController: UIViewController) {
-        addChild(childController, superview: view)
+    func add(child controller: UIViewController) {
+        add(child: controller, superview: view)
     }
     
-    func addChild(_ childController: UIViewController, superview: UIView) {
+    func add(child controller: UIViewController, superview: UIView) {
         /* The addChildViewController: method automatically calls the willMoveToParentViewController: method
          * of the view controller to be added as a child before adding it.
          */
-        addChild(childController) // 1
-        superview.addSubview(childController.view) // 2
-        childController.didMove(toParent: self) // 3
+        addChild(controller) // 1
+        superview.addSubview(controller.view) // 2
+        controller.didMove(toParent: self) // 3
     }
     
-    func addChild(_ childController: UIViewController, superview: UIView, at index: NSInteger) {
-        addChild(childController) // 1
-        superview.insertSubview(childController.view, at: index) // 2
-        childController.didMove(toParent: self) // 3
+    func add(child controller: UIViewController, superview: UIView, at index: NSInteger) {
+        addChild(controller) // 1
+        superview.insertSubview(controller.view, at: index) // 2
+        controller.didMove(toParent: self) // 3
     }
     
-    func addChild(_ childController: UIViewController, superview: UIView, belowSubview siblingSubview: UIView) {
-        addChild(childController) // 1
-        superview.insertSubview(childController.view, belowSubview: siblingSubview) // 2
-        childController.didMove(toParent: self) // 3
+    func add(child controller: UIViewController, superview: UIView, belowSubview siblingSubview: UIView) {
+        addChild(controller) // 1
+        superview.insertSubview(controller.view, belowSubview: siblingSubview) // 2
+        controller.didMove(toParent: self) // 3
     }
     
-    func addChild(_ childController: UIViewController, superview: UIView, aboveSubview siblingSubview: UIView) {
-        addChild(childController) // 1
-        superview.insertSubview(childController.view, aboveSubview: siblingSubview) // 2
-        childController.didMove(toParent: self) // 3
+    func add(child controller: UIViewController, superview: UIView, aboveSubview siblingSubview: UIView) {
+        addChild(controller) // 1
+        superview.insertSubview(controller.view, aboveSubview: siblingSubview) // 2
+        controller.didMove(toParent: self) // 3
     }
     
-    func addChild(_ childController: UIViewController, addSubview: (_ parentView: UIView, _ childView: UIView) -> Void) {
-        addChild(childController) // 1
-        addSubview(view, childController.view) // 2
-        childController.didMove(toParent: self) // 3
+    func add(child controller: UIViewController, addSubview: (_ parentView: UIView, _ childView: UIView) -> Void) {
+        addChild(controller) // 1
+        addSubview(view, controller.view) // 2
+        controller.didMove(toParent: self) // 3
     }
     
     func removeFromParentViewControllerAndSuperiew() {
