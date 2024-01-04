@@ -13,16 +13,16 @@ import Foundation
 prefix operator     !?  // `!?value == value.isNil`,  from `!value` and `value?`
 prefix operator     ??  // `??value == value.notNil`, from `a ?? b`
 
-public prefix func  !? <T>(v: T?) -> Bool { return v == nil }
-public prefix func  ?? <T>(v: T?) -> Bool { return v != nil }
+public prefix func  !? <T>(v: T?) -> Bool { v == nil }
+public prefix func  ?? <T>(v: T?) -> Bool { v != nil }
 
 // MARK: - boolValue & !boolValue
 
 prefix operator     !!  //  `!!value ==  value.boolValue`
 prefix operator     !!! // `!!!value == !value.boolValue`
 
-public prefix func  !!  <T>(v: T?) -> Bool { return  v.boolValue }
-public prefix func  !!! <T>(v: T?) -> Bool { return !v.boolValue }
+public prefix func  !!  <T>(v: T?) -> Bool {  v.boolValue }
+public prefix func  !!! <T>(v: T?) -> Bool { !v.boolValue }
 
 // MARK: - FalsyCoalescing
 

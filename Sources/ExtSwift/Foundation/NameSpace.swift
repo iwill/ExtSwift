@@ -26,11 +26,11 @@ public typealias ES = NameSpace
 public protocol  ESNameSpace {}
 public extension ESNameSpace {
     static var es: NameSpace<Self>.Type {
-        get { return NameSpace<Self>.self }
+        get { NameSpace<Self>.self }
         set {}
     }
     var es: NameSpace<Self> {
-        get { return NameSpace(self) }
+        get { NameSpace(self) }
         set {}
     }
 }

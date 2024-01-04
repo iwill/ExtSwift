@@ -19,27 +19,27 @@ public protocol BoolValue {
 
 // MARK: - extension
 
-extension Bool   : BoolValue { public var boolValue: Bool { return self        } }
-extension Int    : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension Int8   : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension Int16  : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension Int32  : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension Int64  : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension UInt   : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension UInt8  : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension UInt16 : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension UInt32 : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension UInt64 : BoolValue { public var boolValue: Bool { return self != 0   } }
-extension Double : BoolValue { public var boolValue: Bool { return self != 0.0 } }
-extension Float  : BoolValue { public var boolValue: Bool { return self != 0.0 } }
+extension Bool   : BoolValue { public var boolValue: Bool { self        } }
+extension Int    : BoolValue { public var boolValue: Bool { self != 0   } }
+extension Int8   : BoolValue { public var boolValue: Bool { self != 0   } }
+extension Int16  : BoolValue { public var boolValue: Bool { self != 0   } }
+extension Int32  : BoolValue { public var boolValue: Bool { self != 0   } }
+extension Int64  : BoolValue { public var boolValue: Bool { self != 0   } }
+extension UInt   : BoolValue { public var boolValue: Bool { self != 0   } }
+extension UInt8  : BoolValue { public var boolValue: Bool { self != 0   } }
+extension UInt16 : BoolValue { public var boolValue: Bool { self != 0   } }
+extension UInt32 : BoolValue { public var boolValue: Bool { self != 0   } }
+extension UInt64 : BoolValue { public var boolValue: Bool { self != 0   } }
+extension Double : BoolValue { public var boolValue: Bool { self != 0.0 } }
+extension Float  : BoolValue { public var boolValue: Bool { self != 0.0 } }
 // public typealias Float32 = Float
 // public typealias Float64 = Double
 #if arch(i386) || arch(x86_64)
-extension Float80: BoolValue { public var boolValue: Bool { return self != 0.0 } }
+extension Float80: BoolValue { public var boolValue: Bool { self != 0.0 } }
 #endif
 
-// NO: extension String    : BoolValue { public var boolValue: Bool { return !isEmpty } }
-// NO: extension Array<Any>: BoolValue { public var boolValue: Bool { return !isEmpty } }
+// NO: extension String    : BoolValue { public var boolValue: Bool { !isEmpty } }
+// NO: extension Array<Any>: BoolValue { public var boolValue: Bool { !isEmpty } }
 
 extension Optional: BoolValue {
     public var boolValue: Bool {
@@ -59,7 +59,7 @@ extension Optional: BoolValue {
 
 // OC Types
 #if canImport(CoreGraphics)
-extension CGFloat:  BoolValue { public var boolValue: Bool { return self != 0.0 } }
+extension CGFloat:  BoolValue { public var boolValue: Bool { self != 0.0 } }
 #endif
 extension NSNumber: BoolValue {}
 extension NSString: BoolValue {}

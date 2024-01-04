@@ -13,7 +13,7 @@ final class UIViewBuilderTests: XCTestCase {
     
      func testUIViewBuilder() {
          _ = UIView { view in
-             view.es.build { 
+             view.build { 
                  UIView()
                  UIButton()
              }

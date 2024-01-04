@@ -12,13 +12,14 @@ import XCTest
 import ExtSwift
 
 // `str.es`
-extension String: ESNameSpace {
-}
+extension String: ESNameSpace {}
+
 // `str.es.nonEmpty`
 extension ES where Base == String {
-    var nonEmpty: String? { return !_base.isEmpty ? _base : nil }
+    var nonEmpty: String? { !_base.isEmpty ? _base : nil }
 }
 
+// test
 final class NameSpaceTests: XCTestCase {
     
     func testNameSpace() {

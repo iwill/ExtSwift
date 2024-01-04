@@ -8,10 +8,6 @@
 
 import UIKit
 
-// MARK: ESNameSpace
-
-extension UIResponder: ESNameSpace {}
-
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
 infix operator |: AdditionPrecedence
 
@@ -32,9 +28,13 @@ public extension UIColor {
             return traitCollection.userInterfaceStyle == .dark ? dark : light
         }
     }
+    
     func resolvedColor(with userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
         return resolvedColor(with: .init(userInterfaceStyle: userInterfaceStyle))
     }
+}
+
+public extension UIColor {
     
     convenience init(hex: UInt64) {
         self.init(hex: hex, alpha: 1.0)

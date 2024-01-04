@@ -104,7 +104,7 @@ public final class EventObservable<KVOType>: KVO<KVOType> {
     public override var projectedValue: EventObservable<KVOType> { self }
     
     public override var wrappedValue: KVOType {
-        get { return super.wrappedValue }
+        get { super.wrappedValue }
         set { super.wrappedValue = newValue }
     }
     

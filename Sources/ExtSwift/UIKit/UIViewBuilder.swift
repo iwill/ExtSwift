@@ -64,13 +64,13 @@ public struct UIViewBuilder: Hashable {
     }
 }
 
-public extension ES where Base: UIView {
+public extension UIView {
     
     @discardableResult
     func build(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.ViewAndConstraintClosure]) -> [some UIView] {
         let viewAndConstraintClosureArray = buildSubviewsAndConstraints()
         for (subview, _) in viewAndConstraintClosureArray {
-            _base.addSubview(subview)
+            addSubview(subview)
         }
         for (subview, closure) in viewAndConstraintClosureArray {
             if closure != nil {
@@ -81,33 +81,30 @@ public extension ES where Base: UIView {
     }
     
     func buildConstraints(_ closure: @escaping UIViewBuilder.ConstraintClosure) -> UIViewBuilder.ViewAndConstraintClosure {
-        return (_base, closure)
+        return (self, closure)
     }
 }
 
-public extension ES where Base: UIControl {
-    
+public extension UIControl {
     @discardableResult
-    func buildHandler(for events: UIControl.Event, _ handler: @escaping (_ control: UIControl, _ event: UIControl.Event) -> Void) -> Base {
+    func buildHandler(for events: UIControl.Event, _ handler: @escaping (_ control: UIControl, _ event: UIControl.Event) -> Void) -> Self {
         addHandler(for: events, handler)
-        return _base
+        return self
     }
 }
 
-public extension ES where Base: UIButton {
-    
+public extension UIButton {
     @discardableResult
-    func buildHandler(_ handler: @escaping (_ button: Base) -> Void) -> Base {
+    func buildHandler(_ handler: @escaping (_ button: Self) -> Void) -> Self {
         addHandler(handler)
-        return _base
+        return self
     }
 }
 
-public extension ES where Base: UITextField {
-    
+public extension UITextField {
     @discardableResult
-    func buildHandler(_ handler: @escaping (_ button: Base) -> Void) -> Base {
+    func buildHandler(_ handler: @escaping (_ button: Self) -> Void) -> Self {
         addHandler(handler)
-        return _base
+        return self
     }
 }
