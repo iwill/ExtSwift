@@ -69,20 +69,6 @@ public extension ES where Base: UIControl {
     }
 }
 
-public extension ES where Base: UIButton {
-    
-    @discardableResult
-    func addHandler(_ handler: @escaping (_ button: Base) -> Void) -> Any {
-        addHandler(for: .touchUpInside) { sender, event in
-            handler(sender as! Base)
-        }
-    }
-    
-    func removeHandler(with target: Any) {
-        removeHandler(with: target, for: .touchUpInside)
-    }
-}
-
 fileprivate class EventHandlerWrapper: Equatable {
     private let handler: (_ sender: UIControl, _ event: UIControl.Event) -> Void
     let event: UIControl.Event
@@ -95,6 +81,24 @@ fileprivate class EventHandlerWrapper: Equatable {
     }
     static func == (lhs: EventHandlerWrapper, rhs: EventHandlerWrapper) -> Bool {
         return lhs === rhs
+    }
+}
+
+// MARK: UIButton
+
+public extension ES where Base: UIButton {
+    
+    private var commonEvent: UIControl.Event { .touchUpInside }
+    
+    @discardableResult
+    func addHandler(_ handler: @escaping (_ button: Base) -> Void) -> Any {
+        return addHandler(for: commonEvent) { sender, event in
+            handler(sender as! Base)
+        }
+    }
+    
+    func removeHandler(with target: Any) {
+        removeHandler(with: target, for: commonEvent)
     }
 }
 
@@ -127,6 +131,15 @@ public extension ES where Base: UIBarButtonItem {
     }
 }
 
+fileprivate extension UIBarButtonItem {
+    @objc func _es_action(with sender: UIBarButtonItem) {
+        let wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [UIBarButtonItemActionHandlerWrapper] ?? []
+        for wrapper in wrappers {
+            wrapper.action(with: sender)
+        }
+    }
+}
+
 fileprivate class UIBarButtonItemActionHandlerWrapper: Equatable {
     private let handler: (_ sender: UIBarButtonItem) -> Void
     init(_ handler: @escaping (_ sender: UIBarButtonItem) -> Void) {
@@ -137,15 +150,6 @@ fileprivate class UIBarButtonItemActionHandlerWrapper: Equatable {
     }
     static func == (lhs: UIBarButtonItemActionHandlerWrapper, rhs: UIBarButtonItemActionHandlerWrapper) -> Bool {
         return lhs === rhs
-    }
-}
-
-fileprivate extension UIBarButtonItem {
-    @objc func _es_action(with sender: UIBarButtonItem) {
-        let wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [UIBarButtonItemActionHandlerWrapper] ?? []
-        for wrapper in wrappers {
-            wrapper.action(with: sender)
-        }
     }
 }
 
