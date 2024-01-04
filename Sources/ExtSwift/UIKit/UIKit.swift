@@ -23,6 +23,25 @@ public extension String {
 
 public extension UIColor {
     
+    private var highlightedAlpha: CGFloat { 0.2 }
+    
+    var highlighted: UIColor {
+        var alpha: CGFloat = 0.0
+        if getRed(nil, green: nil, blue: nil, alpha: &alpha) {
+            return withAlphaComponent(alpha * highlightedAlpha)
+        }
+        if getWhite(nil, alpha: &alpha) {
+            return withAlphaComponent(alpha * highlightedAlpha) 
+        }
+        if getHue(nil, saturation: nil, brightness: nil, alpha: &alpha) {
+            return withAlphaComponent(alpha * highlightedAlpha)
+        }
+        return withAlphaComponent(highlightedAlpha)
+    }
+}
+
+public extension UIColor {
+    
     static func | (light: UIColor, dark: UIColor) -> UIColor {
         return UIColor { traitCollection -> UIColor in
             return traitCollection.userInterfaceStyle == .dark ? dark : light
