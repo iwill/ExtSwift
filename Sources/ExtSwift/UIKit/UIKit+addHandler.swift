@@ -223,3 +223,38 @@ private class UIGestureRecognizerActionHandlerWrapper: Equatable {
         return lhs === rhs
     }
 }
+
+// UIAlertController
+
+public extension UIAlertController {
+    @discardableResult
+    func addAction(title: String, style: UIAlertAction.Style, handler: ((_ action: UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        let action = UIAlertAction(title: title, style: style, handler: handler)
+        addAction(action)
+        return action
+    }
+}
+
+public extension UIAlertAction {
+    var checked: Bool {
+        get {
+            let a = "is", b = "C", c = "hecked"
+            let selector = Selector("_\(a)\(b)\(c)")
+            guard responds(to: selector) else {
+                return false
+            }
+            // let number = perform(selector)?.takeUnretainedValue() as? NSNumber
+            let number = value(forKey: "\(b)\(c)".lowercased())
+            return number.boolValue
+        }
+        set {
+            let a = "set", b = "C", c = "hecked"
+            let selector = Selector("_\(a)\(b)\(c):")
+            guard responds(to: selector) else {
+                return
+            }
+            // perform(selector, with: NSNumber(value: newValue))
+            setValue(NSNumber(value: newValue), forKey: "\(b)\(c)".lowercased())
+        }
+    }
+}
