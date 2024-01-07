@@ -5,10 +5,10 @@ import PackageDescription
 let package = Package(
     name: "ExtSwift",
     platforms: [
-        // supported min versions for `swift-tools-version:5.9`
-        .iOS(.v13),
-        .tvOS(.v13)
-        // .macOS(.v11)
+        // ge supported min versions from `swift-tools-version:5.9`
+        .iOS(.v15),
+        .tvOS(.v15)
+        // .macOS(.v12)
     ],
     products: [
         .library(name: "ExtSwift", targets: ["ExtSwift"]),
@@ -16,17 +16,22 @@ let package = Package(
         .library(name: "ExtSwift-Dynamic", type: .dynamic, targets: ["ExtSwift"])
     ],
     dependencies: [
-        // .package(url: "https://github.com/iwill/ExCodable", from: "0.2.0"),
+        // .package(url: "https://github.com/iwill/ExCodable", branch: "develop"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0")
     ],
     targets: [
         .target(
             name: "ExtSwift",
-            dependencies: ["SnapKit"] // "ExCodable"
+            dependencies: [
+                // "ExCodable",
+                "SnapKit"
+            ]
         ),
         .testTarget(
             name: "ExtSwiftTests",
-            dependencies: ["ExtSwift", "SnapKit"]) // "ExCodable"
+            dependencies: [
+                "ExtSwift"
+            ])
     ],
     swiftLanguageVersions: [.v5]
 )

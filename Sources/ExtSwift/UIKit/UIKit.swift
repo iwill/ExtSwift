@@ -14,7 +14,7 @@ infix operator |: AdditionPrecedence
 // MARK: NSAttributedString
 
 public extension String {
-    static func | (string: String, attributes: [NSAttributedString.Key : Any]? = nil) -> NSAttributedString {
+    static func | (string: String, attributes: [NSAttributedString.Key: Any]? = nil) -> NSAttributedString {
         return NSAttributedString(string: string, attributes: attributes)
     }
 }

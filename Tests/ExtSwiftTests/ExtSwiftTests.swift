@@ -15,7 +15,22 @@ struct Test: Mutable {
     var i: Int
 }
 
+@objc
+class TestObject: NSObject, Mutable {
+    @objc var i: Int
+    init(i: Int) {
+        self.i = i
+    }
+    func key() -> String {
+        return #keyPath(i)
+    }
+}
+
 final class ExtSwiftTests: XCTestCase {
+    
+    func testExtSwift() {
+        XCTAssertEqual(ExtSwift().text, "Hello, ExtSwift!")
+    }
     
     func testMutable() {
         var test = Test(i: 0).mutating { t in
@@ -28,7 +43,8 @@ final class ExtSwiftTests: XCTestCase {
         XCTAssertEqual(test.i, 2)
     }
     
-    func testExtSwift() {
-        XCTAssertEqual(ExtSwift().text, "Hello, ExtSwift!")
+    func testKeyPath() {
+        let t = TestObject(i: 1)
+        XCTAssertEqual(t.key(), "i")
     }
 }
