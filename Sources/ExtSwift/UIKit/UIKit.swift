@@ -29,6 +29,47 @@ public extension String {
     }
 }
 
+public protocol OptionalAttributedText {
+    var attributedText: NSAttributedString? { get set }
+    var attributed: AttributedString? { get set }
+}
+public extension OptionalAttributedText {
+    var attributed: AttributedString? {
+        get {
+            return attributedText.map { AttributedString($0) }
+        }
+        set {
+            attributedText = newValue.map { NSAttributedString($0) }
+        }
+    }
+}
+public protocol ImplicitAttributedText {
+    var attributedText: NSAttributedString! { get set }
+    var attributed: AttributedString! { get set }
+}
+public extension ImplicitAttributedText {
+    var attributed: AttributedString! {
+        get {
+            return attributedText.map { AttributedString($0) }
+        }
+        set {
+            attributedText = newValue.map { NSAttributedString($0) }
+        }
+    }
+}
+
+extension UILabel: OptionalAttributedText {}
+extension UITextField: OptionalAttributedText {}
+extension UITextView: ImplicitAttributedText {}
+public extension UIButton {
+    func setAttributed(_ title: AttributedString?, for state: UIControl.State) {
+        setAttributedTitle(title.map { NSAttributedString($0) }, for: state)
+    }
+    func attributed(for state: UIControl.State) -> AttributedString? {
+        return attributedTitle(for: state).map { AttributedString($0) }
+    }
+}
+
 // MARK: UIColor
 
 public extension UIColor {
