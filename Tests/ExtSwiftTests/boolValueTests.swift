@@ -31,5 +31,10 @@ final class BoolValueTests: XCTestCase {
         
         XCTAssertTrue(some.boolValue  == true)
         XCTAssertTrue(none.boolValue  == false)
+        
+        XCTAssertFalse(("" as NSString).boolValue)
+        XCTAssertTrue(("1" as NSString).boolValue)
+        XCTAssertFalse((0 as NSNumber).boolValue)
+        XCTAssertTrue((1 as NSNumber).boolValue)
     }
 }
