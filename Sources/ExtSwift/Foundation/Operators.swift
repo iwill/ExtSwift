@@ -18,10 +18,10 @@ public prefix func  ?? <T>(v: T?) -> Bool { v != nil }
 
 // MARK: - boolValue & !boolValue
 
-prefix operator     !!  //  `!!value ==  value.boolValue`
+prefix operator      !! //  `!!value ==  value.boolValue`
 prefix operator     !!! // `!!!value == !value.boolValue`
 
-public prefix func  !!  <T>(v: T?) -> Bool {  v.boolValue }
+public prefix func   !! <T>(v: T?) -> Bool {  v.boolValue }
 public prefix func  !!! <T>(v: T?) -> Bool { !v.boolValue }
 
 // MARK: - FalsyCoalescing
@@ -33,6 +33,25 @@ precedencegroup FalsyCoalescingPrecedence {
     higherThan: ComparisonPrecedence
 }
 
-infix  operator     ??!: FalsyCoalescingPrecedence // a ??! b  >  a.isTruthy ? a : b
+infix  operator     ??! : FalsyCoalescingPrecedence // a ??! b  >  a.isTruthy ? a : b
 
+@available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
 public func         ??! <T>(l: T, r: T) -> T { return !!l ? l : r }
+
+infix operator       ** : MultiplicationPrecedence
+
+public func          ** (radix: Int, power: Int) -> Int {
+    return Int(pow(Double(radix), Double(power)))
+}
+public func          ** (radix: Double, power: Int) -> Double {
+    return pow(radix, Double(power))
+}
+
+infix operator      **= : AssignmentPrecedence
+
+public func         **= (radix: inout Int, power: Int) {
+    radix = radix ** power
+}
+public func         **= (radix: inout Double, power: Int) {
+    radix = radix ** power
+}

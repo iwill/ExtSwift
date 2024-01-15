@@ -101,4 +101,12 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(none ?!! none  == none)
         XCTAssertTrue(some ?!! some2 == some2)
     }
+    
+    func testPow() {
+        XCTAssertEqual(10 ** 2, 100)
+        XCTAssertEqual(10.0 ** 2, 100.0)
+        var int = 10
+        int **= 2
+        XCTAssertEqual(int, 100)
+    }
 }
