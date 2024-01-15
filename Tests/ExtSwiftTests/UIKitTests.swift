@@ -15,7 +15,18 @@ import ExtSwift
 
 final class UIKitTests: XCTestCase {
     
-    func testMakable() {
+    func testAttributedString() {
+        let a = "text" | AttributeContainer()
+            .font(UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold))
+            .foregroundColor(.black)
+        let b = AttributedString("text", attributes: AttributeContainer([
+            NSAttributedString.Key.font: UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold),
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]))
+        XCTAssertEqual(a, b)
+    }
+    
+    func testMutable() {
         let frame = CGRectZero.mutating { rect in
             rect.size = CGSizeMake(1.0, 1.0)
         }

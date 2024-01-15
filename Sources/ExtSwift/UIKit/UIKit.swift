@@ -11,11 +11,15 @@ import UIKit
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
 infix operator |: AdditionPrecedence
 
-// MARK: NSAttributedString
+// MARK: AttributedString
+// https://stackoverflow.com/a/68156160/456536
 
 public extension String {
-    static func | (string: String, attributes: [NSAttributedString.Key: Any]? = nil) -> NSAttributedString {
-        return NSAttributedString(string: string, attributes: attributes)
+    static func | (string: String, attributes: AttributeContainer? = nil) -> AttributedString {
+        return AttributedString(string, attributes: attributes ?? AttributeContainer())
+    }
+    static func | (string: String, attributes: [NSAttributedString.Key: Any]? = nil) -> AttributedString {
+        return AttributedString(string, attributes: AttributeContainer(attributes ?? [:]))
     }
 }
 
