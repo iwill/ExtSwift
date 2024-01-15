@@ -21,6 +21,12 @@ public extension String {
     static func | (string: String, attributes: [NSAttributedString.Key: Any]? = nil) -> AttributedString {
         return AttributedString(string, attributes: AttributeContainer(attributes ?? [:]))
     }
+    static func | (string: String, attributes: AttributeContainer? = nil) -> NSAttributedString {
+        return NSAttributedString(AttributedString(string, attributes: attributes ?? AttributeContainer()))
+    }
+    static func | (string: String, attributes: [NSAttributedString.Key: Any]? = nil) -> NSAttributedString {
+        return NSAttributedString(string: string, attributes: attributes ?? [:])
+    }
 }
 
 // MARK: UIColor

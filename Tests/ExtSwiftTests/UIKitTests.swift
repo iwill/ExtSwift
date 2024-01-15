@@ -16,7 +16,7 @@ import ExtSwift
 final class UIKitTests: XCTestCase {
     
     func testAttributedString() {
-        let a = "text" | AttributeContainer()
+        let a: AttributedString = "text" | AttributeContainer()
             .font(UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold))
             .foregroundColor(.black)
         let b = AttributedString("text", attributes: AttributeContainer([
@@ -24,6 +24,14 @@ final class UIKitTests: XCTestCase {
             NSAttributedString.Key.foregroundColor: UIColor.black
         ]))
         XCTAssertEqual(a, b)
+        let c: NSAttributedString = "text" | AttributeContainer()
+            .font(UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold))
+            .foregroundColor(.black)
+        let d = NSAttributedString(string: "text", attributes: [
+            NSAttributedString.Key.font: UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold),
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ])
+        XCTAssertEqual(c, d)
     }
     
     func testMutable() {
