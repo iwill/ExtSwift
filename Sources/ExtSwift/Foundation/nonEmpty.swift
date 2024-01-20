@@ -16,7 +16,7 @@ public extension Collection {
 
 public extension Optional where Wrapped: Collection {
     var nonEmpty: Wrapped? {
-        if let self = self, !self.isEmpty {
+        if let self, !self.isEmpty {
             return self
         }
         return nil

@@ -7,9 +7,9 @@
 //
 
 import XCTest
+@testable import ExtSwift
 
-@testable
-import ExtSwift
+import JavaScriptCore
 
 struct Test: Mutable {
     var i: Int
@@ -46,5 +46,23 @@ final class ExtSwiftTests: XCTestCase {
     func testKeyPath() {
         let t = TestObject(i: 1)
         XCTAssertEqual(t.key(), "i")
+    }
+    
+    func testJSCore() {
+        self.measure {
+            var arr = [JSContext]()
+            for _ in 0..<1000 {
+                let cxt = JSContext()!
+                cxt.evaluateScript("""
+                    req = {
+                        funcs = {};
+                        vars  = {};
+                        vals  = [];
+                    };
+                    """)
+                arr.append(cxt)
+            }
+            XCTAssertEqual(arr.count, 1000)
+        }
     }
 }
