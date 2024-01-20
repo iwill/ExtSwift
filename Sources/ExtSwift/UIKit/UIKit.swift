@@ -29,44 +29,45 @@ public extension String {
     }
 }
 
-public protocol OptionalAttributedText {
+public protocol OptionalAttributedText: AnyObject {
     var attributedText: NSAttributedString? { get set }
     var attributed: AttributedString? { get set }
 }
 public extension OptionalAttributedText {
     var attributed: AttributedString? {
-        get {
-            return attributedText.map { AttributedString($0) }
-        }
-        set {
-            attributedText = newValue.map { NSAttributedString($0) }
-        }
+        get { attributedText.map { AttributedString($0) } }
+        set { attributedText = newValue.map { NSAttributedString($0) } }
     }
 }
-public protocol ImplicitAttributedText {
+public protocol ImplicitAttributedText: AnyObject {
     var attributedText: NSAttributedString! { get set }
     var attributed: AttributedString! { get set }
 }
 public extension ImplicitAttributedText {
     var attributed: AttributedString! {
-        get {
-            return attributedText.map { AttributedString($0) }
-        }
-        set {
-            attributedText = newValue.map { NSAttributedString($0) }
-        }
+        get { attributedText.map { AttributedString($0) } }
+        set { attributedText = newValue.map { NSAttributedString($0) } }
     }
 }
 
 extension UILabel: OptionalAttributedText {}
 extension UITextField: OptionalAttributedText {}
-extension UITextView: ImplicitAttributedText {}
-public extension UIButton {
-    func setAttributed(_ title: AttributedString?, for state: UIControl.State) {
-        setAttributedTitle(title.map { NSAttributedString($0) }, for: state)
+extension UITextView: ImplicitAttributedText {
+    public func setAttributedTextByKeepingContentOffset(_ attributed: AttributedString!) {
+        let offset = contentOffset, range = selectedTextRange
+        isScrollEnabled = false
+        self.attributed = attributed
+        isScrollEnabled = true
+        contentOffset = offset
+        selectedTextRange = range
     }
+}
+public extension UIButton {
     func attributed(for state: UIControl.State) -> AttributedString? {
         return attributedTitle(for: state).map { AttributedString($0) }
+    }
+    func setAttributed(_ title: AttributedString?, for state: UIControl.State) {
+        setAttributedTitle(title.map { NSAttributedString($0) }, for: state)
     }
 }
 
