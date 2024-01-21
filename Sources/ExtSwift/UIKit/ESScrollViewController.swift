@@ -26,7 +26,9 @@ fileprivate class ESScrollView: UIScrollView {
 }
 
 open class ESScrollViewController: UIViewController {
+    
     open private(set) var scrollView: UIScrollView! // use `scrollView.snp.removeAllConstraints()` to remove default constraints
+    
     open var refreshControl: UIRefreshControl? {
         willSet {
             if refreshControl != nil {

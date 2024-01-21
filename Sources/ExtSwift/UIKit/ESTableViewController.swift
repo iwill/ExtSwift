@@ -86,18 +86,24 @@ open class ESTableViewController: UIViewController {
         tableView.delegate = nil
     }
     
+    // `@objc dynamic` for overriding in subclass
+    
+    @objc dynamic
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFLOAT_MIN
     }
     
+    @objc dynamic
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
     }
     
+    @objc dynamic
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         CGFLOAT_MIN
     }
     
+    @objc dynamic
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
