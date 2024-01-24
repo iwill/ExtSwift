@@ -164,9 +164,30 @@ extension CGRect: Mutable {}
 public protocol ResponderMutable: UIResponder {}
 extension UIResponder: ResponderMutable, Mutable {}
 
-public extension ResponderMutable where Self: UIView {
+public extension ResponderMutable where Self: UIResponder {
     init(mutate: (Self) -> Void) {
         self.init()
         mutate(self)
+    }
+}
+
+public extension UIResponder {
+    func next<T>(of type: T.Type) -> T? {
+        return (next as? T) ?? next?.next(of: type)
+    }
+    func closest<T>(of type: T.Type) -> T? {
+        return (self as? T) ?? next?.closest(of: type)
+    }
+}
+
+public extension UIView {
+    func superview<T>(of type: T.Type) -> T? {
+        return (superview as? T) ?? superview?.superview(of: type)
+    }
+}
+
+public extension UIViewController {
+    func parent<T>(of type: T.Type) -> T? {
+        return (parent as? T) ?? parent?.parent(of: type)
     }
 }
