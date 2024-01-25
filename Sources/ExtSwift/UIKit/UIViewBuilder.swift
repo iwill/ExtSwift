@@ -67,7 +67,7 @@ public struct UIViewBuilder: Hashable {
 public extension UIView {
     
     @discardableResult
-    func build(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.ViewAndConstraintClosure]) -> [some UIView] {
+    func buildSubviews(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.ViewAndConstraintClosure]) -> [some UIView] {
         let viewAndConstraintClosureArray = buildSubviewsAndConstraints()
         for (subview, _) in viewAndConstraintClosureArray {
             addSubview(subview)
