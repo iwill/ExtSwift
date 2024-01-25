@@ -16,7 +16,7 @@ public extension UITableView {
         public typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ item: Item) -> Void
         fileprivate let reuseIdentifier: String
         fileprivate let handler: Handler
-        public init(_reuseIdentifier: String = UUID().uuidString, handler: @escaping Handler) {
+        public init(_reuseIdentifier: String = "\(Cell.self)-\(Item.self)-\(UUID().uuidString)", handler: @escaping Handler) {
             self.reuseIdentifier = _reuseIdentifier
             self.handler = handler
         }
