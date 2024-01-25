@@ -71,6 +71,17 @@ public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIde
         }
         return snapshot
     }
+    
+    public static func buildFinalResult(_ components: [SectionWithItems]) -> NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType> {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>()
+        for (section, items) in components {
+            if section != nil {
+                snapshot.appendSections([section!])
+            }
+            snapshot.appendItems(items, toSection: section)
+        }
+        return snapshot
+    }
 }
 
 // for nested [ItemIdentifierType]
@@ -112,27 +123,6 @@ public struct ESDiffableDataSourceItemIdentifierBuilder<ItemIdentifierType> wher
 
 // MARK: -
 
-public struct ESSection: Hashable, ExpressibleByIntegerLiteral {
-    public let integerValue: Int
-    public init(integerLiteral literal: Int) {
-        integerValue = literal
-    }
-}
-
-public struct ESItem: Hashable, ExpressibleByIntegerLiteral {
-    public let integerValue: Int
-    public init(integerLiteral literal: Int) {
-        integerValue = literal
-    }
-}
-
-public struct ESRow: Hashable, ExpressibleByIntegerLiteral {
-    public let integerValue: Int
-    public init(integerLiteral literal: Int) {
-        integerValue = literal
-    }
-}
-
 public extension ESCollectionViewDiffableDataSource {
     func apply(@ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> _ snapshot: () -> ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>) {
         apply(snapshot())
@@ -141,6 +131,18 @@ public extension ESCollectionViewDiffableDataSource {
 
 public extension ESTableViewDiffableDataSource {
     func apply(@ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> _ snapshot: () -> ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>) {
+        apply(snapshot())
+    }
+}
+
+public extension UICollectionViewDiffableDataSource {
+    func apply(@ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> snapshot: () -> NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>) {
+        apply(snapshot())
+    }
+}
+
+public extension UITableViewDiffableDataSource {
+    func apply(@ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> snapshot: () -> NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>) {
         apply(snapshot())
     }
 }
