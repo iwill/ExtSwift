@@ -70,7 +70,9 @@ public extension UIView {
     func buildSubviews(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.ViewAndConstraintClosure]) -> [some UIView] {
         let viewAndConstraintClosureArray = buildSubviewsAndConstraints()
         for (subview, _) in viewAndConstraintClosureArray {
-            addSubview(subview)
+            if !subviews.contains(subview) {
+                addSubview(subview)
+            }
         }
         for (subview, closure) in viewAndConstraintClosureArray {
             if closure != nil {
