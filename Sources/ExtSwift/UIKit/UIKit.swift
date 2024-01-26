@@ -169,6 +169,11 @@ public extension ResponderMutable where Self: UIResponder {
         self.init()
         mutate(self)
     }
+    init<T: UIResponder>(`var`: inout T?, mutate: (Self) -> Void) {
+        self.init()
+        mutate(self)
+        `var` = (self as! T)
+    }
 }
 
 public extension UIResponder {
