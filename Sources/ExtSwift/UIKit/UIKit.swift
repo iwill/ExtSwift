@@ -174,6 +174,11 @@ public extension ResponderMutable where Self: UIResponder {
         mutate(self)
         `var` = (self as! T)
     }
+    func mutate<T: UIResponder>(`var`: inout T?, mutate: (Self) -> Void) -> Self {
+        mutate(self)
+        `var` = (self as! T)
+        return self
+    }
 }
 
 public extension UIResponder {
