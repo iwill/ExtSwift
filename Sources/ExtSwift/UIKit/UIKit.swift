@@ -156,30 +156,32 @@ public extension UIEdgeInsets {
 
 // MARK: Mutable
 
-extension CGPoint: Mutable {}
-extension CGSize: Mutable {}
-extension CGRect: Mutable {}
+// constrain conforming types to subclasses of AnyObject
+public protocol ObjectMutable: AnyObject {
+    init()
+}
+extension NSObject: ObjectMutable, Mutable {}
 
-// constrain conforming types to subclasses of UIResponder
-public protocol ResponderMutable: UIResponder {}
-extension UIResponder: ResponderMutable, Mutable {}
-
-public extension ResponderMutable where Self: UIResponder {
+public extension ObjectMutable where Self: AnyObject & ObjectMutable & Mutable {
     init(mutate: (Self) -> Void) {
         self.init()
         mutate(self)
     }
-    init<T: UIResponder>(`var`: inout T?, mutate: (Self) -> Void) {
+    init<T: AnyObject>(`var`: inout T?, mutate: (Self) -> Void) {
         self.init()
         mutate(self)
         `var` = (self as! T)
     }
-    func mutate<T: UIResponder>(`var`: inout T?, mutate: (Self) -> Void) -> Self {
+    func mutate<T: AnyObject>(`var`: inout T?, mutate: (Self) -> Void) -> Self {
         mutate(self)
         `var` = (self as! T)
         return self
     }
 }
+
+extension CGPoint: Mutable {}
+extension CGSize: Mutable {}
+extension CGRect: Mutable {}
 
 public extension UIResponder {
     func next<T>(of type: T.Type) -> T? {
