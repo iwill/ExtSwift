@@ -167,10 +167,18 @@ public extension ObjectMutable where Self: AnyObject & ObjectMutable & Mutable {
         self.init()
         mutate(self)
     }
+    init<T: AnyObject>(`var`: inout T?) {
+        self.init()
+        `var` = (self as! T)
+    }
     init<T: AnyObject>(`var`: inout T?, mutate: (Self) -> Void) {
         self.init()
         mutate(self)
         `var` = (self as! T)
+    }
+    func mutate<T: AnyObject>(`var`: inout T?) -> Self {
+        `var` = (self as! T)
+        return self
     }
     func mutate<T: AnyObject>(`var`: inout T?, mutate: (Self) -> Void) -> Self {
         mutate(self)

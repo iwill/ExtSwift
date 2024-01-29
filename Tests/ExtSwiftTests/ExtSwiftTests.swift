@@ -16,7 +16,7 @@ struct Test: Mutable {
 }
 
 @objc
-class TestObject: NSObject, Mutable {
+class TestObject: NSObject { // base on: `NSObject: Mutable`
     @objc var i: Int
     init(i: Int) {
         self.i = i
