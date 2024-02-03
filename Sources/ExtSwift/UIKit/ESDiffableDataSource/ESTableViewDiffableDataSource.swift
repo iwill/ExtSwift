@@ -12,24 +12,45 @@ import UIKit
 
 public extension UITableView {
     
-    struct ESCellRegistration<Cell, Item> where Cell: UITableViewCell, Item: Hashable {
-        public typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ item: Item) -> Void
+    struct ESCellRegistration<Cell, ItemIdentifierType> where Cell: UITableViewCell, ItemIdentifierType: Hashable {
+        public typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ itemIdentifier: ItemIdentifierType) -> Void
         fileprivate let reuseIdentifier: String
         fileprivate let handler: Handler
-        public init(_reuseIdentifier: String = "\(Cell.self)-\(Item.self)-\(UUID().uuidString)", handler: @escaping Handler) {
+        public init(_reuseIdentifier: String = "\(Cell.self)-\(ItemIdentifierType.self)-\(UUID().uuidString)", handler: @escaping Handler) {
             self.reuseIdentifier = _reuseIdentifier
             self.handler = handler
         }
     }
     
-    func dequeueConfiguredReusableCell<Cell, Item>(using registration: ESCellRegistration<Cell, Item>, for indexPath: IndexPath, item: Item?) -> Cell where Cell: UITableViewCell {
-        guard let item = item else { return Cell() }
+    func dequeueConfiguredReusableCell<Cell, ItemIdentifierType>(using registration: ESCellRegistration<Cell, ItemIdentifierType>, for indexPath: IndexPath, itemIdentifier: ItemIdentifierType?) -> Cell where Cell: UITableViewCell {
+        guard let itemIdentifier else { return Cell() }
         if dequeueReusableCell(withIdentifier: registration.reuseIdentifier) == nil {
             register(Cell.self, forCellReuseIdentifier: registration.reuseIdentifier)
         }
         let cell = dequeueReusableCell(withIdentifier: registration.reuseIdentifier, for: indexPath) as! Cell
-        registration.handler(cell, indexPath, item)
+        registration.handler(cell, indexPath, itemIdentifier)
         return cell
+    }
+    
+    struct ESHeaderFooterRegistration<HeaderFooter, SectionIdentifierType> where HeaderFooter: UITableViewHeaderFooterView, SectionIdentifierType: Hashable {
+        public typealias Handler = (_ headerFooter: HeaderFooter, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> Void
+        fileprivate let reuseIdentifier: String
+        fileprivate let handler: Handler
+        public init(_reuseIdentifier: String = "\(HeaderFooter.self)-\(SectionIdentifierType.self)-\(UUID().uuidString)", handler: @escaping Handler) {
+            self.reuseIdentifier = _reuseIdentifier
+            self.handler = handler
+        }
+    }
+    
+    func dequeueConfiguredReusableHeaderFooter<HeaderFooter, SectionIdentifierType>(using registration: ESHeaderFooterRegistration<HeaderFooter, SectionIdentifierType>, section: Int, sectionIdentifier: SectionIdentifierType?) -> HeaderFooter where HeaderFooter: UITableViewHeaderFooterView {
+        guard let sectionIdentifier else { return HeaderFooter() }
+        var headerFooter = dequeueReusableHeaderFooterView(withIdentifier: registration.reuseIdentifier) as? HeaderFooter
+        if !?headerFooter {
+            register(HeaderFooter.self, forHeaderFooterViewReuseIdentifier: registration.reuseIdentifier)
+            headerFooter = dequeueReusableHeaderFooterView(withIdentifier: registration.reuseIdentifier) as? HeaderFooter
+        }
+        registration.handler(headerFooter!, section, sectionIdentifier)
+        return headerFooter!
     }
 }
 
@@ -37,7 +58,7 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     
     public typealias CellProvider = (_ tableView: UITableView, _ indexPath: IndexPath, _ itemIdentifier: ItemIdentifierType) -> UITableViewCell?
     public typealias StringProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> String?
-    public typealias ViewProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> UIView?
+    public typealias ViewProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> UITableViewHeaderFooterView?
     
     private let tableView: UITableView
     private let cellProvider: CellProvider
@@ -94,18 +115,20 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
         return nil
     }
     
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
-           let view = headerViewProvider?(tableView, section, sectionIdentifier) {
-            return view
-        }
-        return nil
-    }
-    
     public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
            let title = footerTitleProvider?(tableView, section, sectionIdentifier) {
             return title
+        }
+        return nil
+    }
+    
+    // MARK: UITableViewDelegate
+    
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+           let view = headerViewProvider?(tableView, section, sectionIdentifier) {
+            return view
         }
         return nil
     }
