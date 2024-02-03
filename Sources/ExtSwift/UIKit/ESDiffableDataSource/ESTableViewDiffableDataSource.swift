@@ -57,23 +57,29 @@ public extension UITableView {
 open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>: NSObject, UITableViewDataSource where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
     
     public typealias CellProvider = (_ tableView: UITableView, _ indexPath: IndexPath, _ itemIdentifier: ItemIdentifierType) -> UITableViewCell?
+    
     public typealias StringProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> String?
     public typealias ViewProvider = (_ tableView: UITableView, _ section: Int, _ sectionIdentifier: SectionIdentifierType) -> UITableViewHeaderFooterView?
     
     private let tableView: UITableView
-    private let cellProvider: CellProvider
-    private let headerTitleProvider: StringProvider?
-    private let headerViewProvider: ViewProvider?
-    private let footerTitleProvider: StringProvider?
-    private let footerViewProvider: ViewProvider?
+    private let cellProvider: CellProvider,
+                headerTitleProvider: StringProvider?,
+                footerTitleProvider: StringProvider?,
+                headerViewProvider: ViewProvider?,
+                footerViewProvider: ViewProvider?
     private lazy var _snapshot = ESDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>()
     
-    public init(tableView: UITableView, cellProvider: @escaping CellProvider, headerTitleProvider: StringProvider? = nil, headerViewProvider: ViewProvider? = nil, footerTitleProvider: StringProvider? = nil, footerViewProvider: ViewProvider? = nil) {
+    public init(tableView: UITableView,
+                cellProvider: @escaping CellProvider,
+                headerTitleProvider: StringProvider? = nil,
+                footerTitleProvider: StringProvider? = nil,
+                headerViewProvider: ViewProvider? = nil,
+                footerViewProvider: ViewProvider? = nil) {
         self.tableView = tableView
         self.cellProvider = cellProvider
         self.headerTitleProvider = headerTitleProvider
-        self.headerViewProvider = headerViewProvider
         self.footerTitleProvider = footerTitleProvider
+        self.headerViewProvider = headerViewProvider
         self.footerViewProvider = footerViewProvider
         super.init()
         tableView.dataSource = self
