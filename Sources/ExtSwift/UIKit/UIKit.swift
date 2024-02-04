@@ -190,6 +190,7 @@ public extension ObjectMutable where Self: AnyObject & ObjectMutable & Mutable {
 extension CGPoint: Mutable {}
 extension CGSize: Mutable {}
 extension CGRect: Mutable {}
+extension UIEdgeInsets: Mutable {}
 
 public extension UIResponder {
     func next<T>(of type: T.Type) -> T? {
