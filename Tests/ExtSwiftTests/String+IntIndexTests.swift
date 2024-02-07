@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import UIKit
 
 // @testable
 import ExtSwift
@@ -49,6 +50,45 @@ final class IntIndexTests: XCTestCase {
         // PartialRangeFrom<Int>
         let eq2_ = fingers[2...]
         XCTAssertEqual(eq2_, "🤞🏿🤟🏿")
+        
+        let textView = UITextView()
+        textView.resignFirstResponder()
+        textView.endEditing(true)
+        print("textView.selectedRange: \(textView.selectedRange)")
+        
+        textView.text = "🤟🏿"
+        XCTAssertEqual(textView.text.count, 1)
+        
+        textView.selectAll(nil)
+        let selectedRange = textView.selectedRange
+        print("selectedRange: \(selectedRange)")
+        XCTAssertEqual(selectedRange.location, 0)
+        XCTAssertEqual(selectedRange.length, 4)
+        XCTAssertEqual(selectedRange.length, textView.text.utf16.count)
+        
+        if let range = Range(textView.selectedRange, in: textView.text) {
+            let intRange = textView.text.intRange(from: range)
+            print("intRange: \(intRange)")
+            let text = textView.text[intRange]
+            // let text = textView.text[range]
+            XCTAssertEqual(text, "🤟🏿")
+        }
+        else {
+            XCTFail()
+        }
+        
+        let intRange = textView.selectedIntRange
+        XCTAssertEqual(intRange.lowerBound, 0)
+        XCTAssertEqual(intRange.upperBound, 1)
+        
+        let s: String = ""
+        let r: Range<String.Index> = s.startIndex..<s.startIndex
+        let sub = s[r]
+        print("sub: [\(sub)]")
+        
+        let intR: Range<Int> = 0..<0 // 0..<1 -> crash
+        let intSub = s[intR]
+        print("intSub: [\(intSub)]")
         
         // runtime error
         // XCTAssertThrowsError(fingers[5])
