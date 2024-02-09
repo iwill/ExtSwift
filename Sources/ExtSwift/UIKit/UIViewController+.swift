@@ -56,3 +56,44 @@ public extension UIViewController {
         removeFromParent() // 3
     }
 }
+
+public extension UINavigationController {
+    
+    var rootViewController: UIViewController? {
+        return self.viewControllers.first
+    }
+    
+    func pushViewController(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        pushViewController(viewController, animated: animated)
+        CATransaction.commit()
+    }
+    
+    @discardableResult
+    func popViewController(animated: Bool, completion: @escaping () -> Void) -> UIViewController? {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        let viewController = popViewController(animated: animated)
+        CATransaction.commit()
+        return viewController
+    }
+    
+    @discardableResult
+    func popToViewController(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) -> [UIViewController]? {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        let viewControllers = popToViewController(viewController, animated: animated)
+        CATransaction.commit()
+        return viewControllers
+    }
+    
+    @discardableResult
+    func popToRootViewController(animated: Bool, completion: @escaping () -> Void) -> [UIViewController]? {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        let viewControllers = popToRootViewController(animated: animated)
+        CATransaction.commit()
+        return viewControllers
+    }
+}
