@@ -6,6 +6,15 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-struct ExtSwift {
+import Foundation
+
+private struct ExtSwift {
     var text = "Hello, ExtSwift!"
+}
+
+// TODO: move to String+?.swift
+public extension String {
+    init(localizedFormat: String, comment: String? = nil, _ arguments: CVarArg...) {
+        self.init(format: NSLocalizedString(localizedFormat, comment: comment ?? ""), arguments)
+    }
 }
