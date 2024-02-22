@@ -212,3 +212,26 @@ public extension UIViewController {
         return (parent as? T) ?? parent?.parent(of: type)
     }
 }
+
+// UIViewController
+
+public extension UIViewController {
+    var currentContentViewController: UIViewController {
+        if let tabBarController = self as? UITabBarController,
+           let currentContentViewController = tabBarController.selectedViewController?.currentContentViewController {
+            return currentContentViewController
+        }
+        if let splitViewController = self as? UISplitViewController,
+           let currentContentViewController = (UIDevice.current.userInterfaceIdiom == .phone
+                                               ? splitViewController.viewController(for: .primary)?.currentContentViewController
+                                               : splitViewController.viewController(for: .secondary)?.currentContentViewController) {
+            return currentContentViewController
+        }
+        if let navigationController = self as? UINavigationController,
+           let currentContentViewController = navigationController.topViewController?.currentContentViewController {
+            return currentContentViewController
+        }
+        // ???: presentedViewController
+        return self
+    }
+}
