@@ -18,7 +18,7 @@ public extension UITextView {
         }
         set {
             let intRange = newValue
-            let strRange: Range<String.Index> = text.range(from: intRange)
+            guard let strRange: Range<String.Index> = text.range(from: intRange) else { return }
             let nsRange: NSRange = NSRange(strRange, in: text)
             selectedRange = nsRange
         }

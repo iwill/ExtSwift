@@ -12,8 +12,8 @@ public extension String {
     
     // MARK: index
     
-    func index(from intIndex: Int) -> Index {
-        return index(startIndex, offsetBy: intIndex)
+    func index(from intIndex: Int) -> Index? {
+        return index(startIndex, offsetBy: intIndex, limitedBy: endIndex)
     }
     func intIndex(from index: Index) -> Int {
         return distance(from: startIndex, to: index)
@@ -47,26 +47,31 @@ public extension String {
     
     // MARK: range
     
-    func range(from intRange: Range<Int>) -> Range<Index> {
-        let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound)
-        let upperIndex = index(startIndex, offsetBy: intRange.upperBound)
+    func range(from intRange: Range<Int>) -> Range<Index>? {
+        guard let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound, limitedBy: endIndex),
+              let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        else { return nil }
         return lowerIndex..<upperIndex
     }
-    func range(from intRange: ClosedRange<Int>) -> ClosedRange<Index> {
-        let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound)
-        let upperIndex = index(startIndex, offsetBy: intRange.upperBound)
+    func range(from intRange: ClosedRange<Int>) -> ClosedRange<Index>? {
+        guard let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound, limitedBy: endIndex),
+              let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        else { return nil }
         return lowerIndex...upperIndex
     }
-    func range(from intRange: PartialRangeUpTo<Int>) -> PartialRangeUpTo<Index> {
-        let upperIndex = index(startIndex, offsetBy: intRange.upperBound)
+    func range(from intRange: PartialRangeUpTo<Int>) -> PartialRangeUpTo<Index>? {
+        guard let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        else { return nil }
         return ..<upperIndex
     }
-    func range(from intRange: PartialRangeThrough<Int>) -> PartialRangeThrough<Index> {
-        let upperIndex = index(startIndex, offsetBy: intRange.upperBound)
+    func range(from intRange: PartialRangeThrough<Int>) -> PartialRangeThrough<Index>? {
+        guard let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        else { return nil }
         return ...upperIndex
     }
-    func range(from intRange: PartialRangeFrom<Int>) -> PartialRangeFrom<Index> {
-        let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound)
+    func range(from intRange: PartialRangeFrom<Int>) -> PartialRangeFrom<Index>? {
+        guard let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound, limitedBy: endIndex)
+        else { return nil }
         return lowerIndex...
     }
     
@@ -95,78 +100,100 @@ public extension String {
     
     // MARK: subscript
     
-    subscript(_ intIndex: Int) -> Character {
-        return self[index(from: intIndex)]
+    subscript(_ intIndex: Int) -> Character? {
+        guard let index = index(from: intIndex) else { return nil }
+        return self[index]
     }
     
-    subscript(_ intRange: Range<Int>) -> Substring {
-        return self[range(from: intRange)]
+    subscript(_ intRange: Range<Int>) -> Substring? {
+        guard let range = range(from: intRange) else { return nil }
+        return self[range]
     }
-    subscript(_ intRange: ClosedRange<Int>) -> Substring {
-        return self[range(from: intRange)]
+    subscript(_ intRange: ClosedRange<Int>) -> Substring? {
+        guard let range = range(from: intRange) else { return nil }
+        return self[range]
     }
-    subscript(_ intRange: PartialRangeUpTo<Int>) -> Substring {
-        return self[range(from: intRange)]
+    subscript(_ intRange: PartialRangeUpTo<Int>) -> Substring? {
+        guard let range = range(from: intRange) else { return nil }
+        return self[range]
     }
-    subscript(_ intRange: PartialRangeThrough<Int>) -> Substring {
-        return self[range(from: intRange)]
+    subscript(_ intRange: PartialRangeThrough<Int>) -> Substring? {
+        guard let range = range(from: intRange) else { return nil }
+        return self[range]
     }
-    subscript(_ intRange: PartialRangeFrom<Int>) -> Substring {
-        return self[range(from: intRange)]
+    subscript(_ intRange: PartialRangeFrom<Int>) -> Substring? {
+        guard let range = range(from: intRange) else { return nil }
+        return self[range]
     }
     
     // MARK: mutating
     
     mutating func insert(_ newElement: Character, at intIndex: Int) {
-        insert(newElement, at: index(from: intIndex))
+        guard let index = index(from: intIndex) else { return }
+        insert(newElement, at: index)
     }
     mutating func insert<C>(contentsOf newElements: C, at intIndex: Int) where C: Collection, C.Element == Element {
-        insert(contentsOf: newElements, at: index(from: intIndex))
+        guard let index = index(from: intIndex) else { return }
+        insert(contentsOf: newElements, at: index)
     }
     
     mutating func replaceSubrange<C>(_ intRange: Range<Int>, with newElements: C) where C: Collection, C.Element == Element {
-        replaceSubrange(range(from: intRange), with: newElements)
+        guard let range = range(from: intRange) else { return }
+        replaceSubrange(range, with: newElements)
     }
     mutating func replaceSubrange<C>(_ intRange: ClosedRange<Int>, with newElements: C) where C: Collection, C.Element == Element {
-        replaceSubrange(range(from: intRange), with: newElements)
+        guard let range = range(from: intRange) else { return }
+        replaceSubrange(range, with: newElements)
     }
     mutating func replaceSubrange<C>(_ intRange: PartialRangeUpTo<Int>, with newElements: C) where C: Collection, C.Element == Element {
-        replaceSubrange(range(from: intRange), with: newElements)
+        guard let range = range(from: intRange) else { return }
+        replaceSubrange(range, with: newElements)
     }
     mutating func replaceSubrange<C>(_ intRange: PartialRangeThrough<Int>, with newElements: C) where C: Collection, C.Element == Element {
-        replaceSubrange(range(from: intRange), with: newElements)
+        guard let range = range(from: intRange) else { return }
+        replaceSubrange(range, with: newElements)
     }
     mutating func replaceSubrange<C>(_ intRange: PartialRangeFrom<Int>, with newElements: C) where C: Collection, C.Element == Element {
-        replaceSubrange(range(from: intRange), with: newElements)
+        guard let range = range(from: intRange) else { return }
+        replaceSubrange(range, with: newElements)
     }
     
-    mutating func remove(at intIndex: Int) -> Character {
-        return remove(at: index(from: intIndex))
+    mutating func remove(at intIndex: Int) -> Character? {
+        guard let index = index(from: intIndex) else { return nil }
+        return remove(at: index)
     }
     mutating func removeSubrange(_ intRange: Range<Int>) {
-        removeSubrange(range(from: intRange))
+        guard let range = range(from: intRange) else { return }
+        removeSubrange(range)
     }
     
     // MARK: new string
     
     func replacingCharacters<T>(in intRange: Range<Int>, with replacement: T) -> String where T: StringProtocol {
-        return replacingCharacters(in: range(from: intRange), with: replacement)
+        guard let range = range(from: intRange) else { return self }
+        return replacingCharacters(in: range, with: replacement)
     }
     func replacingCharacters<T>(in intRange: ClosedRange<Int>, with replacement: T) -> String where T: StringProtocol {
-        return replacingCharacters(in: range(from: intRange), with: replacement)
+        guard let range = range(from: intRange) else { return self }
+        return replacingCharacters(in: range, with: replacement)
     }
     func replacingCharacters<T>(in intRange: PartialRangeUpTo<Int>, with replacement: T) -> String where T: StringProtocol {
-        return replacingCharacters(in: range(from: intRange), with: replacement)
+        guard let range = range(from: intRange) else { return self }
+        return replacingCharacters(in: range, with: replacement)
     }
     func replacingCharacters<T>(in intRange: PartialRangeThrough<Int>, with replacement: T) -> String where T: StringProtocol {
-        return replacingCharacters(in: range(from: intRange), with: replacement)
+        guard let range = range(from: intRange) else { return self }
+        return replacingCharacters(in: range, with: replacement)
     }
     func replacingCharacters<T>(in intRange: PartialRangeFrom<Int>, with replacement: T) -> String where T: StringProtocol {
-        return replacingCharacters(in: range(from: intRange), with: replacement)
+        guard let range = range(from: intRange) else { return self }
+        return replacingCharacters(in: range, with: replacement)
     }
     
     // only `Range<Int>?`
-    func replacingOccurrences<Target, Replacement>(of target: Target, with replacement: Replacement, options: CompareOptions = [], range intRange: Range<Int>? = nil) -> String where Target: StringProtocol, Replacement: StringProtocol {
-        return replacingOccurrences(of: target, with: replacement, options: options, range: intRange.map { range(from: $0) })
+    func replacingOccurrences<Target, Replacement>(of target: Target, with replacement: Replacement, options: String.CompareOptions = [], range intRange: Range<Int>? = nil) -> String where Target: StringProtocol, Replacement: StringProtocol {
+        // ???: let range = intRange.transform { self.range(from: $0) }
+        let range = intRange != nil ? range(from: intRange!) : nil
+        return replacingOccurrences(of: target, with: replacement, options: options, range: range)
     }
 }

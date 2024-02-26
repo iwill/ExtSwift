@@ -35,4 +35,15 @@ final class tryIndexTests: XCTestCase {
         XCTAssertEqual(ints[tryBidirectRange: bidirectIndex(from: -3)!..<bidirectIndex(from: -1)!], [1, 2]) // (4 - 3)..<(4 - 1) -> 1..<3
         XCTAssertEqual(ints[tryBidirectRange: bidirectIndex(from: -6)!...bidirectIndex(from: -5)!], nil)
     }
+    
+    func testStringIndex() {
+        
+        let string = "0123"
+        
+        let i = string.index(from: 1)
+        XCTAssertEqual(string[try: i!], "1")
+        
+        // let j = string.index(from: 10) // Fatal error: String index is out of bounds
+        // XCTAssertEqual(string[try: j], nil)
+    }
 }

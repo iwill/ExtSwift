@@ -88,11 +88,17 @@ final class IntIndexTests: XCTestCase {
         
         let intR: Range<Int> = 0..<0 // 0..<1 -> crash
         let intSub = s[intR]
-        print("intSub: [\(intSub)]")
+        print("intSub: [\(String(describing: intSub))]")
         
         // runtime error
         // XCTAssertThrowsError(fingers[5])
         // XCTAssertThrowsError(fingers[1..<5])
         // XCTAssertThrowsError(fingers[1...5])
+        
+        var string = "x"
+        if let i = string.index(string.startIndex, offsetBy: 1, limitedBy: string.endIndex) {
+            string.insert(contentsOf: "x", at: i)
+        }
+        XCTAssertEqual(string, "xx")
     }
 }

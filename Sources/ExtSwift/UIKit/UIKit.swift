@@ -126,10 +126,10 @@ public extension UIColor {
     convenience init(hex: String, alpha: CGFloat) {
         var hexString: String
         if hex.hasPrefix("#") {
-            hexString = String(hex[1...])
+            hexString = String(hex[1...]!)
         }
         else if hex.hasPrefix("0x") {
-            hexString = String(hex[2...])
+            hexString = String(hex[2...]!)
         }
         else {
             hexString = hex

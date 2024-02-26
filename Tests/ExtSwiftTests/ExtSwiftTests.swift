@@ -32,6 +32,19 @@ final class ExtSwiftTests: XCTestCase {
         XCTAssertEqual(ExtSwift().text, "Hello, ExtSwift!")
     }
     
+    func testTransform() {
+        let string: String? = "string",
+            `nil`: String? = nil
+        let _string_ = string.transform { "[\($0)]" },
+            nil2 = `nil`.transform { "[\($0)]" }
+        XCTAssertEqual(_string_, "[string]")
+        XCTAssertEqual(nil2, nil)
+        
+        let intRange: Range<Int>? = nil
+        let range = intRange.transform { string?.range(from:$0) }
+        XCTAssertEqual(range, nil)
+    }
+    
     func testMutable() {
         var test = Test(i: 0).mutating { t in
             t.i = 1

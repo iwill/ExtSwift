@@ -8,7 +8,7 @@
 
 import Foundation
 
-private struct ExtSwift {
+internal struct ExtSwift {
     var text = "Hello, ExtSwift!"
 }
 

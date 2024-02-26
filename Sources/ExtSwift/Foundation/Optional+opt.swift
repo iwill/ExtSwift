@@ -9,7 +9,7 @@
 import Foundation
 
 public extension Optional {
-    func map<U>(_ transform: (Wrapped) throws -> U?) rethrows -> U? {
+    func transform<U>(_ transform: (Wrapped) throws -> U?) rethrows -> U? {
         return self != nil ? try transform(self!) : nil
     }
 }
