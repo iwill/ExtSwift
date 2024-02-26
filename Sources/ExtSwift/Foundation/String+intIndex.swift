@@ -13,6 +13,7 @@ public extension String {
     // MARK: index
     
     func index(from intIndex: Int) -> Index? {
+        let intIndex = intIndex >= 0 ? intIndex : count + intIndex
         return index(startIndex, offsetBy: intIndex, limitedBy: endIndex)
     }
     func intIndex(from index: Index) -> Int {
@@ -48,29 +49,29 @@ public extension String {
     // MARK: range
     
     func range(from intRange: Range<Int>) -> Range<Index>? {
-        guard let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound, limitedBy: endIndex),
-              let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        guard let lowerIndex = index(from: intRange.lowerBound),
+              let upperIndex = index(from: intRange.upperBound)
         else { return nil }
         return lowerIndex..<upperIndex
     }
     func range(from intRange: ClosedRange<Int>) -> ClosedRange<Index>? {
-        guard let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound, limitedBy: endIndex),
-              let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        guard let lowerIndex = index(from: intRange.lowerBound),
+              let upperIndex = index(from: intRange.upperBound)
         else { return nil }
         return lowerIndex...upperIndex
     }
     func range(from intRange: PartialRangeUpTo<Int>) -> PartialRangeUpTo<Index>? {
-        guard let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        guard let upperIndex = index(from: intRange.upperBound)
         else { return nil }
         return ..<upperIndex
     }
     func range(from intRange: PartialRangeThrough<Int>) -> PartialRangeThrough<Index>? {
-        guard let upperIndex = index(startIndex, offsetBy: intRange.upperBound, limitedBy: endIndex)
+        guard let upperIndex = index(from: intRange.upperBound)
         else { return nil }
         return ...upperIndex
     }
     func range(from intRange: PartialRangeFrom<Int>) -> PartialRangeFrom<Index>? {
-        guard let lowerIndex = index(startIndex, offsetBy: intRange.lowerBound, limitedBy: endIndex)
+        guard let lowerIndex = index(from: intRange.lowerBound)
         else { return nil }
         return lowerIndex...
     }
