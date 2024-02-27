@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension String {
+public extension StringProtocol {
     
     // MARK: index
     
@@ -98,8 +98,11 @@ public extension String {
         let lowerIndex = intIndex(from: range.lowerBound)
         return lowerIndex...
     }
-    
-    // MARK: subscript
+}
+
+// MARK: subscript
+
+public extension String {
     
     subscript(_ intIndex: Int) -> Character? {
         guard let index = index(from: intIndex) else { return nil }

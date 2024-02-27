@@ -52,16 +52,7 @@ public extension ImplicitAttributedText {
 
 extension UILabel: OptionalAttributedText {}
 extension UITextField: OptionalAttributedText {}
-extension UITextView: ImplicitAttributedText {
-    public func setAttributedTextByKeepingContentOffset(_ attributed: AttributedString!) {
-        let offset = contentOffset, range = selectedTextRange
-        isScrollEnabled = false
-        self.attributed = attributed
-        isScrollEnabled = true
-        contentOffset = offset
-        selectedTextRange = range
-    }
-}
+extension UITextView: ImplicitAttributedText {}
 public extension UIButton {
     func attributed(for state: UIControl.State) -> AttributedString? {
         return attributedTitle(for: state).map { AttributedString($0) }

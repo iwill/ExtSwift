@@ -8,7 +8,19 @@
 
 import UIKit
 
+public extension NSRange {
+    
+    func range<S>(in string: S) -> Range<String.Index>? where S : StringProtocol {
+        return Range(self, in: string)
+    }
+    
+    func intRange<S>(in string: S) -> Range<Int>? where S : StringProtocol {
+        return Range(self, in: string).transform { string.intRange(from: $0) }
+    }
+}
+
 public extension UITextView {
+    
     var selectedIntRange: Range<Int> {
         get {
             let nsRange: NSRange = selectedRange
@@ -22,5 +34,12 @@ public extension UITextView {
             let nsRange: NSRange = NSRange(strRange, in: text)
             selectedRange = nsRange
         }
+    }
+    
+    func replace(_ intRange: Range<Int>, withText text: String) {
+        guard let beginning = position(from: beginningOfDocument, offset: intRange.lowerBound),
+              let end = position(from: beginningOfDocument, offset: intRange.upperBound),
+              let textRange = textRange(from: beginning, to: end) else { return }
+        replace(textRange, withText: text)
     }
 }
