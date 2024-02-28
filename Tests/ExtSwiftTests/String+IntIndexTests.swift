@@ -65,9 +65,12 @@ final class IntIndexTests: XCTestCase {
         XCTAssertEqual(selectedRange.location, 0)
         XCTAssertEqual(selectedRange.length, 4)
         XCTAssertEqual(selectedRange.length, textView.text.utf16.count)
+        let selectedIntRange = textView.selectedIntRange!
+        print("selectedIntRange: \(selectedIntRange)")
+        XCTAssertEqual(selectedIntRange.lowerBound, 0)
+        XCTAssertEqual(selectedIntRange.upperBound, 1)
         
-        if let range = Range(textView.selectedRange, in: textView.text) {
-            let intRange = textView.text.intRange(from: range)
+        if let intRange = Range<Int>(textView.selectedRange, in: textView.text) {
             print("intRange: \(intRange)")
             let text = textView.text[intRange]
             // let text = textView.text[range]
@@ -77,9 +80,24 @@ final class IntIndexTests: XCTestCase {
             XCTFail()
         }
         
-        let intRange = textView.selectedIntRange
+        let intRange = textView.selectedIntRange!
         XCTAssertEqual(intRange.lowerBound, 0)
         XCTAssertEqual(intRange.upperBound, 1)
+        
+        if let beginning = textView.position(from: textView.beginningOfDocument, offset: 0),
+           let end = textView.position(from: textView.beginningOfDocument, offset: 1),
+           let textRange = textView.textRange(from: beginning, to: end) {
+            XCTAssertNotEqual(textView.text(in: textRange), "🤟🏿")
+            XCTAssertEqual(textView.offset(from: beginning, to: end), 1)
+        }
+        
+        if let nsRange = textView.text.range(from: intRange).transform({ NSRange($0, in: textView.text) }),
+           let beginning = textView.position(from: textView.beginningOfDocument, offset: nsRange.location),
+           let end = textView.position(from: textView.beginningOfDocument, offset: nsRange.location + nsRange.length),
+           let textRange = textView.textRange(from: beginning, to: end) {
+            XCTAssertEqual(textView.text(in: textRange), "🤟🏿")
+            XCTAssertEqual(textView.offset(from: beginning, to: end), 4)
+        }
         
         let s: String = ""
         let r: Range<String.Index> = s.startIndex..<s.startIndex
@@ -95,10 +113,10 @@ final class IntIndexTests: XCTestCase {
         // XCTAssertThrowsError(fingers[1..<5])
         // XCTAssertThrowsError(fingers[1...5])
         
-        var string = "x"
+        var string = "🤟🏿"
         if let i = string.index(string.startIndex, offsetBy: 1, limitedBy: string.endIndex) {
-            string.insert(contentsOf: "x", at: i)
+            string.insert(contentsOf: "🤟🏿", at: i)
         }
-        XCTAssertEqual(string, "xx")
+        XCTAssertEqual(string, "🤟🏿🤟🏿")
     }
 }
