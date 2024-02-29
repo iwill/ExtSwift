@@ -97,4 +97,9 @@ public extension UITextView {
         let textRange = textRange(from: intRange)!
         replace(textRange, withText: text)
     }
+    
+    func scrollRangeToVisible(_ intRange: Range<Int>) {
+        guard let nsRange = NSRange(intRange, in: text) else { return }
+        scrollRangeToVisible(nsRange)
+    }
 }
