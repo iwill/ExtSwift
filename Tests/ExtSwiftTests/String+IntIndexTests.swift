@@ -65,7 +65,7 @@ final class IntIndexTests: XCTestCase {
         XCTAssertEqual(selectedRange.location, 0)
         XCTAssertEqual(selectedRange.length, 4)
         XCTAssertEqual(selectedRange.length, textView.text.utf16.count)
-        let selectedIntRange = textView.selectedIntRange!
+        let selectedIntRange = textView.selectedIntRange
         print("selectedIntRange: \(selectedIntRange)")
         XCTAssertEqual(selectedIntRange.lowerBound, 0)
         XCTAssertEqual(selectedIntRange.upperBound, 1)
@@ -80,7 +80,7 @@ final class IntIndexTests: XCTestCase {
             XCTFail()
         }
         
-        let intRange = textView.selectedIntRange!
+        let intRange = textView.selectedIntRange
         XCTAssertEqual(intRange.lowerBound, 0)
         XCTAssertEqual(intRange.upperBound, 1)
         
