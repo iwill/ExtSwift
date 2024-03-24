@@ -46,28 +46,40 @@ public func type(of a: Any, isSubclassOfTypeOf b: Any) -> Bool {
 }
 
 /// Check whether value/type is Optional, get Wrapped Type
+/// - seealso: https://forums.swift.org/t/challenge-finding-base-type-of-nested-optionals/25096/2
 /// - seealso: https://stackoverflow.com/a/32781143/456536
 
-// !!!: MUST be `private`
-private protocol OptionalProtocol {
-    static var wrappedType: Any.Type { get }
-    var wrappedType: Any.Type { get }
+// !!!: MUST be `fileprivate`
+fileprivate protocol OptionalProtocol {
+    static var deeplyWrappedType: Any.Type { get }
+    var deeplyWrappedType: Any.Type { get }
+    var deeplyWrapped: Any? { get }
 }
+
 extension Optional: OptionalProtocol {
-    static var wrappedType: Any.Type { Wrapped.self }
-    var wrappedType: Any.Type { Wrapped.self }
-}
-
-public func isOptional<T>(_ type: T.Type) -> Bool {
-    return type is OptionalProtocol.Type
-}
-public func isOptional<T>(_ value: T) -> Bool {
-    return value is OptionalProtocol
-}
-
-public func wrappedType<T>(ifOptional type: T.Type) -> Any.Type? {
-    return (type as? OptionalProtocol.Type)?.wrappedType
-}
-public func wrappedType<T>(ifOptional value: T) -> Any.Type? {
-    return (value as? OptionalProtocol)?.wrappedType
+    
+    fileprivate static var deeplyWrappedType: Any.Type {
+        return switch Wrapped.self {
+            case let optional as OptionalProtocol.Type:
+                optional.deeplyWrappedType
+            default:
+                Wrapped.self
+        }
+    }
+    public var deeplyWrappedType: Any.Type {
+        return switch self {
+            case .some(let optional as OptionalProtocol):
+                optional.deeplyWrappedType
+            case .some(let wrapped):
+                type(of: wrapped)
+            case .none:
+                Optional.deeplyWrappedType
+        }
+    }
+    
+    public var deeplyWrapped: Any? {
+        guard case let .some(wrapped) = self else { return nil }
+        guard let wrapped = wrapped as? OptionalProtocol else { return wrapped }
+        return wrapped.deeplyWrapped
+    }
 }

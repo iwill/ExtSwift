@@ -96,30 +96,54 @@ final class TypesTests: XCTestCase {
     
     func testOptional() {
         
-        let i: Int = 1, j: Int? = 1
+        let some: Int???? = 1,
+            optional: Int???? = Optional(Optional(Optional(Optional(nil)))),
+            none: Int???? = nil
         
-        func isValueOptional<T>(value: T) -> Bool {
-            return isOptional(value)
+        print("Int.self: \(String(describing: Int.self))")
+        print("Int????.self: \(String(describing: Int????.self))")
+        
+        print("some: \(String(describing: some))")
+        print("optional: \(String(describing: optional))")
+        print("none: \(String(describing: none))")
+        if let some {
+            print("if let some: \(String(describing: some))")
+            XCTAssertEqual(some, Optional(Optional(Optional(1))))
         }
-        func isTypeOptional<T>(value: T) -> Bool {
-            return isOptional(T.self)
+        else {
+            print("else some: \(String(describing: some))")
+            XCTAssertEqual(some, nil)
+        }
+        if let optional {
+            print("if let optional: \(String(describing: optional))")
+            XCTAssertEqual(optional, Optional(Optional(Optional(nil))))
+        }
+        else {
+            print("else optional: \(String(describing: optional))")
+            XCTAssertEqual(optional, nil)
+        }
+        if let none {
+            print("if let none: \(String(describing: none))")
+            XCTAssertNotEqual(none, nil)
+        }
+        else {
+            print("else none: \(String(describing: none))")
+            XCTAssertEqual(none, nil)
         }
         
-        XCTAssertFalse(isValueOptional(value: i))
-        XCTAssertTrue(isValueOptional(value: j))
-        XCTAssertFalse(isTypeOptional(value: i))
-        XCTAssertTrue(isTypeOptional(value: j))
+        print("some.deeplyWrappedType: \(String(describing: some.deeplyWrappedType))")
+        print("optional.deeplyWrappedType: \(String(describing: optional.deeplyWrappedType))")
+        print("none.deeplyWrappedType: \(String(describing: none.deeplyWrappedType))")
+        XCTAssert(some.deeplyWrappedType == Int.self)
+        XCTAssert(optional.deeplyWrappedType == Int.self)
+        XCTAssert(none.deeplyWrappedType == Int.self)
         
-        func wrappedTypeOfValue<T>(value: T) -> Any.Type {
-            return wrappedType(ifOptional: value) ?? T.self
-        }
-        func wrappedTypeOfType<T>(value: T) -> Any.Type {
-            return wrappedType(ifOptional: T.self) ?? T.self
-        }
-        
-        XCTAssertTrue(wrappedTypeOfValue(value: i) is Int.Type)
-        XCTAssertTrue(wrappedTypeOfValue(value: j) is Int.Type)
-        XCTAssertTrue(wrappedTypeOfType(value: i) is Int.Type)
-        XCTAssertTrue(wrappedTypeOfType(value: j) is Int.Type)
+        print("some.deeplyWrapped!: \(String(describing: some.deeplyWrapped!))")
+        print("some.deeplyWrapped: \(String(describing: some.deeplyWrapped))")
+        print("optional.deeplyWrapped: \(String(describing: optional.deeplyWrapped))")
+        print("none.deeplyWrapped: \(String(describing: none.deeplyWrapped))")
+        XCTAssert(some.deeplyWrapped as? Int == 1)
+        XCTAssert(optional.deeplyWrapped == nil)
+        XCTAssert(none.deeplyWrapped == nil)
     }
 }
