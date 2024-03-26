@@ -43,16 +43,11 @@ extension Float80: BoolValue { public var boolValue: Bool { self != 0.0 } }
 
 extension Optional: BoolValue {
     public var boolValue: Bool {
-        switch self {
+        return switch self {
             case .some(let v):
-                if let b = v as? BoolValue {
-                    return b.boolValue
-                }
-                else {
-                    return true
-                }
-            default:
-                return false
+                if let b = v as? BoolValue { b.boolValue }
+                else { true }
+            default: false
         }
     }
 }

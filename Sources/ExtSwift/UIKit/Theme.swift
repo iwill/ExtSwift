@@ -35,9 +35,7 @@ public extension UIResponder {
         }
         set {
             let prevTheme = theme
-            guard newValue != prevTheme else {
-                return
-            }
+            guard newValue != prevTheme else { return }
             objc_setAssociatedObject(self, &AssociatedObject_theme, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             updateTheme(prevTheme: prevTheme)
         }
@@ -125,8 +123,7 @@ public extension UIView {
     
     static func autoUpdateThemeWhenMovedToSuperview() {
         guard let originalMethod = class_getInstanceMethod(Self.self, #selector(didMoveToSuperview)),
-              let swizzledMethod = class_getInstanceMethod(Self.self, #selector(_es_didMoveToSuperview))
-        else { return }
+              let swizzledMethod = class_getInstanceMethod(Self.self, #selector(_es_didMoveToSuperview)) else { return }
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
 }

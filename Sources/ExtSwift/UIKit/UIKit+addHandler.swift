@@ -42,9 +42,7 @@ public extension UIControl {
             }
             return
         }
-        guard let wrapper = target as? EventHandlerWrapper else {
-            return
-        }
+        guard let wrapper = target as? EventHandlerWrapper else { return }
         if events.contains(wrapper.event) {
             removeTarget(wrapper, action: #selector(EventHandlerWrapper.action(with:)), for: events) // events - NOT wrapper.event
             var wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [EventHandlerWrapper] ?? []
@@ -136,9 +134,7 @@ public extension UIBarButtonItem {
     }
     
     func removeHandler(with target: Any) {
-        guard let wrapper = target as? UIBarButtonItemActionHandlerWrapper else {
-            return
-        }
+        guard let wrapper = target as? UIBarButtonItemActionHandlerWrapper else { return }
         var wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [UIBarButtonItemActionHandlerWrapper] ?? []
         wrappers.removeAll { $0 == wrapper }
         objc_setAssociatedObject(self, &AssociatedObject_handlerWrappers, wrappers.isEmpty ? nil : wrappers, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -192,9 +188,7 @@ public extension UIGestureRecognizer {
     }
     
     func removeHandler(with target: Any) {
-        guard let wrapper = target as? UIGestureRecognizerActionHandlerWrapper else {
-            return
-        }
+        guard let wrapper = target as? UIGestureRecognizerActionHandlerWrapper else { return }
         removeTarget(wrapper, action: #selector(UIGestureRecognizerActionHandlerWrapper.action(with:)))
         var wrappers = objc_getAssociatedObject(self, &AssociatedObject_handlerWrappers) as? [UIGestureRecognizerActionHandlerWrapper] ?? []
         wrappers.removeAll { $0 == wrapper }
@@ -240,9 +234,7 @@ public extension UIAlertAction {
         get {
             let a = "is", b = "C", c = "hecked"
             let selector = Selector("_\(a)\(b)\(c)")
-            guard responds(to: selector) else {
-                return false
-            }
+            guard responds(to: selector) else { return false }
             // let number = perform(selector)?.takeUnretainedValue() as? NSNumber
             let number = value(forKey: "\(b)\(c)".lowercased())
             return number.boolValue
@@ -250,9 +242,7 @@ public extension UIAlertAction {
         set {
             let a = "set", b = "C", c = "hecked"
             let selector = Selector("_\(a)\(b)\(c):")
-            guard responds(to: selector) else {
-                return
-            }
+            guard responds(to: selector) else { return }
             // perform(selector, with: NSNumber(value: newValue))
             setValue(NSNumber(value: newValue), forKey: "\(b)\(c)".lowercased())
         }

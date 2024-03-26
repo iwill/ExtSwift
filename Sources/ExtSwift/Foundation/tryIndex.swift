@@ -28,9 +28,7 @@ public extension Collection {
     subscript<R>(try rangeExpression: R) -> Self.SubSequence? where R: RangeExpression, Self.Index == R.Bound {
         let limit = startIndex..<endIndex
         let range = rangeExpression.relative(to: self).clamped(to: limit)
-        guard !range.isEmpty else {
-            return nil
-        }
+        guard !range.isEmpty else { return nil }
         return self[range]
     }
 }
@@ -66,9 +64,7 @@ public extension Collection {
     subscript<R>(tryBidirectRange rangeExpression: R) -> Self.SubSequence? where R: RangeExpression, Self.Index == R.Bound, Self.Index == Int {
         
         func relative(bidirectIndex: Int, to count: Int) -> Int {
-            guard let negative = negative(from: bidirectIndex) else {
-                return bidirectIndex
-            }
+            guard let negative = negative(from: bidirectIndex) else { return bidirectIndex }
             return count + negative
         }
         
@@ -81,9 +77,7 @@ public extension Collection {
         let limit = startIndex..<endIndex
         range = range.clamped(to: limit)
         
-        guard !range.isEmpty else {
-            return nil
-        }
+        guard !range.isEmpty else { return nil }
         return self[range]
     }
 }
@@ -94,17 +88,13 @@ public extension Collection {
 /// return: `bidirectIndex`
 @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
 public func bidirectIndex(from negative: Int) -> Int? {
-    guard negative <= 0 && negative > -1024 else {
-        return nil
-    }
+    guard negative <= 0 && negative > -1024 else { return nil }
     return Int.max + negative
 }
 
 @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
 public func negative(from bidirectIndex: Int) -> Int? {
-    guard isBidirectIndex(bidirectIndex) else {
-        return nil
-    }
+    guard isBidirectIndex(bidirectIndex) else { return nil }
     return bidirectIndex - Int.max
 }
 

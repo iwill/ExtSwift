@@ -125,9 +125,7 @@ public extension UIColor {
         else {
             hexString = hex
         }
-        guard hexString.count == 6 else {
-            fatalError("invalid hex string: \(hex)")
-        }
+        guard hexString.count == 6 else { fatalError("invalid hex string: \(hex)") }
         var hexUInt: UInt64 = 0
         Scanner(string: hexString).scanHexInt64(&hexUInt)
         self.init(hex: hexUInt, alpha: alpha)

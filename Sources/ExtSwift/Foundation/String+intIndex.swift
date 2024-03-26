@@ -50,29 +50,24 @@ public extension StringProtocol {
     
     func range(from intRange: Range<Int>) -> Range<Index>? {
         guard let lowerIndex = index(from: intRange.lowerBound),
-              let upperIndex = index(from: intRange.upperBound)
-        else { return nil }
+              let upperIndex = index(from: intRange.upperBound) else { return nil }
         return lowerIndex..<upperIndex
     }
     func range(from intRange: ClosedRange<Int>) -> ClosedRange<Index>? {
         guard let lowerIndex = index(from: intRange.lowerBound),
-              let upperIndex = index(from: intRange.upperBound)
-        else { return nil }
+              let upperIndex = index(from: intRange.upperBound) else { return nil }
         return lowerIndex...upperIndex
     }
     func range(from intRange: PartialRangeUpTo<Int>) -> PartialRangeUpTo<Index>? {
-        guard let upperIndex = index(from: intRange.upperBound)
-        else { return nil }
+        guard let upperIndex = index(from: intRange.upperBound) else { return nil }
         return ..<upperIndex
     }
     func range(from intRange: PartialRangeThrough<Int>) -> PartialRangeThrough<Index>? {
-        guard let upperIndex = index(from: intRange.upperBound)
-        else { return nil }
+        guard let upperIndex = index(from: intRange.upperBound) else { return nil }
         return ...upperIndex
     }
     func range(from intRange: PartialRangeFrom<Int>) -> PartialRangeFrom<Index>? {
-        guard let lowerIndex = index(from: intRange.lowerBound)
-        else { return nil }
+        guard let lowerIndex = index(from: intRange.lowerBound) else { return nil }
         return lowerIndex...
     }
     
