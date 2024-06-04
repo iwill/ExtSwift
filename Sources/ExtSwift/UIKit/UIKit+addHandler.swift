@@ -108,7 +108,8 @@ public extension UITextField {
     private var commonEvents: UIControl.Event { .allEditingEvents }
     
     @discardableResult
-    func addHandler(_ handler: @escaping (_ button: Self) -> Void) -> Any {
+    func addHandler(_ handler: @escaping (_ textField: Self) -> Void) -> Any {
+        handler(self as! Self) // initialize
         return addHandler(for: commonEvents) { sender, event in
             handler(sender as! Self)
         }

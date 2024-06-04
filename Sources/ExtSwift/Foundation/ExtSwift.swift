@@ -12,7 +12,20 @@ internal struct ExtSwift {
     var text = "Hello, ExtSwift!"
 }
 
-// TODO: move to String+?.swift
+// TODO: move to String+?.swift, Array+?.swift
+
+extension String {
+    public init(localizedFormat: String, comment: String? = nil, _ arguments: CVarArg...) {
+        self.init(format: NSLocalizedString(localizedFormat, comment: comment ?? ""), arguments)
+    }
+}
+
+extension Array {
+    public mutating func replace(_ element: Self.Element, where shouldBeRemoved: (Self.Element) throws -> Bool) rethrows {
+        guard let index = try firstIndex(where: shouldBeRemoved) else { return }
+        self[index] = element
+    }
+}
 
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 extension BidirectionalCollection where Self.SubSequence == Substring {
@@ -40,11 +53,5 @@ extension Regex {
     
     public func lastMatch(in string: Substring) throws -> Regex<Output>.Match? {
         return try lastMatch(in: String(string))
-    }
-}
-
-public extension String {
-    init(localizedFormat: String, comment: String? = nil, _ arguments: CVarArg...) {
-        self.init(format: NSLocalizedString(localizedFormat, comment: comment ?? ""), arguments)
     }
 }

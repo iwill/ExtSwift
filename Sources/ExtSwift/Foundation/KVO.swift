@@ -10,6 +10,8 @@ import Foundation
 
 /// Key-Value Observing
 
+/// TODO: same API for ObjC KVO, for UIKit?
+
 @propertyWrapper
 public class KVO<ValueType> {
     
