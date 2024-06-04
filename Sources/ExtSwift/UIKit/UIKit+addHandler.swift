@@ -6,6 +6,7 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 private var AssociatedObject_handlerWrappers: UInt8 = 0
@@ -248,3 +249,4 @@ public extension UIAlertAction {
         }
     }
 }
+#endif

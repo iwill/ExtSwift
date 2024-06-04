@@ -6,11 +6,8 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 import UIKit
-#else
-import AppKit
-#endif
 
 fileprivate class ESScrollView: UIScrollView {
     override func touchesShouldCancel(in view: UIView) -> Bool {
@@ -69,3 +66,4 @@ open class ESScrollViewController: UIViewController {
         scrollView.delegate = nil
     }
 }
+#endif

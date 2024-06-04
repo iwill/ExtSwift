@@ -6,6 +6,7 @@
 //  Copyright (c) 2024 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 open class ESHitTestView: UIView {
@@ -25,3 +26,4 @@ open class ESHitTestView: UIView {
         return hitView == self ? nil : hitView
     }
 }
+#endif

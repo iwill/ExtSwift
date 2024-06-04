@@ -6,6 +6,7 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 import SnapKit
@@ -110,3 +111,4 @@ public extension UITextField {
         return self
     }
 }
+#endif

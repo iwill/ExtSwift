@@ -7,8 +7,8 @@ let package = Package(
     platforms: [
         // ge supported min versions from `swift-tools-version:5.9`
         .iOS(.v13),
-        .tvOS(.v13)
-        // .macOS(.v12)
+        .tvOS(.v13),
+        .macOS(.v12)
     ],
     products: [
         .library(name: "ExtSwift", targets: ["ExtSwift"]),

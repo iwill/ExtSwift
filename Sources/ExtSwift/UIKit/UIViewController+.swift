@@ -6,6 +6,7 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public extension UIViewController {
@@ -97,3 +98,4 @@ public extension UINavigationController {
         return viewControllers
     }
 }
+#endif

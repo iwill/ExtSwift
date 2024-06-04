@@ -6,6 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// - seealso: https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
@@ -250,3 +251,4 @@ public extension UIViewController {
         return self
     }
 }
+#endif

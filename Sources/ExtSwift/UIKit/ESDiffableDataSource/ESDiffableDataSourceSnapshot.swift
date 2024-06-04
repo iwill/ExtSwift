@@ -6,6 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// #see NSDiffableDataSourceSnapshot
@@ -187,3 +188,4 @@ public extension ESDiffableDataSourceSnapshot {
         return IndexPath(item: item, section: section)
     }
 }
+#endif

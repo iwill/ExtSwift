@@ -6,6 +6,7 @@
 //  Copyright (c) 2024 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// UITextView
@@ -103,3 +104,4 @@ public extension UITextView {
         scrollRangeToVisible(nsRange)
     }
 }
+#endif

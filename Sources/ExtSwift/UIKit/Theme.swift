@@ -6,6 +6,7 @@
 //  Copyright (c) 2023 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 private class ThemeMakerWrapper: Equatable {
@@ -127,3 +128,4 @@ public extension UIView {
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
 }
+#endif

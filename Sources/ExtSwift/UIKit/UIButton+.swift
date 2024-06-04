@@ -6,6 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // MARK: - set backgroundColor for state
@@ -134,3 +135,4 @@ fileprivate class HandlerWrapper: NSObject {
         }
     }
 }
+#endif

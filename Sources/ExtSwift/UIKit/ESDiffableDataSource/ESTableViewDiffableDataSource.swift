@@ -6,6 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// #see UITableViewDiffableDataSource
@@ -147,3 +148,4 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
         return nil
     }
 }
+#endif

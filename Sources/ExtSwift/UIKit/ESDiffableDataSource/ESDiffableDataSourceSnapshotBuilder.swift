@@ -6,6 +6,7 @@
 //  Copyright (c) 2022 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // for [SectionWithItems]
@@ -146,3 +147,4 @@ public extension UITableViewDiffableDataSource {
         apply(snapshot())
     }
 }
+#endif
