@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "ExtSwift",
     platforms: [
-        // ge supported min versions from `swift-tools-version:5.9`
+        // get supported min versions by setting `swift-tools-version:5.9`
         .iOS(.v13),
         .tvOS(.v13),
         .macOS(.v12)
