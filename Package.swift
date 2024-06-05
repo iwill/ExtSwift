@@ -7,7 +7,7 @@ let package = Package(
     platforms: [
         // get supported min versions by setting `swift-tools-version:5.9`
         .iOS(.v13),
-        .tvOS(.v13),
+        .tvOS(.v15),
         .macOS(.v12)
     ],
     products: [
