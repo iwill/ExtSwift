@@ -17,8 +17,8 @@ public extension Dictionary where Key == String, Value == Any {
     subscript<T>(key: Key, as type: T.Type) -> T? {
         let any = self[key]
         return if let value = any as? T { value }
-        else if let value = any as? NSNumber { value.as(type) }
-        else if let value = any as? NSString { value.as(type) }
+        else if let value = any as? NSNumber { value.castTo(type) }
+        else if let value = any as? NSString { value.castTo(type) }
         else { nil }
     }
 }
@@ -27,14 +27,14 @@ public extension Array where Element == Any {
     subscript<T>(index: Index, as type: T.Type) -> T? {
         let any = self[try: index]
         return if let value = any as? T { value }
-        else if let value = any as? NSNumber { value.as(type) }
-        else if let value = any as? NSString { value.as(type) }
+        else if let value = any as? NSNumber { value.castTo(type) }
+        else if let value = any as? NSString { value.castTo(type) }
         else { nil }
     }
 }
 
-public extension NSNumber {
-    func `as`<T>(_ type: T.Type) -> T? {
+fileprivate extension NSNumber {
+    func castTo<T>(_ type: T.Type) -> T? {
         if let value = self as? T {
             return value
         }
@@ -61,7 +61,7 @@ public extension NSNumber {
     }
 }
 public extension NSString {
-    func `as`<T>(_ type: T.Type) -> T? {
+    func castTo<T>(_ type: T.Type) -> T? {
         if let value = self as? T {
             return value
         }
