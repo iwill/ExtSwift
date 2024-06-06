@@ -238,8 +238,8 @@ public extension UIAlertAction {
             let selector = Selector("_\(a)\(b)\(c)")
             guard responds(to: selector) else { return false }
             // let number = perform(selector)?.takeUnretainedValue() as? NSNumber
-            let number = value(forKey: "\(b)\(c)".lowercased())
-            return number.boolValue
+            let number = value(forKey: "\(b)\(c)".lowercased()) as? NSNumber
+            return number?.boolValue ?? false
         }
         set {
             let a = "set", b = "C", c = "hecked"

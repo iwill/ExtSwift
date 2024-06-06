@@ -139,7 +139,9 @@ Pod::Spec.new do |s|
         ]
         ss.dependency "ExtSwift/Mutable"
         ss.dependency "ExtSwift/NameSpace"
+        ss.dependency "ExtSwift/Operators"
         ss.dependency "ExtSwift/Optional"
+        ss.dependency "ExtSwift/String+intIndex"
         ss.dependency "ExtSwift/tryIndex"
         ss.dependency "SnapKit", "~> 5.6"
     end
