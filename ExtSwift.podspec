@@ -41,6 +41,11 @@ Pod::Spec.new do |s|
     # s.xcconfig      = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
     # s.dependency "ExCodable", "~> 0.2.0"
     
+    # fix: Build failed because ExtSwift.swiftmodule is not built for arm64
+    # see: https://stackoverflow.com/a/63955114/456536
+    s.pod_target_xcconfig  = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    
     # ――― Subspecs ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     
     s.default_subspecs = ["ExtSwift"]
