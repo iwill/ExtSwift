@@ -15,41 +15,37 @@ public extension Optional {
     }
 }
 
-/// Check whether value/type is Optional, get Wrapped Type
-/// - seealso: https://forums.swift.org/t/challenge-finding-base-type-of-nested-optionals/25096/2
+/// Check whether value/type is Optional, get wrapped value/type
+/// - seealso: https://forums.swift.org/t/challenge-finding-base-type-of-nested-optionals/25096
 /// - seealso: https://stackoverflow.com/a/32781143/456536
 
-// !!!: MUST be `fileprivate`
 fileprivate protocol OptionalProtocol {
-    static var deeplyWrappedType: Any.Type { get }
-    var deeplyWrappedType: Any.Type { get }
-    var deeplyWrapped: Any? { get }
+    static var wrappedType: Any.Type { get }
+    var wrappedType: Any.Type { get }
+    var wrapped: Any? { get }
 }
 
 extension Optional: OptionalProtocol {
     
-    fileprivate static var deeplyWrappedType: Any.Type {
-        return switch Wrapped.self {
-            case let optional as OptionalProtocol.Type:
-                optional.deeplyWrappedType
-            default:
-                Wrapped.self
+    public static var wrappedType: Any.Type {
+        if let optional = Wrapped.self as? OptionalProtocol.Type {
+            return optional.wrappedType
         }
-    }
-    public var deeplyWrappedType: Any.Type {
-        return switch self {
-            case .some(let optional as OptionalProtocol):
-                optional.deeplyWrappedType
-            case .some(let wrapped):
-                Swift.type(of: wrapped)
-            case .none:
-                Optional.deeplyWrappedType
-        }
+        return Wrapped.self
     }
     
-    public var deeplyWrapped: Any? {
-        guard case let .some(wrapped) = self else { return nil }
-        guard let wrapped = wrapped as? OptionalProtocol else { return wrapped }
-        return wrapped.deeplyWrapped
+    public var wrappedType: Any.Type {
+        return Self.wrappedType
+    }
+    
+    public var wrapped: Any? {
+        return switch self {
+            case .some(let optional as OptionalProtocol):
+                optional.wrapped
+            case .some(let wrapped):
+                wrapped
+            case .none:
+                nil
+        }
     }
 }
