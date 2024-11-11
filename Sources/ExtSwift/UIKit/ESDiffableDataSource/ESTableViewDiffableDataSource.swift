@@ -25,9 +25,7 @@ public extension UITableView {
     
     func dequeueConfiguredReusableCell<Cell, ItemIdentifierType>(using registration: ESCellRegistration<Cell, ItemIdentifierType>, for indexPath: IndexPath, itemIdentifier: ItemIdentifierType?) -> Cell where Cell: UITableViewCell {
         guard let itemIdentifier else { return Cell() }
-        if dequeueReusableCell(withIdentifier: registration.reuseIdentifier) == nil {
-            register(Cell.self, forCellReuseIdentifier: registration.reuseIdentifier)
-        }
+        register(Cell.self, forCellReuseIdentifier: registration.reuseIdentifier)
         let cell = dequeueReusableCell(withIdentifier: registration.reuseIdentifier, for: indexPath) as! Cell
         registration.handler(cell, indexPath, itemIdentifier)
         return cell
