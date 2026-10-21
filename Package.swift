@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version: 5.10
 
 import PackageDescription
 
@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "ExtSwift-Dynamic", type: .dynamic, targets: ["ExtSwift"])
     ],
     dependencies: [
+        // .package(url: "https://github.com/swiftlang/swift-docc-plugin", branch: "main"),
         // .package(url: "https://github.com/iwill/ExCodable", branch: "develop"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0")
     ],

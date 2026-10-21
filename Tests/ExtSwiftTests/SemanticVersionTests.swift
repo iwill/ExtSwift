@@ -39,7 +39,7 @@ final class SemanticVersionTests: XCTestCase {
         
         XCTAssertTrue("2.0.0".semanticVersion   < "2.0.a")
         
-        let systemVersion = UIDevice.current.systemVersion
+        let systemVersion = "27.0.1"
         XCTAssertTrue((systemVersion + "-beta").semanticVersion < systemVersion.semanticVersion)
         
         let a = "1-a".replacingOccurrences(of: "-", with: "\0")

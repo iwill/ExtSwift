@@ -8,6 +8,7 @@
 
 import XCTest
 
+#if canImport(UIKit)
 import UIKit
 
 // @testable
@@ -15,23 +16,24 @@ import ExtSwift
 
 final class UIKitTests: XCTestCase {
     
-    
     @available(iOS 15, *)
     func testAttributedString() {
+        let font = UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold)
+        let color = UIColor.black
         let a: AttributedString = "text" | AttributeContainer()
-            .font(UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold))
-            .foregroundColor(.black)
+            .font(font)
+            .foregroundColor(color)
         let b = AttributedString("text", attributes: AttributeContainer([
-            NSAttributedString.Key.font: UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold),
-            NSAttributedString.Key.foregroundColor: UIColor.black
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: color
         ]))
         XCTAssertEqual(a, b)
         let c: NSAttributedString = "text" | AttributeContainer()
-            .font(UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold))
-            .foregroundColor(.black)
+            .font(font)
+            .foregroundColor(color)
         let d = NSAttributedString(string: "text", attributes: [
-            NSAttributedString.Key.font: UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold),
-            NSAttributedString.Key.foregroundColor: UIColor.black
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: color
         ])
         XCTAssertEqual(c, d)
     }
@@ -66,3 +68,5 @@ final class UIKitTests: XCTestCase {
         XCTAssertEqual(label.superview, view)
     }
 }
+
+#endif

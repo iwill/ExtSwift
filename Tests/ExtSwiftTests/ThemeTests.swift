@@ -8,6 +8,9 @@
 
 import XCTest
 
+#if canImport(UIKit)
+import UIKit
+
 final class ThemeTests: XCTestCase {
     
     func testThemeMakers() throws {
@@ -41,3 +44,5 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(button.titleColor(for: .normal), .white)
     }
 }
+
+#endif

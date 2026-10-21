@@ -7,6 +7,8 @@
 //
 
 import XCTest
+
+#if canImport(UIKit)
 import UIKit
 
 // @testable
@@ -120,3 +122,5 @@ final class IntIndexTests: XCTestCase {
         XCTAssertEqual(string, "🤟🏿🤟🏿")
     }
 }
+
+#endif

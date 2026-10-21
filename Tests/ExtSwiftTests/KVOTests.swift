@@ -26,7 +26,7 @@ class TestKVO {
     @ExtKVO
     var eventWithoutParameter: Void? = nil
     
-    @ExtKVO (keepEventState: true)
+    @ExtKVO(keepEventState: true)
     var eventWithIntAndString: (i: Int, s: String)? = nil
 }
 

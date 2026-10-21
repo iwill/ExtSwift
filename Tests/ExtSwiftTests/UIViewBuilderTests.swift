@@ -7,6 +7,9 @@
 
 import XCTest
 
+#if canImport(UIKit)
+import UIKit
+
 import ExtSwift
 
 final class UIViewBuilderTests: XCTestCase {
@@ -20,3 +23,5 @@ final class UIViewBuilderTests: XCTestCase {
          }
     }
 }
+
+#endif
