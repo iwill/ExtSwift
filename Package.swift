@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.4
 
 import PackageDescription
 
@@ -6,7 +6,7 @@ let package = Package(
     name: "ExtSwift",
     platforms: [
         // get supported min versions by setting `swift-tools-version:5.9`
-        .iOS(.v13),
+        .iOS(.v15),
         // .tvOS(.v15),
         .macOS(.v12)
     ],
@@ -34,5 +34,5 @@ let package = Package(
                 "ExtSwift"
             ])
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v5]
 )
