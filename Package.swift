@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         // .package(url: "https://github.com/swiftlang/swift-docc-plugin", branch: "main"),
         // .package(url: "https://github.com/iwill/ExCodable", branch: "develop"),
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0")
+        .package(url: "https://github.com/SnapKit/SnapKit", from: "6.0.0")
     ],
     targets: [
         .target(
