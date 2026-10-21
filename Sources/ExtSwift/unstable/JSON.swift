@@ -25,7 +25,7 @@ public extension Dictionary where Key == String, Value == Any {
 
 public extension Array where Element == Any {
     subscript<T>(index: Index, as type: T.Type) -> T? {
-        let any = self[try: index]
+        let any = self[safe: index]
         return if let value = any as? T { value }
         else if let value = any as? NSNumber { value.castTo(type) }
         else if let value = any as? NSString { value.castTo(type) }

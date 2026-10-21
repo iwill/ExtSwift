@@ -18,18 +18,18 @@ final class tryIndexTests: XCTestCase {
         
         let ints = [0, 1, 2, 3]
         
-        XCTAssertEqual(ints[try: 0], 0)
-        XCTAssertEqual(ints[try: 1], 1)
-        XCTAssertEqual(ints[try: 4], nil)
+        XCTAssertEqual(ints[safe: 0], 0)
+        XCTAssertEqual(ints[safe: 1], 1)
+        XCTAssertEqual(ints[safe: 4], nil)
         
-        XCTAssertEqual(ints[try: -1], 3)
-        XCTAssertEqual(ints[try: -2], 2)
-        XCTAssertEqual(ints[try: -4], 0)
-        XCTAssertEqual(ints[try: -5], nil)
+        XCTAssertEqual(ints[safe: -1], 3)
+        XCTAssertEqual(ints[safe: -2], 2)
+        XCTAssertEqual(ints[safe: -4], 0)
+        XCTAssertEqual(ints[safe: -5], nil)
         
-        XCTAssertEqual(ints[try: -1...1], [0, 1])
-        XCTAssertEqual(ints[try: 2...10000], [2, 3])
-        XCTAssertEqual(ints[try: 4...], nil)
+        XCTAssertEqual(ints[safe: -1...1], [0, 1])
+        XCTAssertEqual(ints[safe: 2...10000], [2, 3])
+        XCTAssertEqual(ints[safe: 4...], nil)
         
         XCTAssertEqual(ints[tryBidirectRange: 1..<bidirectIndex(from: -1)!], [1, 2]) // -> 1..<(4 - 1) -> 1..<3
         XCTAssertEqual(ints[tryBidirectRange: bidirectIndex(from: -3)!..<bidirectIndex(from: -1)!], [1, 2]) // (4 - 3)..<(4 - 1) -> 1..<3
@@ -41,9 +41,9 @@ final class tryIndexTests: XCTestCase {
         let string = "0123"
         
         let i = string.index(from: 1)
-        XCTAssertEqual(string[try: i!], "1")
+        XCTAssertEqual(string[safe: i!], "1")
         
         // let j = string.index(from: 10) // Fatal error: String index is out of bounds
-        // XCTAssertEqual(string[try: j], nil)
+        // XCTAssertEqual(string[safe: j], nil)
     }
 }

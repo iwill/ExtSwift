@@ -13,18 +13,21 @@ import Foundation
 /// [SwiftKit](https://github.com/wendyliga/SwiftKit)
 public extension Collection {
     
+    @available(*, deprecated, message: "DEPRECATED API - Use `safe` instead!")
     subscript(try index: Index) -> Iterator.Element? {
         guard indices.contains(index) else { return nil }
         return self[index]
     }
     
     /// supports negative-integer as backward-index: `-1` -> `count - 1`
+    @available(*, deprecated, message: "DEPRECATED API - Use `safe` instead!")
     subscript(try index: Index) -> Iterator.Element? where Self.Index == Int {
         let index = index >= 0 ? index : count + index
         guard indices.contains(index) else { return nil }
         return self[index]
     }
     
+    @available(*, deprecated, message: "DEPRECATED API - Use `safe` instead!")
     subscript<R>(try rangeExpression: R) -> Self.SubSequence? where R: RangeExpression, Self.Index == R.Bound {
         let limit = startIndex..<endIndex
         let range = rangeExpression.relative(to: self).clamped(to: limit)

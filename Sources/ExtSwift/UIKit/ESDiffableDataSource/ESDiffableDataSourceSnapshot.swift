@@ -155,7 +155,7 @@ public extension ESDiffableDataSourceSnapshot {
 public extension ESDiffableDataSourceSnapshot {
     
     func sectionIdentifier(in section: Int) -> SectionIdentifierType? {
-        return sectionIdentifiers[try: section]
+        return sectionIdentifiers[safe: section]
     }
     
     func numberOfItems(in section: Int) -> Int {
@@ -163,17 +163,17 @@ public extension ESDiffableDataSourceSnapshot {
     }
     
     func itemIdentifiers(in section: Int) -> [ItemIdentifierType] {
-        guard let section = sectionIdentifiers[try: section] else {
+        guard let section = sectionIdentifiers[safe: section] else {
             return []
         }
         return itemIdentifiers(inSection: section)
     }
     
     func itemIdentifier(at indexPath: IndexPath) -> ItemIdentifierType? {
-        guard let section = sectionIdentifiers[try: indexPath.section] else {
+        guard let section = sectionIdentifiers[safe: indexPath.section] else {
             return nil
         }
-        return itemIdentifiers(inSection: section)[try: indexPath.item]
+        return itemIdentifiers(inSection: section)[safe: indexPath.item]
     }
     
     func indexOfItem(_ itemIdentifier: ItemIdentifierType, inSection sectionIdentifier: SectionIdentifierType) -> Int? {

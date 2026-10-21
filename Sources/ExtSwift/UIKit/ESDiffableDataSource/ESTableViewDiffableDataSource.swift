@@ -104,8 +104,8 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: indexPath.section],
-           let itemIdentifier = _snapshot.allItemIdentifiers[sectionIdentifier]![try: indexPath.row],
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[safe: indexPath.section],
+           let itemIdentifier = _snapshot.allItemIdentifiers[sectionIdentifier]![safe: indexPath.row],
            let cell = cellProvider(tableView, indexPath, itemIdentifier) {
             return cell
         }
@@ -113,7 +113,7 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     }
     
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[safe: section],
            let title = headerTitleProvider?(tableView, section, sectionIdentifier) {
             return title
         }
@@ -121,7 +121,7 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     }
     
     public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[safe: section],
            let title = footerTitleProvider?(tableView, section, sectionIdentifier) {
             return title
         }
@@ -131,7 +131,7 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     // MARK: UITableViewDelegate
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[safe: section],
            let view = headerViewProvider?(tableView, section, sectionIdentifier) {
             return view
         }
@@ -139,7 +139,7 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let sectionIdentifier = _snapshot.sectionIdentifiers[try: section],
+        if let sectionIdentifier = _snapshot.sectionIdentifiers[safe: section],
            let view = footerViewProvider?(tableView, section, sectionIdentifier) {
             return view
         }
