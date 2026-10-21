@@ -16,7 +16,6 @@ import ExtSwift
 
 final class UIKitTests: XCTestCase {
     
-    @available(iOS 15, *)
     func testAttributedString() {
         let font = UIFont.monospacedSystemFont(ofSize: 14.0, weight: .bold)
         let color = UIColor.black
@@ -38,6 +37,7 @@ final class UIKitTests: XCTestCase {
         XCTAssertEqual(c, d)
     }
     
+    @MainActor
     func testMutable() {
         let frame = CGRectZero.mutating { rect in
             rect.size = CGSizeMake(1.0, 1.0)

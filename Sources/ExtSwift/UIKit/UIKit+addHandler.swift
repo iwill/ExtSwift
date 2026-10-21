@@ -9,7 +9,7 @@
 #if canImport(UIKit)
 import UIKit
 
-private var AssociatedObject_handlerWrappers: UInt8 = 0
+nonisolated(unsafe) fileprivate var AssociatedObject_handlerWrappers: UInt8 = 0
 
 // MARK: UIControl
 
@@ -206,7 +206,7 @@ public extension UIGestureRecognizer {
     }
 }
 
-private class UIGestureRecognizerActionHandlerWrapper: Equatable {
+fileprivate class UIGestureRecognizerActionHandlerWrapper: Equatable {
     private let handler: (_ gesture: UIGestureRecognizer) -> Void
     init(_ handler: @escaping (_ gesture: UIGestureRecognizer) -> Void) {
         self.handler = handler

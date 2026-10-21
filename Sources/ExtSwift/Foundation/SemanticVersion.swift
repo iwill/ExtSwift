@@ -1,8 +1,9 @@
 //
 //  SemanticVersion.swift
-//  
+//  ExtSwift
 //
 //  Created by MingLQ on 2021-05-19.
+//  Copyright (c) 2021 Míng <minglq.9@gmail.com>. Released under the MIT license.
 //
 
 import Foundation

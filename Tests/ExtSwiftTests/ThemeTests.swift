@@ -13,12 +13,13 @@ import UIKit
 
 final class ThemeTests: XCTestCase {
     
+    @available(iOS, introduced: 13.0, deprecated: 17.0, message: "Use `UITraitDefinition` insead: https://developer.apple.com/videos/play/wwdc2023/10057/")
+    @MainActor
     func testThemeMakers() throws {
         UIView.autoUpdateThemeWhenMovedToSuperview()
         
         let view = UIView()
-        view.makeTheme { this in
-            let view = this as! UIView
+        view.makeTheme { view in
             let app = view // UIApplication.shared - <uninitialized>
             if app.theme == "Dark" {
                 view.backgroundColor = .black
@@ -33,8 +34,7 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(view.backgroundColor, .black)
         
         let button = UIButton()
-        button.makeTheme { this in
-            let button = this as! UIButton
+        button.makeTheme { button in
             let color: UIColor = button.theme == "Dark" ? .white : .black
             button.setTitleColor(color, for: .normal)
         }

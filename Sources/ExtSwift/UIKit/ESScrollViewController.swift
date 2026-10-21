@@ -62,7 +62,7 @@ open class ESScrollViewController: UIViewController {
         }
     }
     
-    deinit {
+    isolated deinit {
         scrollView.delegate = nil
     }
 }

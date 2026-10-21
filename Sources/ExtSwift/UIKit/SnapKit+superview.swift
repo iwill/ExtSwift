@@ -10,6 +10,7 @@
 import UIKit
 import SnapKit
 
+@MainActor
 public extension ConstraintViewDSL {
     
     @discardableResult

@@ -68,9 +68,7 @@ open class ESTableViewController: UIViewController {
         if conforms(to: UITableViewDelegate.self) {
             tableView.delegate = (self as! UITableViewDelegate)
         }
-        if #available(iOS 15, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -78,7 +76,7 @@ open class ESTableViewController: UIViewController {
         }
     }
     
-    deinit {
+    isolated deinit {
         tableView.dataSource = nil
         tableView.delegate = nil
     }

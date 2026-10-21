@@ -15,7 +15,6 @@ infix operator |: AdditionPrecedence
 // MARK: AttributedString
 // https://stackoverflow.com/a/68156160/456536
 
-@available(iOS 15.0, *)
 public extension String {
     static func | (string: String, attributes: AttributeContainer? = nil) -> AttributedString {
         return AttributedString(string, attributes: attributes ?? AttributeContainer())
@@ -31,24 +30,20 @@ public extension String {
     }
 }
 
-@available(iOS 15.0, *)
 public protocol OptionalAttributedText: AnyObject {
     var attributedText: NSAttributedString? { get set }
     var attributed: AttributedString? { get set }
 }
-@available(iOS 15.0, *)
 public extension OptionalAttributedText {
     var attributed: AttributedString? {
         get { attributedText.map { AttributedString($0) } }
         set { attributedText = newValue.map { NSAttributedString($0) } }
     }
 }
-@available(iOS 15.0, *)
 public protocol ImplicitAttributedText: AnyObject {
     var attributedText: NSAttributedString! { get set }
     var attributed: AttributedString! { get set }
 }
-@available(iOS 15.0, *)
 public extension ImplicitAttributedText {
     var attributed: AttributedString! {
         get { attributedText.map { AttributedString($0) } }
@@ -56,10 +51,9 @@ public extension ImplicitAttributedText {
     }
 }
 
-extension UILabel: OptionalAttributedText {}
-extension UITextField: OptionalAttributedText {}
-extension UITextView: ImplicitAttributedText {}
-@available(iOS 15.0, *)
+extension UILabel: @MainActor OptionalAttributedText {}
+extension UITextField: @MainActor OptionalAttributedText {}
+extension UITextView: @MainActor ImplicitAttributedText {}
 public extension UIButton {
     func attributed(for state: UIControl.State) -> AttributedString? {
         return attributedTitle(for: state).map { AttributedString($0) }
@@ -230,7 +224,6 @@ public extension UIViewController {
 
 // UIViewController
 
-@available(iOS 14.0, *)
 public extension UIViewController {
     var currentContentViewController: UIViewController {
         if let tabBarController = self as? UITabBarController,

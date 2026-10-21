@@ -11,9 +11,9 @@ import XCTest
 // @testable
 import ExtSwift
 
-private struct S {}
+fileprivate struct S {}
 
-private class Sup: Equatable {
+fileprivate class Sup: Equatable {
     let i: Int
     init(i: Int) {
         self.i = i
@@ -23,7 +23,7 @@ private class Sup: Equatable {
     }
 }
 
-private class Sub: Sup {
+fileprivate class Sub: Sup {
     static func == (lhs: Sub, rhs: Sub) -> Bool {
         return lhs.i == rhs.i
     }

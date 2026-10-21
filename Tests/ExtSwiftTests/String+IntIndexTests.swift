@@ -14,6 +14,7 @@ import UIKit
 // @testable
 import ExtSwift
 
+@MainActor
 final class IntIndexTests: XCTestCase {
     
     func testIntIndex() {

@@ -34,5 +34,5 @@ let package = Package(
                 "ExtSwift"
             ])
     ],
-    swiftLanguageModes: [.v5]
+    swiftLanguageModes: [.v6]
 )

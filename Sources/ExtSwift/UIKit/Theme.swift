@@ -9,7 +9,7 @@
 #if canImport(UIKit)
 import UIKit
 
-private class ThemeMakerWrapper: Equatable {
+fileprivate class ThemeMakerWrapper: Equatable {
     
     let closure: () -> Void
     
@@ -22,8 +22,8 @@ private class ThemeMakerWrapper: Equatable {
     }
 }
 
-private var AssociatedObject_theme: UInt8 = 0
-private var AssociatedObject_themeMakers: UInt8 = 0
+nonisolated(unsafe) fileprivate var AssociatedObject_theme: UInt8 = 0
+nonisolated(unsafe) fileprivate var AssociatedObject_themeMakers: UInt8 = 0
 
 /// UIResponder: UIApplication, UIWindowScene, UIWindow, UIViewController, UIView, UIControl ...
 public extension UIResponder {

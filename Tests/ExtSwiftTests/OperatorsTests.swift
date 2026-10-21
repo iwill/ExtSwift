@@ -65,6 +65,7 @@ final class OperatorsTests: XCTestCase {
         XCTAssertTrue(!!!c ==  false)
     }
     
+    @available(*, deprecated, message: "UNSTABLE API - Maybe it's not necessary!")
     func testFalsyCoalescing() {
         
         XCTAssertTrue(0 ??! 1 == 1)

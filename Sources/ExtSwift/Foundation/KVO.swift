@@ -152,7 +152,7 @@ public final class ExtKVO<ValueType>: KVO<ValueType> {
 // MARK: - supports
 
 // when move into KVO: "Static stored properties not supported in generic types"
-public struct ObservingOptions: OptionSet, CustomStringConvertible {
+public struct ObservingOptions: OptionSet, CustomStringConvertible, Sendable {
     
     public static let initial = ObservingOptions(rawValue: 1 << 0) // value
     public static let willSet = ObservingOptions(rawValue: 1 << 1) // value + oldValue

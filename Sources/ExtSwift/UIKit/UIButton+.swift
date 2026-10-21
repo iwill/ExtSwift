@@ -66,14 +66,21 @@ extension UIButton {
 
 // MARK: - enabling kvo for state
 
+fileprivate enum UIControlKeys {
+    static let state = "state",
+               enabled = "enabled",
+               selected = "selected",
+               highlighted = "highlighted"
+}
+
 extension UIControl {
     open override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         let set = super.keyPathsForValuesAffectingValue(forKey: key)
-        guard key == #keyPath(UIControl.state) else { return set }
+        guard key == UIControlKeys.state else { return set }
         return set.union([
-            #keyPath(UIControl.isEnabled),
-            #keyPath(UIControl.isSelected),
-            #keyPath(UIControl.isHighlighted)
+            UIControlKeys.enabled,
+            UIControlKeys.selected,
+            UIControlKeys.highlighted
         ])
     }
 }
@@ -94,7 +101,7 @@ extension UIControl {
         let wrapper = HandlerWrapper { [weak self] wrapper, isCancelled in
             guard let self else { return }
             NSObject.cancelPreviousPerformRequests(withTarget: wrapper)
-            removeObserver(wrapper, forKeyPath: #keyPath(UIControl.isEnabled), context: &AssociatedObject_kvoContext)
+            removeObserver(wrapper, forKeyPath: UIControlKeys.enabled, context: &AssociatedObject_kvoContext)
             objc_setAssociatedObject(self, &AssociatedObject_kvoHandlerWrapper, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             // isCancelled: false - called from afterDelay, true - called from KVO or prevWrapper
             if !isCancelled {
@@ -103,13 +110,13 @@ extension UIControl {
         }
         
         objc_setAssociatedObject(self, &AssociatedObject_kvoHandlerWrapper, wrapper, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        addObserver(wrapper, forKeyPath: #keyPath(UIControl.isEnabled), options: [.old, .new], context: &AssociatedObject_kvoContext)
+        addObserver(wrapper, forKeyPath: UIControlKeys.enabled, options: [.old, .new], context: &AssociatedObject_kvoContext)
         wrapper.perform(#selector(HandlerWrapper.handle), with: nil, afterDelay: seconds)
     }
 }
 
-fileprivate var AssociatedObject_kvoContext: UInt8 = 0
-fileprivate var AssociatedObject_kvoHandlerWrapper: UInt8 = 0
+nonisolated(unsafe) fileprivate var AssociatedObject_kvoContext: UInt8 = 0
+nonisolated(unsafe) fileprivate var AssociatedObject_kvoHandlerWrapper: UInt8 = 0
 
 @objc
 fileprivate class HandlerWrapper: NSObject {
@@ -130,7 +137,7 @@ fileprivate class HandlerWrapper: NSObject {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return
         }
-        if keyPath == #keyPath(UIControl.isEnabled) {
+        if keyPath == UIControlKeys.enabled {
             handle(cancel: true)
         }
     }

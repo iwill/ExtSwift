@@ -11,7 +11,7 @@ import UIKit
 
 // for [SectionWithItems]
 @resultBuilder
-public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType, ItemIdentifierType> where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
+public struct ESDiffableDataSourceSnapshotBuilder<SectionIdentifierType: Sendable, ItemIdentifierType: Sendable> where SectionIdentifierType: Hashable, ItemIdentifierType: Hashable {
     
     public typealias SectionWithItems = (SectionIdentifierType?, [ItemIdentifierType])
     
