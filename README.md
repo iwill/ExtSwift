@@ -14,9 +14,9 @@ Extensions for Swift
 
 ## Requirements
 
-- iOS 9.0+ / tvOS 9.0+ / macOS X 10.11+ / watchOS 2+
-- Xcode 12.0+
-- Swift 5.0+
+- iOS 15+ / tvOS 16+ / macOS 12+
+- Xcode 27+
+- Swift 6.4+
 
 ## Communication
 
@@ -28,7 +28,13 @@ Extensions for Swift
 
 ## Installation
 
-### TODO: CocoaPods
+### Swift Package Manager
+
+```
+.package(url: "https://github.com/iwill/ExtSwift", from: "3.0.0")
+```
+
+### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
 
@@ -39,12 +45,23 @@ $ gem install cocoapods
 To integrate ExtSwift into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '27.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'ExtSwift', '~> 0.0'
+    pod 'ExtSwift', :git => 'https://github.com/iwill/ExtSwift.git', :tag => '3.0.0'
+end
+```
+
+or
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '27.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+    pod 'ExtSwift', '~> 2.1'
 end
 ```
 
@@ -54,9 +71,7 @@ Then, run the following command:
 $ pod install
 ```
 
-### TODO: Swift Package Manager
-
-## Features
+### Features
 
 - [x] Basic
     - [x] Falsify

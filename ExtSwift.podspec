@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name          = "ExtSwift"
-    s.version       = "2.1.0"
+    s.version       = "3.0.0"
     s.summary       = "Extensions for Swift"
     # s.description   = "Extensions for Swift."
     s.homepage      = "https://github.com/iwill/ExtSwift"
@@ -13,10 +13,10 @@ Pod::Spec.new do |s|
     s.social_media_url = "https://iwill.im/about/"
     
     # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-    s.ios.deployment_target = "13.0"
+    s.ios.deployment_target = "15.0"
     # s.tvos.deployment_target = "15.0"
     s.osx.deployment_target = "12.0"
-    s.swift_version = "5.10"
+    s.swift_version = "6.4"
     
     # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.source        = { :git => "https://github.com/iwill/ExtSwift.git", :tag => s.version.to_s }
@@ -61,7 +61,7 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/Optional"
         ss.dependency "ExtSwift/SemanticVersion"
         ss.dependency "ExtSwift/String+intIndex"
-        ss.dependency "ExtSwift/tryIndex"
+        ss.dependency "ExtSwift/safeIndex"
         ss.dependency "ExtSwift/Types"
         # ss.dependency "ExtSwift/WeakArray"
         ss.dependency "ExtSwift/UIKit"
@@ -77,7 +77,7 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/Operators"
         # ss.dependency "ExtSwift/SemanticVersion"
         ss.dependency "ExtSwift/String+intIndex"
-        ss.dependency "ExtSwift/tryIndex"
+        ss.dependency "ExtSwift/safeIndex"
         ss.dependency "ExtSwift/Types"
         # ss.dependency "ExtSwift/WeakArray"
         ss.dependency "ExtSwift/UIKit"
@@ -125,8 +125,8 @@ Pod::Spec.new do |s|
         ss.source_files  = "Sources/ExtSwift/**/String+intIndex.swift"
     end
     
-    s.subspec "tryIndex" do |ss|
-        ss.source_files  = "Sources/ExtSwift/**/tryIndex.swift"
+    s.subspec "safeIndex" do |ss|
+        ss.source_files  = "Sources/ExtSwift/**/safeIndex.swift"
     end
     
     s.subspec "Types" do |ss|
@@ -147,7 +147,7 @@ Pod::Spec.new do |s|
         ss.dependency "ExtSwift/Operators"
         ss.dependency "ExtSwift/Optional"
         ss.dependency "ExtSwift/String+intIndex"
-        ss.dependency "ExtSwift/tryIndex"
+        ss.dependency "ExtSwift/safeIndex"
         ss.dependency "SnapKit", "~> 5.6"
     end
     
