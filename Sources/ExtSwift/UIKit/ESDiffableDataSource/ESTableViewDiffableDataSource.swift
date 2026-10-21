@@ -146,4 +146,5 @@ open class ESTableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierTy
         return nil
     }
 }
+
 #endif

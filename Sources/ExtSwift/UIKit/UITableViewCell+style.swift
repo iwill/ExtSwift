@@ -35,4 +35,5 @@ public class UITableViewCellValueSubtitle: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 #endif

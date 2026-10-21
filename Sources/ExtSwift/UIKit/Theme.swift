@@ -128,4 +128,5 @@ public extension UIView {
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
 }
+
 #endif

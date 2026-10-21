@@ -244,4 +244,5 @@ public extension UIViewController {
         return self
     }
 }
+
 #endif

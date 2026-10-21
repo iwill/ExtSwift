@@ -26,4 +26,5 @@ open class ESHitTestView: UIView {
         return hitView == self ? nil : hitView
     }
 }
+
 #endif

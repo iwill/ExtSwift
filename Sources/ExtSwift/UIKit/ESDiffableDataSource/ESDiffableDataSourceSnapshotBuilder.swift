@@ -147,4 +147,5 @@ public extension UITableViewDiffableDataSource {
         apply(snapshot())
     }
 }
+
 #endif

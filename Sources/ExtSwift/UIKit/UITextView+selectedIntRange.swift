@@ -104,4 +104,5 @@ public extension UITextView {
         scrollRangeToVisible(nsRange)
     }
 }
+
 #endif

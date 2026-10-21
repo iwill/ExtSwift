@@ -111,4 +111,5 @@ public extension UITextField {
         return self
     }
 }
+
 #endif

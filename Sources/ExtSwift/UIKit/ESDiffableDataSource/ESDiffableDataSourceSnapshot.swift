@@ -188,4 +188,5 @@ public extension ESDiffableDataSourceSnapshot {
         return IndexPath(item: item, section: section)
     }
 }
+
 #endif

@@ -108,4 +108,5 @@ open class ESCollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentif
         return UICollectionReusableView()
     }
 }
+
 #endif
