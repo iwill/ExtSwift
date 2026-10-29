@@ -69,18 +69,18 @@ public extension UIView {
     
     @discardableResult
     func buildSubviews(@UIViewBuilder _ buildSubviewsAndConstraints: () -> [UIViewBuilder.ViewAndConstraintClosure]) -> [some UIView] {
-        let viewAndConstraintClosureArray = buildSubviewsAndConstraints()
-        for (subview, _) in viewAndConstraintClosureArray {
+        let subviewsAndClosures = buildSubviewsAndConstraints()
+        for (subview, _) in subviewsAndClosures {
             if !subviews.contains(subview) {
                 addSubview(subview)
             }
         }
-        for (subview, closure) in viewAndConstraintClosureArray {
+        for (subview, closure) in subviewsAndClosures {
             if closure != nil {
                 subview.snp.makeConstraints(closure!)
             }
         }
-        return viewAndConstraintClosureArray.map { $0.0 }
+        return subviewsAndClosures.map { $0.0 }
     }
     
     func buildConstraints(_ closure: @escaping UIViewBuilder.ConstraintClosure) -> UIViewBuilder.ViewAndConstraintClosure {
