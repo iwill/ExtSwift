@@ -28,7 +28,7 @@ nonisolated(unsafe) fileprivate var AssociatedObject_themeMakers: UInt8 = 0
 /// UIResponder: UIApplication, UIWindowScene, UIWindow, UIViewController, UIView, UIControl ...
 public extension UIResponder {
     
-    @available(iOS, introduced: 13.0, deprecated: 17.0, message: "Use `UITraitDefinition` insead: https://developer.apple.com/videos/play/wwdc2023/10057/")
+    // @available(iOS, introduced: 13.0, deprecated: 17.0, message: "Use `UITraitDefinition` insead: https://developer.apple.com/videos/play/wwdc2023/10057/")
     var theme: String? {
         get {
             let string = objc_getAssociatedObject(self, &AssociatedObject_theme) as? String
