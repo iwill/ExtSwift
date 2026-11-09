@@ -11,9 +11,7 @@ let package = Package(
         .macOS(.v12)
     ],
     products: [
-        .library(name: "ExtSwift", targets: ["ExtSwift"]),
-        // .library(name: "ExtSwift-Static", type: .static, targets: ["ExtSwift"]),
-        .library(name: "ExtSwift-Dynamic", type: .dynamic, targets: ["ExtSwift"])
+        .library(name: "ExtSwift", targets: ["ExtSwift"])
     ],
     dependencies: [
         // .package(url: "https://github.com/swiftlang/swift-docc-plugin", branch: "main"),
